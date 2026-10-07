@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 HOSTS = {
     "claude": ("plugins/openorange", ".claude-plugin/plugin.json", ".mcp.json", "http",
                "https://app.openorange.ai/mcp"),
-    "openai": ("packages/openai/openorange-usage", "plugin.json", "mcp.json", "streamable-http",
+    "openai": ("packages/openai/openorange-connect", "plugin.json", "mcp.json", "streamable-http",
                "https://app.openorange.ai/mcp/openorange-usage"),
 }
 SHARED = {
@@ -74,6 +74,8 @@ def check(root):
             if files[destination] != read_file(root, source):
                 raise ValueError(f"Usage guides differ: {host}/{destination}; run sync")
         manifest = json.loads(files[manifest_name])
+        if manifest.get("name") != Path(folder).name:
+            raise ValueError(f"Unexpected plugin identity: {host}")
         if not re.fullmatch(r"\d+\.\d+\.\d+", manifest["version"]):
             raise ValueError("Version must be semantic")
         versions.add(manifest["version"])

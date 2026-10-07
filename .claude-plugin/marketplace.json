@@ -7,14 +7,14 @@
   },
   "metadata": {
     "description": "Use your OpenOrange agents with MCP and the oo CLI.",
-    "version": "0.6.8"
+    "version": "0.6.9"
   },
   "plugins": [
     {
       "name": "openorange",
       "source": "./plugins/openorange",
       "description": "Work with your OpenOrange agents: send tasks, read results, continue conversations, and use the oo CLI for selected files and workspace actions.",
-      "version": "0.6.8",
+      "version": "0.6.9",
       "author": {
         "name": "OpenOrange",
         "email": "alex@openorange.ai",
