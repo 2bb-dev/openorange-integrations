@@ -1,0 +1,24 @@
+{
+  "name": "openorange",
+  "version": "0.6.4",
+  "description": "Work with your OpenOrange agents: send tasks, read results, continue conversations, and use the oo CLI for selected files and workspace actions.",
+  "author": {
+    "name": "OpenOrange",
+    "email": "alex@openorange.ai",
+    "url": "https://openorange.ai"
+  },
+  "homepage": "https://openorange.ai",
+  "repository": "https://github.com/2bb-dev/openorange-integrations",
+  "license": "LicenseRef-Proprietary",
+  "keywords": [
+    "openorange",
+    "agents",
+    "mcp",
+    "cli"
+  ],
+  "documentationUrl": "https://github.com/2bb-dev/openorange-integrations#readme",
+  "privacyPolicyUrl": "https://openorange.ai/privacy/",
+  "supportUrl": "https://openorange.ai/#contact",
+  "termsOfServiceUrl": "https://openorange.ai/terms/",
+  "icon": "./assets/openorange.svg"
+}

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="128" height="128" role="img" aria-labelledby="t">
+  <title id="t">OpenOrange</title>
+  <defs>
+    <clipPath id="orange-clip">
+      <circle cx="16" cy="16" r="14.2" />
+    </clipPath>
+  </defs>
+  <circle cx="16" cy="16" r="14.2" fill="#df742b" />
+  <path d="M16 16L28.3 8.9A14.2 14.2 0 0 1 28.3 23.1Z" fill="#f5a524" opacity=".78" />
+  <g clip-path="url(#orange-clip)" stroke="#ffd18a" stroke-opacity=".52" stroke-width="1.05" stroke-linecap="round">
+    <line x1="16" y1="16" x2="16" y2="5.6" />
+    <line x1="16" y1="16" x2="7" y2="10.8" />
+    <line x1="16" y1="16" x2="7" y2="21.2" />
+    <line x1="16" y1="16" x2="16" y2="26.4" />
+    <line x1="16" y1="16" x2="25" y2="10.8" />
+    <line x1="16" y1="16" x2="25" y2="21.2" />
+  </g>
+  <circle cx="16" cy="16" r="2.05" fill="#ffd18a" opacity=".62" />
+  <circle cx="16" cy="16" r="14.2" fill="none" stroke="#ffbe3a" stroke-opacity=".34" />
+</svg>
