@@ -22,13 +22,19 @@ class PackageTests(unittest.TestCase):
     def test_both_archives_contain_only_the_approved_inventory(self):
         output = Path(self.temp.name) / "output"
         package.build(self.root, output)
-        for host, (_, manifest_name, _, _) in package.HOSTS.items():
+        connections = {
+            "claude": {"type": "http", "url": "https://app.openorange.ai/mcp"},
+            "openai": {"type": "streamable-http", "url": "https://app.openorange.ai/mcp/openorange-usage"},
+        }
+        for host, (_, manifest_name, mcp_name, *_) in package.HOSTS.items():
             files = package.package_files(self.root, host)
             manifest = json.loads(files[manifest_name])
             with zipfile.ZipFile(output / f"openorange-{host}-{manifest['version']}.zip") as bundle:
                 self.assertEqual(bundle.namelist(), [f"{manifest['name']}/{name}" for name in files])
                 for name, data in files.items():
                     self.assertEqual(bundle.read(f"{manifest['name']}/{name}"), data)
+                connection = json.loads(bundle.read(f"{manifest['name']}/{mcp_name}"))
+                self.assertEqual(connection["mcpServers"]["openorange"], connections[host])
 
     def test_private_file_blocks_build(self):
         (self.root / "plugins/openorange/private.env").write_text("EXAMPLE_SECRET=synthetic\n")
@@ -54,14 +60,34 @@ class PackageTests(unittest.TestCase):
             package.check(self.root)
 
     def test_connection_cannot_add_credentials_or_change_destination(self):
-        path = self.root / "plugins/openorange/.mcp.json"
-        config = json.loads(path.read_text())
-        for extra in ({"headers": {"Authorization": "synthetic"}}, {"url": "https://example.com/mcp"}):
-            changed = json.loads(json.dumps(config))
-            changed["mcpServers"]["openorange"].update(extra)
-            path.write_text(json.dumps(changed))
-            with self.assertRaises(ValueError):
-                package.check(self.root)
+        for host, (folder, _, mcp_name, *_) in package.HOSTS.items():
+            path = self.root / folder / mcp_name
+            original = path.read_bytes()
+            for extra in ({"headers": {"Authorization": "synthetic"}}, {"url": "https://example.com/mcp"}):
+                with self.subTest(host=host, extra=extra):
+                    changed = json.loads(original)
+                    changed["mcpServers"]["openorange"].update(extra)
+                    path.write_text(json.dumps(changed))
+                    with self.assertRaises(ValueError):
+                        package.check(self.root)
+                    path.write_bytes(original)
+
+    def test_connection_cannot_switch_host_endpoints(self):
+        wrong_connections = {
+            "claude": "https://app.openorange.ai/mcp/openorange-usage",
+            "openai": "https://app.openorange.ai/mcp",
+        }
+        for host, (folder, _, mcp_name, _, endpoint) in package.HOSTS.items():
+            path = self.root / folder / mcp_name
+            original = path.read_bytes()
+            for wrong in (wrong_connections[host], endpoint + "?workspace=other"):
+                with self.subTest(host=host, url=wrong):
+                    changed = json.loads(original)
+                    changed["mcpServers"]["openorange"]["url"] = wrong
+                    path.write_text(json.dumps(changed))
+                    with self.assertRaisesRegex(ValueError, "public OpenOrange MCP connection"):
+                        package.check(self.root)
+                    path.write_bytes(original)
 
     def test_marketplace_cannot_redirect_to_external_source(self):
         path = self.root / ".claude-plugin/marketplace.json"

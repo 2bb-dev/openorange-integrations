@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-usage",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "description": "Work with your OpenOrange agents: send tasks, read results, continue conversations, and use the oo CLI for selected files and workspace actions.",
   "author": {
     "name": "OpenOrange",
