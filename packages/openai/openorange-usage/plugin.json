@@ -66,10 +66,10 @@
               "expected_behavior": "Send one follow-up with the existing thread_id and retrieve the newly returned run_id. The revision retains the release context, adds the supplied owners and dates, and includes a go/no-go check without claiming any external action was performed."
             },
             {
-              "description": "Reconnect to the retained demo workspace and recover the conversation. The demo is already saved; no new workspace is needed.",
-              "prompt": "Reconnect OpenOrange to the same saved workspace if needed, confirm its identity, then show the latest result from our release-checklist conversation. Do not create a new workspace or resend the task.",
+              "description": "Reconnect to the same available workspace before its access expires, then read the existing conversation. Run after the release-checklist and follow-up cases.",
+              "prompt": "Reconnect OpenOrange to the same workspace if needed, confirm its identity, then show the latest result from our release-checklist conversation. Do not create a new workspace or resend the task.",
               "tools_triggered": "whoami, get_result",
-              "expected_behavior": "Use the normal account connection flow if authentication is needed. Confirm the same retained workspace and read the existing result with its preserved identifiers. Report an expired connection or access error honestly. Do not substitute another workspace, allocate a trial or pretend the web chat session list shares this connection history."
+              "expected_behavior": "Use the normal browser connection flow if authentication is needed. Confirm that the workspace identifier returned by whoami matches the initial connection, then retrieve the existing task using its preserved agent_id, thread_id and run_id. Report expired, unavailable or unauthorized access honestly. Do not substitute another workspace, start a new trial or resend a task."
             }
           ],
           "negative": [
