@@ -1,25 +1,20 @@
 # OpenOrange
 
-Bring your OpenOrange agents into your workflow. Send a task, review the result,
-and continue the conversation. Use the `oo` CLI to work with selected task files
-and the other actions available in your workspace.
+Send tasks to your OpenOrange agents, review their results, and continue the
+conversation from your assistant. With the installed `oo` CLI, work with selected
+task files and the other actions available in your workspace.
 
-[OpenOrange](https://openorange.ai) · [Get connected](https://app.openorange.ai) ·
-[Privacy](https://openorange.ai/privacy/) · [Terms](https://openorange.ai/terms/) ·
-[Support](https://openorange.ai/#contact)
+## Get connected
 
-## Choose how to connect
+For text tasks, connect OpenOrange in your assistant and approve access in the
+browser. For CLI actions, install the official `oo` client using the setup at
+https://app.openorange.ai, then sign in to your chosen workspace.
 
-| Connection | What you can do | What you need |
-| --- | --- | --- |
-| MCP | Find agents, send text tasks, read results, and continue a conversation | Connect OpenOrange in your assistant and approve access in the browser |
-| `oo` CLI | Work with agents, conversations, selected files, coding sessions, and other supported workspace actions | The official `oo` CLI, terminal access, and a workspace login |
+Installing this plugin does not install the CLI or grant workspace access.
+MCP and CLI connections can select different workspaces. Confirm the workspace
+before sharing messages, files, or conversation identifiers.
 
-Both connections use your existing permissions. Installing the plugin does not
-install the CLI or grant workspace access. Check the selected workspace before
-sending a task; MCP and CLI connections can point to different workspaces.
-
-## Try a task
+## Try it
 
 > Show my OpenOrange agents and help me choose one for this task.
 
@@ -27,38 +22,20 @@ sending a task; MCP and CLI connections can point to different workspaces.
 
 > Continue that conversation and revise the checklist with these changes.
 
-For a file task, connect the CLI and choose the file you want to share:
+For a selected file with the CLI:
 
-> Use my OpenOrange workspace to summarize this selected report and save the result here.
+> Ask my OpenOrange agent to summarize this report and save the result here.
 
-The assistant checks the connection, uses the agent you select, and reports the
-actual result or current task status. Follow-ups stay in the same conversation.
+Follow the [MCP guide](skills/openorange/references/mcp.md) for connected text
+tasks, or the [CLI guide](skills/openorange/references/cli.md) for selected files,
+coding sessions, and other supported actions. Availability depends on the
+connected workspace, installed version, and your existing permissions.
 
-## Claude
+Share only content needed for the task. OpenOrange and your assistant service
+handle the messages, selected files, and results you use.
 
-In Claude Code, add this marketplace and install OpenOrange:
+[OpenOrange](https://openorange.ai) · [Privacy](https://openorange.ai/privacy/) ·
+[Terms](https://openorange.ai/terms/) · [Support](https://openorange.ai/#contact)
 
-```text
-/plugin marketplace add 2bb-dev/openorange-integrations
-/plugin install openorange@openorange
-```
-
-Approve the OpenOrange connection when prompted. CLI actions additionally need
-the installed `oo` client. Availability in the public Claude directory depends
-on Anthropic approval.
-
-## OpenAI
-
-The OpenAI package is in [`packages/openai/openorange-mcp`](packages/openai/openorange-mcp).
-Use its packaged release where your OpenAI client supports plugin installation.
-Availability in the public directory depends on OpenAI approval.
-
-Both packages use the same [MCP guide](usage/references/mcp.md) and
-[CLI guide](usage/references/cli.md), with the connection format required by each
-assistant. Additional assistants can reuse these usage guides.
-
-Share only the messages and files needed for your task. OpenOrange and your
-assistant service handle the content you send and the results you retrieve.
-See the linked privacy policy for data handling. Questions: alex@openorange.ai.
-
-Copyright © 2026 OpenOrange. Proprietary; see [LICENSE](LICENSE).
+Questions: alex@openorange.ai. Copyright © 2026 OpenOrange. Proprietary;
+see [LICENSE](LICENSE).

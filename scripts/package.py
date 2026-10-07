@@ -6,7 +6,6 @@ import hashlib
 import json
 from pathlib import Path
 import re
-import shutil
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,7 +14,7 @@ HOSTS = {
     "openai": ("packages/openai/openorange-mcp", "plugin.json", "mcp.json", "streamable-http"),
 }
 SHARED = {
-    "README.md": "README.md",
+    "README.md": "usage/README.md",
     "LICENSE": "LICENSE",
     "assets/openorange.svg": "assets/openorange.svg",
     "skills/openorange/SKILL.md": "usage/SKILL.md",
@@ -24,7 +23,7 @@ SHARED = {
 }
 SOURCE_FILES = {
     "README.md", "LICENSE", ".gitignore", ".claude-plugin/marketplace.json",
-    "assets/openorange.svg", "usage/SKILL.md", "usage/references/mcp.md",
+    "assets/openorange.svg", "usage/README.md", "usage/SKILL.md", "usage/references/mcp.md",
     "usage/references/cli.md", "scripts/package.py", "tests/test_package.py",
     ".github/workflows/ci.yml",
 }
