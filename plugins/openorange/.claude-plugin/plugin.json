@@ -1,6 +1,6 @@
 {
   "name": "openorange",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Work with your OpenOrange agents: send tasks, read results, continue conversations, and use the oo CLI for selected files and workspace actions.",
   "author": {
     "name": "OpenOrange",
@@ -20,5 +20,6 @@
   "privacyPolicyUrl": "https://openorange.ai/privacy/",
   "supportUrl": "https://openorange.ai/#contact",
   "termsOfServiceUrl": "https://openorange.ai/terms/",
-  "icon": "./assets/openorange.svg"
+  "icon": "./assets/openorange.svg",
+  "displayName": "OpenOrange"
 }
