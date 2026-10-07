@@ -3,7 +3,7 @@
   "mcpServers": {
     "openorange": {
       "type": "streamable-http",
-      "url": "https://app.openorange.ai/mcp"
+      "url": "https://app.openorange.ai/mcp/openorange-usage"
     }
   }
 }

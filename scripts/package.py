@@ -10,8 +10,10 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 HOSTS = {
-    "claude": ("plugins/openorange", ".claude-plugin/plugin.json", ".mcp.json", "http"),
-    "openai": ("packages/openai/openorange-usage", "plugin.json", "mcp.json", "streamable-http"),
+    "claude": ("plugins/openorange", ".claude-plugin/plugin.json", ".mcp.json", "http",
+               "https://app.openorange.ai/mcp"),
+    "openai": ("packages/openai/openorange-usage", "plugin.json", "mcp.json", "streamable-http",
+               "https://app.openorange.ai/mcp/openorange-usage"),
 }
 SHARED = {
     "README.md": "usage/README.md",
@@ -42,7 +44,7 @@ def read_file(root, relative):
 
 
 def package_files(root, host):
-    folder, manifest_name, mcp_name, _ = HOSTS[host]
+    folder, manifest_name, mcp_name, *_ = HOSTS[host]
     names = sorted({*SHARED, manifest_name, mcp_name})
     package = root / folder
     actual = {str(p.relative_to(package)) for p in package.rglob("*") if p.is_file() or p.is_symlink()}
@@ -65,7 +67,7 @@ def sync(root):
 def check(root):
     expected = set(SOURCE_FILES)
     versions = set()
-    for host, (folder, manifest_name, mcp_name, transport) in HOSTS.items():
+    for host, (folder, manifest_name, mcp_name, transport, endpoint) in HOSTS.items():
         files = package_files(root, host)
         expected.update(f"{folder}/{name}" for name in files)
         for destination, source in SHARED.items():
@@ -82,7 +84,7 @@ def check(root):
         config = json.loads(files[mcp_name])
         server = config.get("mcpServers", {}).get("openorange")
         if set(config.get("mcpServers", {})) != {"openorange"} or server != {
-            "type": transport, "url": "https://app.openorange.ai/mcp"
+            "type": transport, "url": endpoint
         }:
             raise ValueError("Only the public OpenOrange MCP connection is permitted")
         if host == "openai":
@@ -122,7 +124,7 @@ def build(root, output):
     check(root)
     output.mkdir(parents=True, exist_ok=True)
     sums = []
-    for host, (_, manifest_name, _, _) in HOSTS.items():
+    for host, (_, manifest_name, *_) in HOSTS.items():
         files = package_files(root, host)
         manifest = json.loads(files[manifest_name])
         filename = f"openorange-{host}-{manifest['version']}.zip"
