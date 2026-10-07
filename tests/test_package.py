@@ -54,10 +54,23 @@ class PackageTests(unittest.TestCase):
             package.check(self.root)
 
     def test_guides_cannot_drift_between_hosts(self):
-        path = self.root / "packages/openai/openorange-usage/skills/openorange/SKILL.md"
+        path = self.root / "packages/openai/openorange-connect/skills/openorange/SKILL.md"
         path.write_text(path.read_text() + "\nChanged copy\n")
         with self.assertRaises(ValueError):
             package.check(self.root)
+
+    def test_plugin_identity_cannot_change_or_reuse_previous_name(self):
+        wrong_names = {"claude": "openorange-connect", "openai": "openorange-usage"}
+        for host, (folder, manifest_name, *_) in package.HOSTS.items():
+            with self.subTest(host=host):
+                path = self.root / folder / manifest_name
+                original = path.read_bytes()
+                manifest = json.loads(original)
+                manifest["name"] = wrong_names[host]
+                path.write_text(json.dumps(manifest))
+                with self.assertRaisesRegex(ValueError, "plugin identity"):
+                    package.check(self.root)
+                path.write_bytes(original)
 
     def test_connection_cannot_add_credentials_or_change_destination(self):
         for host, (folder, _, mcp_name, *_) in package.HOSTS.items():
