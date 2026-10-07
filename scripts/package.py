@@ -11,7 +11,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 HOSTS = {
     "claude": ("plugins/openorange", ".claude-plugin/plugin.json", ".mcp.json", "http"),
-    "openai": ("packages/openai/openorange-mcp", "plugin.json", "mcp.json", "streamable-http"),
+    "openai": ("packages/openai/openorange-usage", "plugin.json", "mcp.json", "streamable-http"),
 }
 SHARED = {
     "README.md": "usage/README.md",

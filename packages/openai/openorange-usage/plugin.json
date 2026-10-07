@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "openorange-mcp",
-  "version": "0.6.5",
+  "name": "openorange-usage",
+  "version": "0.6.6",
   "description": "Work with your OpenOrange agents: send tasks, read results, continue conversations, and use the oo CLI for selected files and workspace actions.",
   "author": {
     "name": "OpenOrange",
@@ -16,7 +16,7 @@
         "displayName": "OpenOrange",
         "shortDescription": "Work with your agents",
         "longDescription": "Bring your OpenOrange agents into your workflow. Send a task, review its result, and continue the same conversation.\n\nConnect through MCP for text tasks. On a computer with the official oo CLI, work with selected files, coding sessions, and other supported workspace actions. The plugin uses your existing workspace permissions.\n\nApprove sign-in in the browser and choose the workspace you want to use. The plugin does not install the CLI or grant access automatically. Share only the messages and files needed for your task. OpenOrange and your assistant service handle the content you send and the results you retrieve.",
-        "developerName": "OpenOrange",
+        "developerName": "Alex Zenin",
         "category": "Productivity",
         "capabilities": [
           "Find accessible agents",

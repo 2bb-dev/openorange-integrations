@@ -49,7 +49,7 @@ on Anthropic approval.
 
 ## OpenAI
 
-The OpenAI package is in [`packages/openai/openorange-mcp`](packages/openai/openorange-mcp).
+The OpenAI package is in [`packages/openai/openorange-usage`](packages/openai/openorange-usage).
 Use its packaged release where your OpenAI client supports plugin installation.
 Availability in the public directory depends on OpenAI approval.
 

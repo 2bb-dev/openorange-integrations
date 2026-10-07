@@ -48,7 +48,7 @@ class PackageTests(unittest.TestCase):
             package.check(self.root)
 
     def test_guides_cannot_drift_between_hosts(self):
-        path = self.root / "packages/openai/openorange-mcp/skills/openorange/SKILL.md"
+        path = self.root / "packages/openai/openorange-usage/skills/openorange/SKILL.md"
         path.write_text(path.read_text() + "\nChanged copy\n")
         with self.assertRaises(ValueError):
             package.check(self.root)

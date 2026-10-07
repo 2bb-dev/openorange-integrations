@@ -1,6 +1,6 @@
 {
   "name": "openorange",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "Work with your OpenOrange agents: send tasks, read results, continue conversations, and use the oo CLI for selected files and workspace actions.",
   "author": {
     "name": "OpenOrange",
