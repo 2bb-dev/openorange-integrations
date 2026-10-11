@@ -1,4 +1,4 @@
-# CLI: your OpenOrange workspace
+# CLI: your OpenOrange Sunport
 
 Use the official installed `oo` client. Start with `oo --version` and
 `oo --help`; use each command's `--help` for the options supported by that version.
@@ -7,18 +7,19 @@ https://app.openorange.ai. The plugin does not install the CLI.
 
 ## Connect
 
-`oo login --name work` opens browser sign-in and workspace selection. If the
-user has already chosen a workspace, use:
+`oo login --name work` opens browser sign-in and Sunport selection. If the
+user has already chosen a Sunport, use:
 
 ```sh
-oo --instance WORKSPACE_URL auth login --name work
-oo --instance WORKSPACE_URL auth status
-oo --instance WORKSPACE_URL agents list
+oo --instance SUNPORT_URL auth login --name work
+oo --instance SUNPORT_URL auth status
+oo --instance SUNPORT_URL agents list
 ```
 
-Replace `WORKSPACE_URL` with the selected workspace's actual HTTPS address.
+`--instance` takes the Sunport's address: replace `SUNPORT_URL` with the
+selected Sunport's actual HTTPS address.
 Confirm the identity reported by `auth status`, then use that same explicit
-workspace for subsequent commands. For a connection-only request, finish after
+Sunport for subsequent commands. For a connection-only request, finish after
 listing agents. The user completes sign-in and access approval in the browser.
 Where supported, `--no-browser` provides the normal remote-computer login flow.
 
@@ -33,9 +34,9 @@ use `chat list --agent AGENT_ID` and read the selected conversation first.
 For a new task:
 
 ```sh
-oo --instance WORKSPACE_URL chat create --agent AGENT_ID --title "Requested task"
-oo --instance WORKSPACE_URL chat send THREAD_ID --message "USER_REQUESTED_TASK"
-oo --instance WORKSPACE_URL chat get THREAD_ID
+oo --instance SUNPORT_URL chat create --agent AGENT_ID --title "Requested task"
+oo --instance SUNPORT_URL chat send THREAD_ID --message "USER_REQUESTED_TASK"
+oo --instance SUNPORT_URL chat get THREAD_ID
 ```
 
 Use actual returned IDs. Sending acknowledges acceptance; read the conversation
@@ -49,10 +50,10 @@ reply; read it again to confirm the outcome.
 Upload only a file chosen for the task, using the same login as the conversation:
 
 ```sh
-oo --instance WORKSPACE_URL files upload ./selected-report.pdf --for chat
-oo --instance WORKSPACE_URL chat send THREAD_ID --message "Summarize this report" --attachment ATTACHMENT_ID
-oo --instance WORKSPACE_URL chat get THREAD_ID
-oo --instance WORKSPACE_URL chat download THREAD_ID FILE_ID --output ./result.txt
+oo --instance SUNPORT_URL files upload ./selected-report.pdf --for chat
+oo --instance SUNPORT_URL chat send THREAD_ID --message "Summarize this report" --attachment ATTACHMENT_ID
+oo --instance SUNPORT_URL chat get THREAD_ID
+oo --instance SUNPORT_URL chat download THREAD_ID FILE_ID --output ./result.txt
 ```
 
 Use returned attachment and file IDs. Check the command help and upload response
@@ -66,11 +67,11 @@ When the user requests coding work, inspect available sessions and choose the
 intended one. Starting or sending work may execute code and consume usage.
 
 ```sh
-oo --instance WORKSPACE_URL code environments
-oo --instance WORKSPACE_URL code list
-oo --instance WORKSPACE_URL code start --message "USER_REQUESTED_TASK" --wait
-oo --instance WORKSPACE_URL code send SESSION_ID --message "REQUESTED_FOLLOW_UP" --wait
-oo --instance WORKSPACE_URL code get SESSION_ID
+oo --instance SUNPORT_URL code environments
+oo --instance SUNPORT_URL code list
+oo --instance SUNPORT_URL code start --message "USER_REQUESTED_TASK" --wait
+oo --instance SUNPORT_URL code send SESSION_ID --message "REQUESTED_FOLLOW_UP" --wait
+oo --instance SUNPORT_URL code get SESSION_ID
 ```
 
 Use `code wait SESSION_ID` to follow accepted work, or `code cancel SESSION_ID`
@@ -101,12 +102,12 @@ the same operation again after a timeout.
 
 Where offered by the installed CLI, `oo start` connects an available trial or
 reuses a saved connection. Run it only when the user requests that flow. Confirm
-the returned workspace with `auth status` before sending a task.
+the returned Sunport with `auth status` before sending a task.
 
 To keep a CLI trial, the user runs `claim --email person@example.com` and
-`claim --code-stdin` against that same workspace in their own terminal. They
+`claim --code-stdin` against that same Sunport in their own terminal. They
 enter the emailed verification code privately. Afterwards, check `claim` and
-confirm `claimed: true`. Keep the same workspace and conversation IDs.
+confirm `claimed: true`. Keep the same Sunport and conversation IDs.
 
-When asked to disconnect, use `oo --instance WORKSPACE_URL auth logout`.
-Removing the plugin does not revoke the CLI login or delete workspace data.
+When asked to disconnect, use `oo --instance SUNPORT_URL auth logout`.
+Removing the plugin does not revoke the CLI login or delete Sunport data.
