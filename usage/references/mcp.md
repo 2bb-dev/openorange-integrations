@@ -14,10 +14,10 @@ separate CLI workflow.
 
 ## Send and follow a task
 
-Check `whoami` first. Use the returned Sunport identity (its `workspace`
-field) to confirm the user's chosen Sunport. If it differs from an existing
-conversation's Sunport, stop and reconnect to the intended Sunport before
-using its IDs.
+Check `whoami` first. Use the returned Sunport identity (its `sunport` field;
+older servers return it as `workspace`) to confirm the user's chosen Sunport.
+If it differs from an existing conversation's Sunport, stop and reconnect to
+the intended Sunport before using its IDs.
 
 Use `list_agents` and select an actual returned `agent_id`. Call `ask_agent`
 with that ID and the requested `message`. Omit `thread_id` for a new conversation;

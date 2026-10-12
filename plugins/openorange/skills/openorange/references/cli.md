@@ -17,7 +17,8 @@ oo --instance SUNPORT_URL agents list
 ```
 
 `--instance` takes the Sunport's address: replace `SUNPORT_URL` with the
-selected Sunport's actual HTTPS address.
+selected Sunport's actual HTTPS address. Newer `oo` releases show this flag as
+`--sunport` in their help; `--instance` works in every release.
 Confirm the identity reported by `auth status`, then use that same explicit
 Sunport for subsequent commands. For a connection-only request, finish after
 listing agents. The user completes sign-in and access approval in the browser.
