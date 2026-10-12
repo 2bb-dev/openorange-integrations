@@ -1,22 +1,22 @@
 ---
 name: openorange
-description: Use OpenOrange agents from the connected MCP tools or installed oo CLI. Use when the user asks to connect OpenOrange, delegate a task, read or continue an agent conversation, exchange selected task files, or perform a supported action in their OpenOrange workspace.
+description: Use OpenOrange agents from the connected MCP tools or installed oo CLI. Use when the user asks to connect OpenOrange, delegate a task, read or continue an agent conversation, exchange selected task files, or perform a supported action in their OpenOrange Sunport.
 ---
 
 # Use OpenOrange
 
 Help the user get work done with their OpenOrange agents. Use their chosen
-workspace, agent, and connection. Share only the task content they authorize.
+Sunport, agent, and connection. Share only the task content they authorize.
 
 ## Choose the connection
 
 - For text tasks through the connected OpenOrange tools, follow
   [the MCP guide](references/mcp.md).
-- For selected files, coding sessions, or other requested workspace actions on
+- For selected files, coding sessions, or other requested Sunport actions on
   a computer with `oo`, follow [the CLI guide](references/cli.md).
 
 Honor an explicit connection choice. Keep an existing conversation on its
-original connection. MCP and CLI logins are independent; confirm the workspace
+original connection. MCP and CLI logins are independent; confirm the Sunport
 before using conversation identifiers or sending content. Do not switch logins
 to get around a permission error.
 
@@ -26,7 +26,7 @@ plugin does not install `oo` or grant permissions.
 
 ## Work with an agent
 
-1. Check the connected workspace and list accessible agents.
+1. Check the connected Sunport and list accessible agents.
 2. Select the requested agent from the actual response. Ask for a choice when
    several agents fit and the user has not selected one.
 3. Send the requested task once. Save the returned conversation and task IDs.
