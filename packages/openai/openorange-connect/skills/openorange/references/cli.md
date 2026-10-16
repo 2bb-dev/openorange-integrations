@@ -92,7 +92,8 @@ Use command help to discover the actions available with this connection:
 - `export charges --output ./charges.csv` exports accessible charge records.
 - `agents config get AGENT_ID` lists an agent's own configuration changes;
   `set`, `unset` and `reset` change them. A key OpenOrange manages is refused,
-  with where to change it instead.
+  with where to change it instead. A key that runs code, such as an MCP server,
+  hook, plugin or environment variable, needs the same permission as VM commands.
 - `sunport updates`, `sunport data-sharing` and `sunport desired-state` show
   when updates install, what the Sunport shares with OpenOrange, and whether
   it matches what OpenOrange expects.
