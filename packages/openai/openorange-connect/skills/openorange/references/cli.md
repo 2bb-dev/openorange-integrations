@@ -103,6 +103,11 @@ Use command help to discover the actions available with this connection:
 - `sunport updates`, `sunport data-sharing` and `sunport desired-state` show
   when updates install, what the Sunport shares with OpenOrange, and whether
   it matches what OpenOrange expects.
+- `sunport sign-in` shows whether members may sign in with their OpenOrange
+  account, off unless an administrator turns it on, and the logins linked to
+  one. A login is linked by its invitation, its own password or an
+  administrator's approval, never by email alone. `--unlink` removes a link and
+  ends that login's sessions; the login stays.
 - `jobs run FAMILY ACTION key=value` queues an operation of a job family;
   `jobs get JOB_ID` and `jobs wait JOB_ID` follow an accepted one.
 - `approvals list` and `approvals get` inspect actions awaiting a decision.
