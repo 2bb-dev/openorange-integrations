@@ -97,8 +97,9 @@ Use command help to discover the actions available with this connection:
 - `agents browser signin AGENT_ID --page URL` opens the agent's own browser in
   the user's profile and prints the dashboard link where the user signs in to
   that site, never in chat; `agents browser done AGENT_ID` gives it back. Only
-  the user's runs with that agent use the login. It needs an administrator's
-  own login with VM admin on the agent.
+  the user's own dashboard web chats with that agent use the login: a task sent
+  with `oo` or the API browses in its conversation's own profile instead. It
+  needs an administrator's own login with VM admin on the agent.
 - `sunport updates`, `sunport data-sharing` and `sunport desired-state` show
   when updates install, what the Sunport shares with OpenOrange, and whether
   it matches what OpenOrange expects.
