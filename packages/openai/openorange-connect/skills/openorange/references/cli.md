@@ -90,7 +90,14 @@ Use command help to discover the actions available with this connection:
 - `models list` shows available model choices.
 - `requests list` shows accessible request activity.
 - `export charges --output ./charges.csv` exports accessible charge records.
-- `jobs get JOB_ID` and `jobs wait JOB_ID` follow an accepted operation.
+- `agents config get AGENT_ID` lists an agent's own configuration changes;
+  `set`, `unset` and `reset` change them. A key OpenOrange manages is refused,
+  with where to change it instead.
+- `sunport updates`, `sunport data-sharing` and `sunport desired-state` show
+  when updates install, what the Sunport shares with OpenOrange, and whether
+  it matches what OpenOrange expects.
+- `jobs run FAMILY ACTION key=value` queues an operation of a job family;
+  `jobs get JOB_ID` and `jobs wait JOB_ID` follow an accepted one.
 - `approvals list` and `approvals get` inspect actions awaiting a decision.
 - `api routes` and `api route METHOD PATH` describe available public API actions
   and their required permissions. Use `api request` only for the user's requested
