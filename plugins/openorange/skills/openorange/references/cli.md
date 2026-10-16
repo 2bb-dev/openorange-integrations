@@ -92,13 +92,27 @@ Use command help to discover the actions available with this connection:
 - `export charges --output ./charges.csv` exports accessible charge records.
 - `agents config get AGENT_ID` lists an agent's own configuration changes;
   `set`, `unset` and `reset` change them. A key OpenOrange manages is refused,
-  with where to change it instead.
+  with where to change it instead. A key that runs code, such as an MCP server,
+  hook, plugin or environment variable, needs the same permission as VM commands.
+- `agents browser signin AGENT_ID --page URL` opens the agent's own browser in
+  the user's profile and prints the dashboard link where the user signs in to
+  that site, never in chat; `agents browser done AGENT_ID` gives it back. Only
+  the user's own dashboard web chats with that agent use the login: a task sent
+  with `oo` or the API browses in its conversation's own profile instead. It
+  needs an administrator's own login with VM admin on the agent.
 - `sunport updates`, `sunport data-sharing` and `sunport desired-state` show
   when updates install, what the Sunport shares with OpenOrange, and whether
   it matches what OpenOrange expects.
+- `sunport sign-in` shows whether members may sign in with their OpenOrange
+  account, off unless an administrator turns it on, and the logins linked to
+  one. A login is linked by its invitation, its own password or an
+  administrator's approval, never by email alone. `--unlink` removes a link and
+  ends that login's sessions; the login stays.
 - `jobs run FAMILY ACTION key=value` queues an operation of a job family;
   `jobs get JOB_ID` and `jobs wait JOB_ID` follow an accepted one.
 - `approvals list` and `approvals get` inspect actions awaiting a decision.
+- `permissions list` shows explicit permissions, the user's by default, with
+  each area as View or Manage.
 - `api routes` and `api route METHOD PATH` describe available public API actions
   and their required permissions. Use `api request` only for the user's requested
   action, with the input documented by that catalog and command help.
