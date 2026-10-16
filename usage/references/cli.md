@@ -42,7 +42,10 @@ oo --instance SUNPORT_URL chat get THREAD_ID
 
 Use actual returned IDs. Sending acknowledges acceptance; read the conversation
 for the reply to this task. An earlier reply is not the result of a new task.
-Report pending approvals, running tasks, and failures accurately. Send follow-ups
+Report pending approvals, running tasks, and failures accurately. A change that
+waits for approval is decided in the Sunport, on its card in the dashboard or
+with `approvals`, by someone allowed to approve it: report where it waits, and
+don't make the change another way. Send follow-ups
 to the same conversation. When requested, `chat abort THREAD_ID` stops its current
 reply; read it again to confirm the outcome.
 
@@ -95,7 +98,10 @@ Use command help to discover the actions available with this connection:
 
 Availability depends on the installed version and your permissions. Preserve
 the user's filters and scope. Confirm requested changes and any costs or access
-grants before proceeding. Do not invent missing commands or routes. For an
+grants before proceeding. A risky change, one the dashboard confirms in a
+dialog, is confirmed once: without a terminal, `oo` sends nothing and stops with
+`confirmation_required` (exit code 3). Run it again with `--yes` only after the
+user confirms that change in chat. Do not invent missing commands or routes. For an
 accepted job, retain its ID and check its terminal result instead of submitting
 the same operation again after a timeout.
 
