@@ -2,8 +2,9 @@
 
 Connect OpenOrange through your assistant's normal connection controls and
 approve access in the browser. This connection supports text tasks in the
-Sunport it identifies. Selected files and other Sunport actions use the
-separate CLI workflow.
+Sunport it identifies. The agent answers them with web search only: no files,
+commands or changes in the Sunport, Clem included. Selected files and other
+Sunport actions use the separate CLI workflow.
 
 | Tool | Purpose |
 | --- | --- |

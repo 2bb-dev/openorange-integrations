@@ -42,7 +42,10 @@ oo --instance SUNPORT_URL chat get THREAD_ID
 
 Use actual returned IDs. Sending acknowledges acceptance; read the conversation
 for the reply to this task. An earlier reply is not the result of a new task.
-Report pending approvals, running tasks, and failures accurately. Send follow-ups
+Report pending approvals, running tasks, and failures accurately. A change that
+waits for approval is decided in the Sunport, on its card in the dashboard or
+with `approvals`, by someone allowed to approve it: report where it waits, and
+don't make the change another way. Send follow-ups
 to the same conversation. When requested, `chat abort THREAD_ID` stops its current
 reply; read it again to confirm the outcome.
 
@@ -87,7 +90,14 @@ Use command help to discover the actions available with this connection:
 - `models list` shows available model choices.
 - `requests list` shows accessible request activity.
 - `export charges --output ./charges.csv` exports accessible charge records.
-- `jobs get JOB_ID` and `jobs wait JOB_ID` follow an accepted operation.
+- `agents config get AGENT_ID` lists an agent's own configuration changes;
+  `set`, `unset` and `reset` change them. A key OpenOrange manages is refused,
+  with where to change it instead.
+- `sunport updates`, `sunport data-sharing` and `sunport desired-state` show
+  when updates install, what the Sunport shares with OpenOrange, and whether
+  it matches what OpenOrange expects.
+- `jobs run FAMILY ACTION key=value` queues an operation of a job family;
+  `jobs get JOB_ID` and `jobs wait JOB_ID` follow an accepted one.
 - `approvals list` and `approvals get` inspect actions awaiting a decision.
 - `api routes` and `api route METHOD PATH` describe available public API actions
   and their required permissions. Use `api request` only for the user's requested
@@ -95,7 +105,10 @@ Use command help to discover the actions available with this connection:
 
 Availability depends on the installed version and your permissions. Preserve
 the user's filters and scope. Confirm requested changes and any costs or access
-grants before proceeding. Do not invent missing commands or routes. For an
+grants before proceeding. A risky change, one the dashboard confirms in a
+dialog, is confirmed once: without a terminal, `oo` sends nothing and stops with
+`confirmation_required` (exit code 3). Run it again with `--yes` only after the
+user confirms that change in chat. Do not invent missing commands or routes. For an
 accepted job, retain its ID and check its terminal result instead of submitting
 the same operation again after a timeout.
 
