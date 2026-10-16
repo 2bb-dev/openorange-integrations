@@ -105,6 +105,8 @@ Use command help to discover the actions available with this connection:
 - `jobs run FAMILY ACTION key=value` queues an operation of a job family;
   `jobs get JOB_ID` and `jobs wait JOB_ID` follow an accepted one.
 - `approvals list` and `approvals get` inspect actions awaiting a decision.
+- `permissions list` shows explicit permissions, the user's by default, with
+  each area as View or Manage.
 - `api routes` and `api route METHOD PATH` describe available public API actions
   and their required permissions. Use `api request` only for the user's requested
   action, with the input documented by that catalog and command help.
