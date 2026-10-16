@@ -94,6 +94,11 @@ Use command help to discover the actions available with this connection:
   `set`, `unset` and `reset` change them. A key OpenOrange manages is refused,
   with where to change it instead. A key that runs code, such as an MCP server,
   hook, plugin or environment variable, needs the same permission as VM commands.
+- `agents browser signin AGENT_ID --page URL` opens the agent's own browser in
+  the user's profile and prints the dashboard link where the user signs in to
+  that site, never in chat; `agents browser done AGENT_ID` gives it back. Only
+  the user's runs with that agent use the login. It needs an administrator's
+  own login with VM admin on the agent.
 - `sunport updates`, `sunport data-sharing` and `sunport desired-state` show
   when updates install, what the Sunport shares with OpenOrange, and whether
   it matches what OpenOrange expects.
