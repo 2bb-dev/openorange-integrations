@@ -1,7 +1,7 @@
 {
   "name": "openorange",
-  "version": "0.6.14",
-  "description": "Work with your OpenOrange agents: send tasks, read results, continue conversations, and use the oo CLI for selected files and Sunport actions.",
+  "version": "0.6.15",
+  "description": "Bring your OpenOrange agent team into chat. Delegate research, drafting and planning, check results, and continue the same conversation. Use the optional oo CLI for selected files, coding sessions and permitted server actions.",
   "author": {
     "name": "OpenOrange",
     "email": "alex@openorange.ai",
