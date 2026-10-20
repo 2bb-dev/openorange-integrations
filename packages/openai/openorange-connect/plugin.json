@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-connect",
-  "version": "0.6.15",
+  "version": "0.6.16",
   "description": "Bring your OpenOrange agent team into chat. Delegate research, drafting and planning, check results, and continue the same conversation. Use the optional oo CLI for selected files, coding sessions and permitted server actions.",
   "author": {
     "name": "OpenOrange",
@@ -15,7 +15,7 @@
       "interface": {
         "displayName": "OpenOrange",
         "shortDescription": "Hand work to your agent team",
-        "longDescription": "Bring the agent team you've already configured in OpenOrange into your chat. Hand off research, drafting or planning, let tasks run on OpenOrange in the background, then return to check the results and follow up in the same agent conversation.\n\nConnect your Sunport (your OpenOrange server) to check access, find available agents, send a text task or follow-up, and read its status and result. The MCP connection supports text tasks with web search only; it cannot use files, run commands or change your server.\n\nWith the optional official oo CLI on a compatible computer, exchange selected files, start and continue coding sessions, review usage and billing, and use the agent and server actions your account permits. The CLI requires separate installation and sign-in; available actions depend on your server and permissions. Both connections use your existing permissions; installing the plugin does not grant access.\n\nShare only the task content you intend to send. OpenOrange and your assistant service handle the messages, selected files and results you use. OpenOrange service billing is separate.",
+        "longDescription": "Bring the agent team you've already configured in OpenOrange into your chat. Hand off research, drafting or planning, let tasks run on OpenOrange in the background, then return to check the results and follow up in the same agent conversation.\n\nConnect your Sunport (your OpenOrange server) to check access, find available agents, send a text task or follow-up, and read its status and result. The MCP connection supports text tasks with web search only; it cannot use files, run commands or change your server.\n\nWith the optional official oo CLI on a compatible computer, exchange selected files, start and continue coding sessions, review usage, and use the agent and server actions your account permits. The CLI requires separate installation and sign-in; available actions depend on your server and permissions. Both connections use your existing permissions; installing the plugin does not grant access.\n\nShare only the task content you intend to send. OpenOrange and your assistant service handle the messages, selected files and results you use.",
         "developerName": "Alex Zenin",
         "category": "Productivity",
         "capabilities": [
@@ -90,7 +90,7 @@
         "demo_recording_url": "https://github.com/2bb-dev/openorange-integrations/releases/download/v0.6.6/openorange-usage-walkthrough-20261007.mp4"
       },
       "publication": {
-        "release_notes": "Listing copy and getting-started examples now explain why to connect your existing OpenOrange agent team, the four native MCP capabilities, and the separate optional oo CLI workflow. This release adds no tools or runtime capabilities and changes no permissions or authentication. OpenOrange service billing is separate.",
+        "release_notes": "Refines the store description while preserving the existing MCP and optional oo CLI capabilities. No tools, runtime behavior, permissions or authentication changed.",
         "countries": []
       }
     }

@@ -1,6 +1,6 @@
 {
   "name": "openorange",
-  "version": "0.6.15",
+  "version": "0.6.16",
   "description": "Bring your OpenOrange agent team into chat. Delegate research, drafting and planning, check results, and continue the same conversation. Use the optional oo CLI for selected files, coding sessions and permitted server actions.",
   "author": {
     "name": "OpenOrange",
