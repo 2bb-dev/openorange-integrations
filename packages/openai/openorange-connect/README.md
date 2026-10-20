@@ -1,26 +1,40 @@
 # OpenOrange
 
-Send tasks to your OpenOrange agents, review their results, and continue the
-conversation from your assistant. With the installed `oo` CLI, work with selected
-task files and the other actions available in your Sunport.
+Bring the agent team you've already configured in OpenOrange into your chat.
+Delegate research, drafting and planning. Tasks run on OpenOrange in the
+background; return to check results and keep refining the work in the same
+agent conversation.
+
+Connect your Sunport (your OpenOrange server) to check access, find available
+agents, send a text task or follow-up, and read its status and result.
+The MCP connection supports text tasks with web search only; it cannot use
+files, run commands or change your Sunport.
+
+For selected files, coding sessions and permitted server actions, use the
+optional official `oo` CLI on a compatible computer.
 
 ## Get connected
 
 For text tasks, connect OpenOrange in your assistant and approve access in the
-browser. For CLI actions, install the official `oo` client using the setup at
-https://app.openorange.ai, then sign in to your chosen Sunport.
+browser. CLI actions require separate installation and sign-in: follow the
+setup at https://app.openorange.ai, then sign in to your chosen Sunport.
 
 Installing this plugin does not install the CLI or grant Sunport access.
-MCP and CLI connections can select different Sunports. Confirm the Sunport
-before sharing messages, files, or conversation identifiers.
+Both connections use your existing permissions. MCP and CLI connections can
+select different Sunports. Confirm the Sunport before sharing messages, files,
+or conversation identifiers. OpenOrange service billing is separate.
 
 ## Try it
 
-> Show my OpenOrange agents and help me choose one for this task.
+> List my OpenOrange agents and help me choose one for a research task.
 
-> Ask my agent to turn these notes into a five-item checklist.
+> Ask my OpenOrange agent to research three ways a small team can cut meeting time, with sources.
 
-> Continue that conversation and revise the checklist with these changes.
+> Ask my OpenOrange agent to plan a Friday launch: docs are unfinished and rollback needs an owner.
+
+The assistant uses the agent you select and reports the actual result or
+current task status. Return to that conversation to check an accepted task or
+ask the agent to revise its work.
 
 For a selected file with the CLI:
 

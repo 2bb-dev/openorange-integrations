@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-connect",
-  "version": "0.6.14",
-  "description": "Work with your OpenOrange agents: send tasks, read results, continue conversations, and use the oo CLI for selected files and Sunport actions.",
+  "version": "0.6.15",
+  "description": "Bring your OpenOrange agent team into chat. Delegate research, drafting and planning, check results, and continue the same conversation. Use the optional oo CLI for selected files, coding sessions and permitted server actions.",
   "author": {
     "name": "OpenOrange",
     "email": "alex@openorange.ai",
@@ -14,25 +14,25 @@
       "onboardingSkill": "./skills/openorange/SKILL.md",
       "interface": {
         "displayName": "OpenOrange",
-        "shortDescription": "Work with your agents",
-        "longDescription": "Bring your OpenOrange agents into your workflow. Send a task, review its result, and continue the same conversation.\n\nConnect through MCP for text tasks. On a computer with the official oo CLI, work with selected files, coding sessions, and other supported Sunport actions. The plugin uses your existing Sunport permissions.\n\nApprove sign-in in the browser and choose the Sunport you want to use. The plugin does not install the CLI or grant access automatically. Share only the messages and files needed for your task. OpenOrange and your assistant service handle the content you send and the results you retrieve.",
+        "shortDescription": "Hand work to your agent team",
+        "longDescription": "Bring the agent team you've already configured in OpenOrange into your chat. Hand off research, drafting or planning, let tasks run on OpenOrange in the background, then return to check the results and follow up in the same agent conversation.\n\nConnect your Sunport (your OpenOrange server) to check access, find available agents, send a text task or follow-up, and read its status and result. The MCP connection supports text tasks with web search only; it cannot use files, run commands or change your server.\n\nWith the optional official oo CLI on a compatible computer, exchange selected files, start and continue coding sessions, review usage and billing, and use the agent and server actions your account permits. The CLI requires separate installation and sign-in; available actions depend on your server and permissions. Both connections use your existing permissions; installing the plugin does not grant access.\n\nShare only the task content you intend to send. OpenOrange and your assistant service handle the messages, selected files and results you use. OpenOrange service billing is separate.",
         "developerName": "Alex Zenin",
         "category": "Productivity",
         "capabilities": [
-          "Find accessible agents",
-          "Delegate tasks and read results",
-          "Continue agent conversations",
-          "Exchange selected task files with oo",
-          "Use supported Sunport actions with oo"
+          "Research, draft and plan with your agents",
+          "Track tasks and retrieve results",
+          "Continue the same agent conversation",
+          "Share selected files with the oo CLI",
+          "Run coding sessions with the oo CLI"
         ],
         "websiteURL": "https://openorange.ai",
         "privacyPolicyURL": "https://openorange.ai/privacy/",
         "supportURL": "https://openorange.ai/#contact",
         "termsOfServiceURL": "https://openorange.ai/terms/",
         "defaultPrompt": [
-          "Show my OpenOrange agents and help me choose one for my task",
-          "Ask my OpenOrange agent to turn these notes into a checklist",
-          "Continue the same conversation and help me refine the result"
+          "List my OpenOrange agents and help me choose one for a research task.",
+          "Ask my OpenOrange agent to research three ways a small team can cut meeting time, with sources.",
+          "Ask my OpenOrange agent to plan a Friday launch: docs are unfinished and rollback needs an owner."
         ],
         "brandColor": "#df742b",
         "composerIcon": "./assets/openorange.svg",
@@ -90,7 +90,7 @@
         "demo_recording_url": "https://github.com/2bb-dev/openorange-integrations/releases/download/v0.6.6/openorange-usage-walkthrough-20261007.mp4"
       },
       "publication": {
-        "release_notes": "The CLI guide brings the usage guides up to OpenOrange v1.3.49 (oo 1.25.0): paging through older conversations with chat list, starting an OpenClaw agent's conversation in a folder, one job's inputs with api route --capability, whether an agent's browser is open and giving it back, and what to do while the Sunport is updating. Available actions use your connected Sunport's permissions; OpenOrange service billing is separate.",
+        "release_notes": "Listing copy and getting-started examples now explain why to connect your existing OpenOrange agent team, the four native MCP capabilities, and the separate optional oo CLI workflow. This release adds no tools or runtime capabilities and changes no permissions or authentication. OpenOrange service billing is separate.",
         "countries": []
       }
     }

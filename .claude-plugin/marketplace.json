@@ -6,15 +6,15 @@
     "url": "https://openorange.ai"
   },
   "metadata": {
-    "description": "Use your OpenOrange agents with MCP and the oo CLI.",
-    "version": "0.6.14"
+    "description": "Bring your OpenOrange agent team into chat for research, drafting and planning. Add the optional oo CLI for files, coding and permitted server actions.",
+    "version": "0.6.15"
   },
   "plugins": [
     {
       "name": "openorange",
       "source": "./plugins/openorange",
-      "description": "Work with your OpenOrange agents: send tasks, read results, continue conversations, and use the oo CLI for selected files and Sunport actions.",
-      "version": "0.6.14",
+      "description": "Bring your OpenOrange agent team into chat. Delegate research, drafting and planning, check results, and continue the same conversation. Use the optional oo CLI for selected files, coding sessions and permitted server actions.",
+      "version": "0.6.15",
       "author": {
         "name": "OpenOrange",
         "email": "alex@openorange.ai",
