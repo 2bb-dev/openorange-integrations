@@ -7,14 +7,14 @@
   },
   "metadata": {
     "description": "Bring your OpenOrange agent team into chat for research, drafting and planning. Add the optional oo CLI for files, coding and permitted server actions.",
-    "version": "0.6.15"
+    "version": "0.6.16"
   },
   "plugins": [
     {
       "name": "openorange",
       "source": "./plugins/openorange",
       "description": "Bring your OpenOrange agent team into chat. Delegate research, drafting and planning, check results, and continue the same conversation. Use the optional oo CLI for selected files, coding sessions and permitted server actions.",
-      "version": "0.6.15",
+      "version": "0.6.16",
       "author": {
         "name": "OpenOrange",
         "email": "alex@openorange.ai",
