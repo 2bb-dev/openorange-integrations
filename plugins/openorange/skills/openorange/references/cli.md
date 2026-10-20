@@ -85,21 +85,39 @@ and the returned attachment according to command help.
 
 ## Other supported actions
 
-Use command help to discover the actions available with this connection:
+Every `oo` carries OpenOrange's own `openorange` skill for its version:
+`oo skill` prints it, `oo skill list` lists its references and `oo skill DOC`
+prints one, such as `oo skill agent-workflows`. Read the relevant one, and the
+command's help, before an action this guide doesn't describe. An `oo` from
+before `oo skill` has `oo guide` in its place. `oo skill install` copies the
+skill into the agent tools on this computer; run it only when the user asks.
 
-- `models list` shows available model choices.
-- `requests list` shows accessible request activity.
+- The dashboard's Models page shows the models the Sunport serves; `models list`
+  is an administrator's list of the models added there.
+- `requests list`, `models usage`, `billing balance` and `billing charges` show
+  accessible request activity, usage and charges.
 - `export charges --output ./charges.csv` exports accessible charge records.
 - `agents config get AGENT_ID` lists an agent's own configuration changes;
   `set`, `unset` and `reset` change them. A key OpenOrange manages is refused,
   with where to change it instead. A key that runs code, such as an MCP server,
   hook, plugin or environment variable, needs the same permission as VM commands.
-- `agents browser signin AGENT_ID --page URL` opens the agent's own browser in
-  the user's profile and prints the dashboard link where the user signs in to
-  that site, never in chat; `agents browser done AGENT_ID` gives it back. Only
-  the user's own dashboard web chats with that agent use the login: a task sent
-  with `oo` or the API browses in its conversation's own profile instead. It
-  needs an administrator's own login with VM admin on the agent.
+- `agents schedules add AGENT_ID "MESSAGE" --at TIME`, or `--cron EXPRESSION
+  --tz ZONE`, schedules a reminder or task: at the time, the agent posts the
+  message where it was asked. `agents schedules list` and `cancel` manage the
+  user's own. Use it, not the assistant's own reminders, for anything that must
+  outlive the conversation. OpenClaw agents and Clem have Schedules; Hermes
+  agents don't yet.
+- `agents channels groups AGENT_ID CHANNEL on` lets people reach an OpenClaw
+  agent in the groups its bot is in, when they mention it; `off` keeps it to
+  direct messages.
+- `secrets set NAME --agent AGENT_ID` gives an agent an API key or credential
+  file. The user enters the value in their own terminal or the dashboard, never
+  in chat.
+- An agent on its own VM has one browser, with one set of logins for all its
+  chats. When a site needs a person, the agent asks with a link, and its owner
+  or an administrator signs in there and presses Done, never in chat.
+  `agents browser open AGENT_ID --page URL` opens a page in it; acting in it
+  needs VM admin on the agent.
 - `sunport updates`, `sunport data-sharing` and `sunport desired-state` show
   when updates install, what the Sunport shares with OpenOrange, and whether
   it matches what OpenOrange expects.
@@ -111,11 +129,17 @@ Use command help to discover the actions available with this connection:
 - `jobs run FAMILY ACTION key=value` queues an operation of a job family;
   `jobs get JOB_ID` and `jobs wait JOB_ID` follow an accepted one.
 - `approvals list` and `approvals get` inspect actions awaiting a decision.
+  `clem waiting` lists the changes Clem holds for an administrator's click on
+  their card, and `clem approve ID` or `clem decline ID` decides one. An
+  approved change runs once, exactly as its card shows.
 - `permissions list` shows explicit permissions, the user's by default, with
   each area as View or Manage.
 - `api routes` and `api route METHOD PATH` describe available public API actions
-  and their required permissions. Use `api request` only for the user's requested
-  action, with the input documented by that catalog and command help.
+  and their required permissions. `api request GET /api-routes --query
+  path=PREFIX` lists the routes under a prefix, and adding `--query
+  method=POST --query capability=NAME` to the jobs path gives one job's inputs.
+  Use `api request` only for the user's requested action, with the input
+  documented by that catalog and command help.
 
 Availability depends on the installed version and your permissions. Preserve
 the user's filters and scope. Confirm requested changes and any costs or access
@@ -131,6 +155,8 @@ the same operation again after a timeout.
 Where offered by the installed CLI, `oo start` connects an available trial or
 reuses a saved connection. Run it only when the user requests that flow. Confirm
 the returned Sunport with `auth status` before sending a task.
+Until the trial is kept, its agent works with web search only: put the
+material in the task itself rather than in an uploaded file.
 
 To keep a CLI trial, the user runs `claim --email person@example.com` and
 `claim --code-stdin` against that same Sunport in their own terminal. They

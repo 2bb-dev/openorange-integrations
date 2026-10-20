@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-connect",
-  "version": "0.6.12",
+  "version": "0.6.13",
   "description": "Work with your OpenOrange agents: send tasks, read results, continue conversations, and use the oo CLI for selected files and Sunport actions.",
   "author": {
     "name": "OpenOrange",
@@ -90,7 +90,7 @@
         "demo_recording_url": "https://github.com/2bb-dev/openorange-integrations/releases/download/v0.6.6/openorange-usage-walkthrough-20261007.mp4"
       },
       "publication": {
-        "release_notes": "The CLI guide covers signing in to a site on an agent's own browser in your own profile, so the login never passes through chat, permissions shown as View or Manage, and agent config keys that run code, which need the same permission as VM commands. Available actions use your connected Sunport's permissions; OpenOrange service billing is separate.",
+        "release_notes": "The CLI guide brings the usage guides up to OpenOrange v1.3.46 (oo 1.25.0): the skill that comes with oo (oo skill), schedules for reminders and tasks, an agent's Groups switch, agents' secrets, each agent's one browser that asks for a person when a site needs one, Clem's approval cards, and the route catalog's path, method and capability filters. A trial's agent works with web search only until the trial is kept. Available actions use your connected Sunport's permissions; OpenOrange service billing is separate.",
         "countries": []
       }
     }
