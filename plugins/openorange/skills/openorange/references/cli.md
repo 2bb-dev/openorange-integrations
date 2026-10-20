@@ -32,7 +32,12 @@ permission error needs an explanation, not a different login.
 
 Choose an accessible agent from `agents list`. For an existing conversation,
 use `chat list --agent AGENT_ID` and read the selected conversation first.
-For a new task:
+It lists the 25 latest active, or up to 100 with `--limit`; `--order created`
+goes through older ones in pages, giving each answer's `next_cursor` to
+`--cursor`, and `--unfinished` marks those with a run that hasn't ended.
+For a new task (`chat create --cwd DIR` starts an OpenClaw agent's
+conversation in a folder, an absolute path in its workspace or a registered
+project):
 
 ```sh
 oo --instance SUNPORT_URL chat create --agent AGENT_ID --title "Requested task"
@@ -46,7 +51,8 @@ Report pending approvals, running tasks, and failures accurately. A change that
 waits for approval is decided in the Sunport, on its card in the dashboard or
 with `approvals`, by someone allowed to approve it: report where it waits, and
 don't make the change another way. Send follow-ups
-to the same conversation. When requested, `chat abort THREAD_ID` stops its current
+to the same conversation; one sent while the agent is still on the previous
+message waits for its own turn. When requested, `chat abort THREAD_ID` stops its current
 reply; read it again to confirm the outcome.
 
 ## Selected task files
@@ -117,7 +123,10 @@ skill into the agent tools on this computer; run it only when the user asks.
   chats. When a site needs a person, the agent asks with a link, and its owner
   or an administrator signs in there and presses Done, never in chat.
   `agents browser open AGENT_ID --page URL` opens a page in it; acting in it
-  needs VM admin on the agent.
+  needs VM admin on the agent. `agents browser status AGENT_ID` says whether
+  it's open and gives its Screen page's link to whoever may watch it.
+  `agents browser done AGENT_ID` gives it back after helping, but doesn't tell
+  a web chat that asked to go on, as Done in that chat does.
 - `sunport updates`, `sunport data-sharing` and `sunport desired-state` show
   when updates install, what the Sunport shares with OpenOrange, and whether
   it matches what OpenOrange expects.
@@ -135,9 +144,9 @@ skill into the agent tools on this computer; run it only when the user asks.
 - `permissions list` shows explicit permissions, the user's by default, with
   each area as View or Manage.
 - `api routes` and `api route METHOD PATH` describe available public API actions
-  and their required permissions. `api request GET /api-routes --query
-  path=PREFIX` lists the routes under a prefix, and adding `--query
-  method=POST --query capability=NAME` to the jobs path gives one job's inputs.
+  and their required permissions. `api route POST /api/v1/jobs --capability
+  NAME` gives one job's inputs, and `api request GET /api-routes --query
+  path=PREFIX` lists the routes under a prefix.
   Use `api request` only for the user's requested action, with the input
   documented by that catalog and command help.
 
@@ -149,6 +158,11 @@ dialog, is confirmed once: without a terminal, `oo` sends nothing and stops with
 user confirms that change in chat. Do not invent missing commands or routes. For an
 accepted job, retain its ID and check its terminal result instead of submitting
 the same operation again after a timeout.
+
+While an update restarts the Sunport, it answers `updating`. `oo` sends a read,
+or a change it can safely repeat such as `chat send`, again for about 30
+seconds, and no other change. If it still answers `updating`, tell the user the
+Sunport is updating and try again in a minute.
 
 ## Optional trial and disconnecting
 
