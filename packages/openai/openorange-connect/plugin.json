@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-connect",
-  "version": "0.6.17",
-  "description": "Research, write and plan with an OpenOrange agent. Start a free trial Sunport, send tasks, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions.",
+  "version": "0.6.18",
+  "description": "Research, write and plan with an OpenOrange agent. Send tasks to a Sunport, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions.",
   "author": {
     "name": "OpenOrange",
     "email": "alex@openorange.ai",
@@ -15,7 +15,7 @@
       "interface": {
         "displayName": "OpenOrange",
         "shortDescription": "Research and write with agents",
-        "longDescription": "Send research, writing and planning tasks to an OpenOrange agent from chat. Ask it to compare options with sources, turn pasted notes into an action plan, review a draft or rewrite it for a different audience. Find the agents available to your connection and send a task. Let it run, then check back for its status and result or ask for changes in the same conversation. The hosted connection supports text and web research.\n\nStart a free trial Sunport (an OpenOrange server) through the connection flow; no OpenOrange account is needed to try it. To keep that Sunport and its conversations, open its Keep link in the original browser, sign in and choose Keep this Sunport. This hosted flow reconnects Sunports saved through it; it cannot attach an unrelated existing Sunport.\n\nTo use a Sunport you already run, install the optional official oo CLI on a compatible computer and sign in to that Sunport. Exchange selected files, start and continue coding sessions, read earlier conversations, review usage and perform supported agent or server actions. Available actions depend on the installed version and permissions. Each connection uses its granted permissions.\n\nShare only the task content you intend to send. OpenOrange and your assistant service handle the messages, selected files and results you use.",
+        "longDescription": "Send research, writing and planning tasks to an OpenOrange agent from chat. Ask it to compare options with sources, turn pasted notes into an action plan, review a draft or rewrite it for a different audience. Find the agents available to your connection and send a task. Let it run, then check back for its status and result or ask for changes in the same conversation. The hosted connection supports text and web research.\n\nOn first connection, the hosted flow creates a trial Sunport (an OpenOrange server); no OpenOrange account is needed for this step. To keep that Sunport and its conversations, open its Keep link in the original browser, sign in and choose Keep this Sunport. This hosted flow reconnects Sunports saved through it; it cannot attach an unrelated existing Sunport.\n\nTo use a Sunport you already run, install the optional official oo CLI on a compatible computer and sign in to that Sunport. Exchange selected files, start and continue coding sessions, read earlier conversations, review usage and perform supported agent or server actions. Available actions depend on the installed version and permissions. Each connection uses its granted permissions.\n\nShare only the task content you intend to send. OpenOrange and your assistant service handle the messages, selected files and results you use.",
         "developerName": "Alex Zenin",
         "category": "Productivity",
         "capabilities": [
@@ -90,7 +90,7 @@
         "demo_recording_url": "https://github.com/2bb-dev/openorange-integrations/releases/download/v0.6.6/openorange-usage-walkthrough-20261007.mp4"
       },
       "publication": {
-        "release_notes": "Adds practical research, writing and planning examples; clarifies free trial onboarding, Keep and reconnect steps; and improves guidance for task results and follow-ups. Distinguishes the hosted connection from optional CLI and own-connector workflows. No tools, runtime behavior, permissions or authentication changed.",
+        "release_notes": "Removes promotional wording from the listing and onboarding guides while preserving trial, Keep and reconnect requirements. No tools, runtime behavior, permissions or authentication changed.",
         "countries": []
       }
     }
