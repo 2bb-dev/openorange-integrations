@@ -6,15 +6,15 @@
     "url": "https://openorange.ai"
   },
   "metadata": {
-    "description": "Bring your OpenOrange agent team into chat for research, drafting and planning. Add the optional oo CLI for files, coding and permitted server actions.",
-    "version": "0.6.16"
+    "description": "Research, write and plan with an OpenOrange agent in a free trial Sunport. Use the optional oo CLI with your chosen Sunport for files, coding and permitted actions.",
+    "version": "0.6.17"
   },
   "plugins": [
     {
       "name": "openorange",
       "source": "./plugins/openorange",
-      "description": "Bring your OpenOrange agent team into chat. Delegate research, drafting and planning, check results, and continue the same conversation. Use the optional oo CLI for selected files, coding sessions and permitted server actions.",
-      "version": "0.6.16",
+      "description": "Research, write and plan with an OpenOrange agent. Start a free trial Sunport, send tasks, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions.",
+      "version": "0.6.17",
       "author": {
         "name": "OpenOrange",
         "email": "alex@openorange.ai",
