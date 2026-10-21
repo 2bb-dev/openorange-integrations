@@ -89,6 +89,38 @@ when cancellation is requested. Check the result of the current task; a timeout
 does not cancel it. For a selected Code input file, use `files upload PATH --for code`
 and the returned attachment according to command help.
 
+## Google Workspace
+
+On a compatible installed release, use `oo connections --help` and the catalog
+before requesting Google access or choosing an action:
+
+```sh
+oo --instance SUNPORT_URL connections catalog
+oo --instance SUNPORT_URL connections catalog --service docs
+oo --instance SUNPORT_URL connections catalog --operation docs.documents.get
+oo --instance SUNPORT_URL connections list
+oo --instance SUNPORT_URL connections google --capability docs.read
+oo --instance SUNPORT_URL connections status REQUEST_ID
+oo --instance SUNPORT_URL connections do CONNECTION_ID docs.documents.get --param documentId=DOCUMENT_ID
+```
+
+Use returned IDs and only the requested capabilities. `connections google`
+prints a browser link; the person must approve the intended person/agent binding
+and Google consent there. An agent requests for itself; a signed-in person can
+select an allowed agent with `--agent AGENT_ID`. CLI and hosted MCP credentials
+remain separate, so their visible grants need not be identical.
+
+The catalog covers Gmail, Calendar, Drive, Docs, Sheets, Slides, Contacts and
+Tasks on compatible releases. Read an operation's exact schema before `do`;
+use `--params-file FILE.json` for larger inputs. Writes require both local write
+permission and that Google grant's service capability. Use `--yes` for a
+required confirmation only after the specific action is authorized. On
+`google_operation_outcome_unknown`, inspect the exact affected object before
+retrying; on `google_reconnect_required`, reconnect through browser consent
+without adding capabilities. `connections disconnect CONNECTION_ID --yes`
+ends only that selected grant when the user authorizes it. Legacy Gmail search
+and read helpers remain available; inspect their command help.
+
 ## Other supported actions
 
 Every `oo` carries OpenOrange's own `openorange` skill for its version:
