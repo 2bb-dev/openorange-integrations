@@ -6,8 +6,8 @@ Send research, writing and planning tasks to an OpenOrange agent from chat.
 Compare options with sources, turn pasted notes into an action plan, review a
 draft or rewrite it for a different audience. Find the agents available to your
 connection and send a task. Let it run, then check back for its status and result
-or ask for changes in the same conversation. The hosted connection supports
-text and web research.
+or ask for changes in the same conversation. The conversation flow supports text and web research. Compatible hosted
+deployments also offer Google Workspace tools after separate explicit approval.
 
 [OpenOrange](https://openorange.ai) · [Get connected](https://app.openorange.ai) ·
 [Privacy](https://openorange.ai/privacy/) · [Terms](https://openorange.ai/terms/) ·
@@ -15,8 +15,8 @@ text and web research.
 
 ## Get started
 
-Connect OpenOrange through your assistant's connection controls to start a
-trial Sunport (an OpenOrange server). No OpenOrange account is needed to try it.
+For conversation access, connect OpenOrange through your assistant's controls
+to start a trial Sunport (an OpenOrange server). No OpenOrange account is needed to try it.
 The browser connection flow handles consent and trial availability.
 
 To keep that Sunport and its conversations, open the optional Keep link returned
@@ -24,9 +24,9 @@ by `whoami` in the original browser, sign in and choose **Keep this Sunport**.
 The link alone does not retain the trial. Connections and saved access can
 expire; keeping the Sunport does not make that access permanent.
 
-The hosted connection can reconnect an available saved Sunport retained through
-this flow. It does not attach unrelated existing Sunports; use the options below
-for a Sunport you already use elsewhere.
+The conversation flow can reconnect an available saved Sunport retained through
+it. It does not attach unrelated Sunports; Google access uses the separate
+ready-Sunport selection and approval flow below.
 
 ## What the hosted connection can do
 
@@ -38,8 +38,26 @@ for a Sunport you already use elsewhere.
 | `get_result` | Check an accepted task's status and read its result |
 
 Read an accepted task with `get_result` rather than sending it again. A follow-up
-uses the same conversation and creates a new task to check. The hosted tools
-support text and web research, not files, commands or Sunport administration.
+uses the same conversation and creates a new task to check. These conversation tools support text and web research. Local files, Code and
+Sunport administration use the CLI; Google operations use the separate tools below.
+
+## Google Workspace
+
+When the deployed server advertises Google tools, sign in to the App, select a
+ready Sunport and approve a named connected agent in that Sunport's browser
+flow. Approve `connections:read` and, when needed, `connections:write`; then
+separately approve the intended Google capabilities and Google consent.
+Existing conversation credentials do not gain Google access, and a trial is
+not created for this flow.
+
+The eight tools list grants, request and follow consent, discover the operation
+catalog, perform an authorized action, disconnect a grant, search Gmail and
+read a message. They cover Gmail, Calendar, Drive, Docs, Sheets, Slides,
+Contacts and Tasks on compatible releases. Follow [the MCP guide](usage/references/mcp.md)
+for the exact tool names, identity checks, confirmation, expiry and revocation.
+An older server may advertise only four conversation tools; updating this
+package does not deploy or enable the service. Discovery and granted scopes
+remain authoritative.
 
 ## Already have a Sunport?
 
@@ -53,13 +71,13 @@ Where your Sunport offers its own connector, open **Agents > New agent > Connect
 and use its **Connector key** in your assistant's connector settings. Keep that
 credential in the connector settings, never in chat. This separately configured
 connector has its own advertised toolset; it is distinct from this package's
-hosted four-tool connection.
+hosted connection and its separately approved Google tools.
 
 ## Connection choices
 
 | Connection | What you can do | What you need |
 | --- | --- | --- |
-| Hosted MCP | Text tasks with web research, task status/results and follow-ups | Start a trial through the browser flow, or reconnect a saved Sunport retained through it |
+| Hosted MCP | Conversations plus advertised Google Workspace tools | Conversation/trial flow, or separate ready-Sunport and named-agent approval followed by Google consent |
 | Optional `oo` CLI | Selected files, coding, earlier conversations, usage and supported actions | Separate CLI installation and sign-in to your chosen Sunport |
 | Your Sunport's own connector | The tools that connector advertises | Separate connector setup and its credential, where supported |
 

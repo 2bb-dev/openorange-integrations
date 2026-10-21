@@ -1,6 +1,6 @@
 ---
 name: openorange
-description: Use OpenOrange's hosted trial MCP connection or the installed oo CLI for a chosen Sunport. Use when the user asks to try OpenOrange, delegate a task, read or continue an agent conversation, exchange selected files, or perform a supported Sunport action.
+description: Use OpenOrange's advertised hosted MCP tools or the installed oo CLI for a chosen Sunport, including separately approved Google Workspace actions. Use when the user asks to try OpenOrange, delegate a task, read or continue an agent conversation, exchange selected files, or perform a supported Sunport action.
 ---
 
 # Use OpenOrange
@@ -10,20 +10,21 @@ agent and connection, and share only the task content they authorize.
 
 ## Choose the connection
 
-- The packaged hosted MCP connection starts a trial Sunport on first use;
-  no OpenOrange account is needed to try it. It can reconnect an available
-  Sunport retained through that same flow, but cannot attach an unrelated
-  existing Sunport. For its text and web-research tasks, follow
-  [the MCP guide](references/mcp.md).
-- If the user requests an existing Sunport, do not start a new trial instead.
-  Use the installed `oo` CLI signed in to their chosen Sunport. Use its
-  supported commands for earlier conversation history, cancellation, selected
-  files, coding, schedules and other requested actions; follow
+- For hosted conversations, the trial flow needs no OpenOrange account to try
+  it and can reconnect an available Sunport retained through that flow. It does
+  not attach unrelated Sunports. Follow [the MCP guide](references/mcp.md).
+- For Google work, use the Google tools only when the deployed server advertises
+  them. The separate flow requires App sign-in, selection of a ready Sunport,
+  named-agent approval with connections scopes, and then explicit Google
+  consent. Existing conversation credentials keep their permissions. Follow
+  the MCP guide instead of starting a trial or assuming a grant exists.
+- For other existing-Sunport actions, use the installed `oo` CLI signed in to
+  that Sunport: earlier conversations, cancellation, selected local files,
+  coding, schedules and Google actions supported by that version. Follow
   [the CLI guide](references/cli.md).
-- A Sunport's separately configured own connector has its own advertised
-  tools. Where supported, the user configures it through **Agents > New agent >
-  Connect > Connector key**. Its credential belongs only in connector settings,
-  never chat. Do not assume it has the packaged hosted connection's four tools.
+- A Sunport's separately configured own connector has its own advertised tools.
+  Where supported, the user sets it up through **Agents > New agent > Connect >
+  Connector key**. Keep that credential in connector settings, never chat.
 
 Honor an explicit connection choice and authorization already provided. Keep an
 existing conversation on its original connection and preserve its identifiers.
@@ -39,7 +40,7 @@ explain that instead of substituting a new trial. Installing this plugin does
 not install `oo` or automatically start or keep a Sunport. Each connection uses
 its granted permissions.
 
-## Work with an agent
+## Work with an agent conversation
 
 1. Check the connected Sunport and list accessible agents.
 2. Keep the user's named or previously selected agent when it is available.
