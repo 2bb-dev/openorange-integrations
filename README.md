@@ -5,8 +5,9 @@ Research and write with agents.
 Send research, writing and planning tasks to an OpenOrange agent from chat.
 Compare options with sources, turn pasted notes into an action plan, review a
 draft or rewrite it for a different audience. Find the agents available to your
-connection, check task status, read results and send follow-ups in the same
-conversation. The hosted connection supports text and web research.
+connection and send a task. Let it run, then check back for its status and result
+or ask for changes in the same conversation. The hosted connection supports
+text and web research.
 
 [OpenOrange](https://openorange.ai) · [Get connected](https://app.openorange.ai) ·
 [Privacy](https://openorange.ai/privacy/) · [Terms](https://openorange.ai/terms/) ·

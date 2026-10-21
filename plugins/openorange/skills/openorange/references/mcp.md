@@ -36,7 +36,8 @@ requested `message` once. Omit `thread_id` for a new conversation; include its
 previously returned value for a follow-up. A follow-up returns a **new `run_id`**
 to check in that same conversation. If used, `wait_seconds` must be an integer
 from 1 to 25; it limits the wait, not the task's lifetime. A wait timeout does
-not cancel the task.
+not cancel the task. These tools do not send completion notifications; check
+`get_result` for the task's current status and result.
 
 For a completed response, show the returned answer. For a running task, retain
 `agent_id`, `thread_id`, and `run_id`, and call `get_result` with those values.
@@ -54,6 +55,8 @@ check `whoami` and show its returned `keep_url`. The user opens that link in
 the original browser, signs in to OpenOrange and chooses **Keep this Sunport**.
 Reading or returning the link does not keep the trial. Check `whoami` again;
 retention is complete only when both `trial` and `retention_pending` are false.
+MCP and CLI recovery identities are separate: `oo claim` cannot claim an
+MCP-created trial. Use its browser Keep flow.
 
 Continue with the same conversation IDs after keeping the Sunport. Keeping
 it does not refresh the assistant's connection. If the connection expires,
