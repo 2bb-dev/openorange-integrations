@@ -11,7 +11,7 @@ text and web research.
 
 ## Get connected
 
-Connect OpenOrange in your assistant to start a free trial Sunport (an
+Connect OpenOrange in your assistant to start a trial Sunport (an
 OpenOrange server). No OpenOrange account is needed to try it; the browser flow
 handles consent and trial availability. To keep it and its conversations, open
 the optional Keep link returned by `whoami` in the original browser, sign in and

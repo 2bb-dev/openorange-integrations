@@ -15,7 +15,7 @@ text and web research.
 
 ## Get started
 
-Connect OpenOrange through your assistant's connection controls to start a free
+Connect OpenOrange through your assistant's connection controls to start a
 trial Sunport (an OpenOrange server). No OpenOrange account is needed to try it.
 The browser connection flow handles consent and trial availability.
 

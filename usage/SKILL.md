@@ -10,7 +10,7 @@ agent and connection, and share only the task content they authorize.
 
 ## Choose the connection
 
-- The packaged hosted MCP connection starts a free trial Sunport on first use;
+- The packaged hosted MCP connection starts a trial Sunport on first use;
   no OpenOrange account is needed to try it. It can reconnect an available
   Sunport retained through that same flow, but cannot attach an unrelated
   existing Sunport. For its text and web-research tasks, follow

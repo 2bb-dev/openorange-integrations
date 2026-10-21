@@ -1,6 +1,6 @@
 # MCP: tasks and conversations
 
-The packaged hosted connection starts a free trial Sunport (an OpenOrange
+The packaged hosted connection starts a trial Sunport (an OpenOrange
 server) through the assistant's normal connection controls and browser consent.
 No OpenOrange account is needed to try it. Discovery alone does not start a
 trial; the browser Connect action controls consent and allocation, subject to
