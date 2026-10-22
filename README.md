@@ -36,6 +36,10 @@ ready-Sunport selection and approval flow below.
 | `list_agents` | Find the agents available to this connection |
 | `ask_agent` | Send a text task or follow up in the same agent conversation |
 | `get_result` | Check an accepted task's status and read its result |
+| `ask_approval` | Ask a person to approve one exact action, where the hosted server offers it |
+| `ask_secret` | Ask a person for a secret they type in on their Sunport, never in chat |
+| `check_approval` | Read an approval or secret request's status, as the Sunport records it |
+| `cancel_approval` | Withdraw an approval or secret request you asked for that still waits |
 
 Read an accepted task with `get_result` rather than sending it again. A follow-up
 uses the same conversation and creates a new task to check. These conversation tools support text and web research. Local files, Code and

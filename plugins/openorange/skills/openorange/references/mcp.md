@@ -53,8 +53,10 @@ rather than sending it again automatically.
 ## Approvals and secret requests
 
 Use these tools when the deployed hosted server advertises them. The connected
-Sunport also needs OpenOrange v1.3.71 or later for approvals, and v1.3.72 or
-later for secret requests and `cancel_approval`. On an older Sunport the
+Sunport also needs OpenOrange v1.3.71 or later for approvals, v1.3.72 or later
+for secret requests, and a release after v1.3.74 for `cancel_approval` (before
+it, a request ends when it expires, or `oo approvals cancel` withdraws it from
+v1.3.72). On an older Sunport the
 connector answers that the Sunport doesn't offer the tool yet: tell the user
 the Sunport needs an update. Don't promise these tools work on every Sunport.
 
