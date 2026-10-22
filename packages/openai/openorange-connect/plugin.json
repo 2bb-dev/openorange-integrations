@@ -35,7 +35,7 @@
           "Ask an OpenOrange agent to turn these notes into a plan: launch Friday; docs unfinished; rollback owner missing.",
           "Ask an OpenOrange agent to improve this draft: Our app helps small teams plan work and track what gets done."
         ],
-        "brandColor": "#df742b",
+        "brandColor": "#D6561A",
         "composerIcon": "./assets/openorange.svg",
         "logo": "./assets/openorange.svg"
       },
@@ -91,7 +91,7 @@
         "demo_recording_url": "https://github.com/2bb-dev/openorange-integrations/releases/download/v0.6.6/openorange-usage-walkthrough-20261007.mp4"
       },
       "publication": {
-        "release_notes": "Adds the eight advertised Google MCP tools, explicit connections scopes, separate named-agent approval and Google consent to the shared guides, plus oo connections discovery/actions. Existing conversation tokens, host-specific endpoints and package identities are unchanged. Deployed support and installed Google acceptance remain separate from this package update.",
+        "release_notes": "Adds the eight advertised Google MCP tools, explicit connections scopes, separate named-agent approval and Google consent to the shared guides, plus oo connections discovery/actions. Existing conversation tokens, host-specific endpoints and package identities are unchanged. Deployed support and installed Google acceptance remain separate from this package update. The listing's brand colour is the orange O's #D6561A.",
         "countries": []
       }
     }
