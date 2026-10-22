@@ -25,7 +25,7 @@ SHARED = {
 }
 SOURCE_FILES = {
     "README.md", "LICENSE", ".gitignore", ".claude-plugin/marketplace.json",
-    "assets/openorange.svg", "usage/README.md", "usage/SKILL.md", "usage/references/mcp.md",
+    "assets/openorange.svg", "assets/openorange-icon-1024.png", "usage/README.md", "usage/SKILL.md", "usage/references/mcp.md",
     "usage/references/cli.md", "scripts/package.py", "tests/test_package.py",
     ".github/workflows/ci.yml",
 }

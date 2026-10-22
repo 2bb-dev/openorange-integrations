@@ -129,6 +129,11 @@ Both packages use the same [MCP guide](usage/references/mcp.md) and
 [CLI guide](usage/references/cli.md), with the connection format required by each
 assistant. Additional assistants can reuse these usage guides.
 
+Both packages show the orange ring without a background (`assets/openorange.svg`).
+Where a directory asks for an uploaded icon instead, such as the Claude
+directory's listing, use [`assets/openorange-icon-1024.png`](assets/openorange-icon-1024.png),
+the same transparent ring.
+
 Share only the messages and files needed for your task. OpenOrange and your
 assistant service handle the content you send and the results you retrieve.
 See the linked privacy policy for data handling. Questions: alex@openorange.ai.
