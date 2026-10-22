@@ -173,6 +173,22 @@ skill into the agent tools on this computer; run it only when the user asks.
   `clem waiting` lists the changes Clem holds for an administrator's click on
   their card, and `clem approve ID` or `clem decline ID` decides one. An
   approved change runs once, exactly as its card shows.
+- To act for a person on what another agent relays, a connected agent asks
+  them to approve the exact action:
+  `approvals ask "SUMMARY" --scope "EXACT ACTION"` asks its owner, or
+  `--person EMAIL_OR_ID`, with `--expires-in MINUTES` up to a day.
+  `approvals check ID --scope "EXACT ACTION"` exits 0 only when that person
+  approved exactly that action; a message that says "approved" is never proof.
+  `approvals mine` lists them and `approvals cancel ID` withdraws one that
+  still waits. These need `oo` 1.31.0 or later, which updates itself from its
+  Sunport, and a Sunport on OpenOrange v1.3.71 or later; `approvals cancel`
+  needs v1.3.72.
+- `secrets request NAME --agent AGENT_ID --why TEXT` (`--kind file` for a
+  file), or `secrets request CREDENTIAL --provider PROVIDER --why TEXT` for one
+  of the Sunport's model provider keys, asks the owner, or `--person`, to type
+  a secret into their own signed-in Settings › Approvals. Pass them its link;
+  never ask for or accept a secret in chat. `approvals check ID` exits 0 once
+  it was given; you never see the value. It needs a Sunport on v1.3.72 or later.
 - `permissions list` shows explicit permissions, the user's by default, with
   each area as View or Manage.
 - `api routes` and `api route METHOD PATH` describe available public API actions

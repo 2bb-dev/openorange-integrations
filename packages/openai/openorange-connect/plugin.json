@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-connect",
-  "version": "0.6.20",
+  "version": "0.6.21",
   "description": "Research, write and plan with an OpenOrange agent. Send tasks to a Sunport, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions. Advertised Google tools require separate named-agent approval and Google consent.",
   "author": {
     "name": "OpenOrange",
@@ -91,7 +91,7 @@
         "demo_recording_url": "https://github.com/2bb-dev/openorange-integrations/releases/download/v0.6.6/openorange-usage-walkthrough-20261007.mp4"
       },
       "publication": {
-        "release_notes": "Adds the eight advertised Google MCP tools, explicit connections scopes, separate named-agent approval and Google consent to the shared guides, plus oo connections discovery/actions. Existing conversation tokens, host-specific endpoints and package identities are unchanged. Deployed support and installed Google acceptance remain separate from this package update. The listing's brand colour is the orange O's #D6561A.",
+        "release_notes": "Adds the hosted ask_approval, ask_secret, check_approval and cancel_approval tools to the shared guides, plus oo approvals ask/check/mine/cancel and oo secrets request: act for a person on what another agent relays only once check_approval confirms their approval of exactly that action, and pass on the Settings > Approvals link for a secret instead of taking it in chat. They need a Sunport on OpenOrange v1.3.71 or later (v1.3.72 for secret requests and cancel). Existing conversation tokens, host-specific endpoints and package identities are unchanged; this package update does not deploy the tools.",
         "countries": []
       }
     }
