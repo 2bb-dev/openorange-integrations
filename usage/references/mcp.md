@@ -28,6 +28,8 @@ actual tool descriptions. Selected files and other Sunport actions use the CLI.
 | `get_result` | Read the status and result of an accepted task |
 | `check_inbox` | Read what the Sunport's people and agents sent you (own Sunport only) |
 | `reply` | Answer one message from your inbox (own Sunport only) |
+| `send_feedback` | Tell the OpenOrange team about a problem, an idea or a question; works with no working connection |
+| `feedback_status` | Read a report's status and the team's latest reply by its `report_id` |
 
 ## Send and follow a task
 
@@ -225,3 +227,31 @@ saved access. Start another trial only when the user requests that new flow.
 Use the assistant's Disconnect control when requested. Disconnecting does not
 delete Sunport data. Never request passwords or sign-in codes in tool input
 or chat. Share only task-relevant content and results.
+
+## Feedback to OpenOrange
+
+`send_feedback` and `feedback_status` need no working connection: they answer
+with no sign-in, with a connection that asks to reconnect, and before any
+Sunport is reached. Use them for the person's report about OpenOrange itself.
+Never use them for their task.
+
+Where the report goes:
+
+- a working Sunport takes it itself;
+- when that Sunport can't (it refuses this connection's key, fails or is too
+  old), it goes as the person's OpenOrange account's;
+- with no working sign-in at all, nothing is sent yet. The answer has a
+  `send_url` where the person checks the report and sends it, with an email
+  address the team answers.
+
+The answer is the receipt:
+
+- `report_id`;
+- `delivery`: `sent`, `pending` (on the Sunport, not yet with the team),
+  `local` (the team won't see it), `rejected` or `not_sent`;
+- `team_status`;
+- `via`: `sunport`, `account` or `unverified`;
+- `url` and `send_url`.
+
+Tell the person exactly that. `feedback_status` with the `report_id` follows
+it, and `send_feedback` with `report_id` adds details to a sent report.

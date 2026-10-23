@@ -212,6 +212,24 @@ or a change it can safely repeat such as `chat send`, again for about 30
 seconds, and no other change. If it still answers `updating`, tell the user the
 Sunport is updating and try again in a minute.
 
+## Feedback to OpenOrange
+
+To tell the OpenOrange team about a problem, an idea or a question, in the
+person's words:
+
+```bash
+oo feedback send --kind bug "Login times out after I approve in the browser."
+```
+
+It answers with the receipt: the report's `id`, its `url` and whether it
+arrived (`status`). `pending` means the Sunport has it and the team doesn't
+yet. With no working login, or a Sunport that can't be reached, `oo` says so
+and sends it through the OpenOrange app instead, with `--email` as the
+address the team answers. Such a report is unverified.
+
+`oo feedback show <id>` reads its status and the team's replies, and
+`oo feedback reply <id> "<text>"` adds details.
+
 ## Optional trial and disconnecting
 
 Where offered by the installed CLI, `oo start` connects an available trial or
