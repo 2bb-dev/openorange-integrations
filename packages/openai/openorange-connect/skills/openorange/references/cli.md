@@ -2,8 +2,9 @@
 
 Use the official installed `oo` client. Start with `oo --version` and
 `oo --help`; use each command's `--help` for the options supported by that version.
-For installation or updates, follow the setup instructions at
-https://app.openorange.ai. The plugin does not install the CLI.
+For installation or updates, follow https://app.openorange.ai/connect,
+OpenOrange's one entry; it also connects a terminal or server agent to the
+Sunport as an agent of its own. The plugin does not install the CLI.
 
 ## Connect
 

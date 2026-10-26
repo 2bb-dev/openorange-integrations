@@ -59,6 +59,54 @@ class PackageTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             package.check(self.root)
 
+    def test_agent_guide_block_cannot_be_edited_by_hand(self):
+        for relative in package.GUIDE_DOCS:
+            with self.subTest(doc=relative):
+                path = self.root / relative
+                original = path.read_bytes()
+                path.write_text(path.read_text().replace("every 15 minutes", "when the person asks"))
+                with self.assertRaisesRegex(ValueError, "Agent guide is stale"):
+                    package.check(self.root)
+                path.write_bytes(original)
+
+    def test_a_new_agent_guide_reaches_every_package_through_sync(self):
+        path = self.root / package.GUIDE
+        guide = json.loads(path.read_text())
+        guide["layer"] = "staging 0000000 (synthetic)"
+        guide["stayInTouch"][2]["how"] = guide["stayInTouch"][2]["how"].replace("every 15 minutes", "every 10 minutes")
+        guide["markdown"] = guide["markdown"].replace("every 15 minutes", "every 10 minutes")
+        path.write_text(json.dumps(guide))
+        with self.assertRaisesRegex(ValueError, "Agent guide is stale"):
+            package.check(self.root)
+        package.sync(self.root)
+        package.check(self.root)
+        for host, (folder, *_) in package.HOSTS.items():
+            for name in ("skills/openorange/SKILL.md", "skills/openorange/references/mcp.md"):
+                with self.subTest(host=host, name=name):
+                    text = (self.root / folder / name).read_text()
+                    self.assertIn("every 10 minutes", text)
+                    self.assertNotIn("every 15 minutes", text)
+
+    def test_agent_guide_needs_its_layer_its_markers_and_one_text(self):
+        path = self.root / package.GUIDE
+        original = path.read_bytes()
+        changes = {
+            "Layer commit": lambda guide: guide.pop("layer"),
+            "differs from its ways": lambda guide: guide.update(markdown=guide["markdown"].replace("never add another", "add one")),
+        }
+        for message, change in changes.items():
+            with self.subTest(message=message):
+                guide = json.loads(original)
+                change(guide)
+                path.write_text(json.dumps(guide))
+                with self.assertRaisesRegex(ValueError, message):
+                    package.check(self.root)
+                path.write_bytes(original)
+        skill = self.root / "usage/SKILL.md"
+        skill.write_text(skill.read_text().replace(package.GUIDE_END, ""))
+        with self.assertRaisesRegex(ValueError, "markers are missing"):
+            package.sync(self.root)
+
     def test_plugin_identity_cannot_change_or_reuse_previous_name(self):
         wrong_names = {"claude": "openorange-connect", "openai": "openorange-usage"}
         for host, (folder, manifest_name, *_) in package.HOSTS.items():
