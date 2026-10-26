@@ -64,7 +64,8 @@ class PackageTests(unittest.TestCase):
             with self.subTest(doc=relative):
                 path = self.root / relative
                 original = path.read_bytes()
-                path.write_text(path.read_text().replace("every 15 minutes", "when the person asks"))
+                every = f"every {json.loads((self.root / package.GUIDE).read_text())['checkEveryMinutes']} minutes"
+                path.write_text(path.read_text().replace(every, "when the person asks"))
                 with self.assertRaisesRegex(ValueError, "Agent guide is stale"):
                     package.check(self.root)
                 path.write_bytes(original)
@@ -73,8 +74,9 @@ class PackageTests(unittest.TestCase):
         path = self.root / package.GUIDE
         guide = json.loads(path.read_text())
         guide["layer"] = "staging 0000000 (synthetic)"
-        guide["stayInTouch"][2]["how"] = guide["stayInTouch"][2]["how"].replace("every 15 minutes", "every 10 minutes")
-        guide["markdown"] = guide["markdown"].replace("every 15 minutes", "every 10 minutes")
+        every = f"every {guide['checkEveryMinutes']} minutes"
+        guide["stayInTouch"][2]["how"] = guide["stayInTouch"][2]["how"].replace(every, "every 10 minutes")
+        guide["markdown"] = guide["markdown"].replace(every, "every 10 minutes")
         path.write_text(json.dumps(guide))
         with self.assertRaisesRegex(ValueError, "Agent guide is stale"):
             package.check(self.root)
@@ -85,7 +87,7 @@ class PackageTests(unittest.TestCase):
                 with self.subTest(host=host, name=name):
                     text = (self.root / folder / name).read_text()
                     self.assertIn("every 10 minutes", text)
-                    self.assertNotIn("every 15 minutes", text)
+                    self.assertNotIn(every, text)
 
     def test_agent_guide_needs_its_layer_its_markers_and_one_text(self):
         path = self.root / package.GUIDE

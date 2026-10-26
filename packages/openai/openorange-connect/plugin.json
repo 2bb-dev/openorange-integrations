@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-connect",
-  "version": "0.6.24",
+  "version": "0.6.25",
   "description": "Research, write and plan with an OpenOrange agent. Send tasks to a Sunport, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions. Advertised Google tools require separate named-agent approval and Google consent.",
   "author": {
     "name": "OpenOrange",
@@ -91,7 +91,7 @@
         "demo_recording_url": "https://github.com/2bb-dev/openorange-integrations/releases/download/v0.6.6/openorange-usage-walkthrough-20261007.mp4"
       },
       "publication": {
-        "release_notes": "One entry: app.openorange.ai/connect connects every client, and this listing is its one-click install for ChatGPT, the single OpenAI entry for OpenOrange. How the assistant hears of new messages now comes from OpenOrange's one agent guide, generated into the skill: use the first way you can, an inbox.item automation kept or resumed (never a second), oo serve, a check every 15 minutes, or a check when a conversation starts and when the person comes back; tell the person about everything that arrives. An asked agent's answer that ends after you stopped waiting arrives as an inbox notice. The hosted connection, endpoint, tools, scopes and package identity are unchanged; this package update does not deploy anything.",
+        "release_notes": "The agent guide, version 2, as every Sunport now says it (Layer v1.3.132): the assistant is reminded at most once a day, and only when it comes back after a quiet spell; if its inbox automation or oo serve stopped, it is told what stopped and to resume it rather than add another; the scheduled check is every 30 minutes, and where the app asks before each tool call, the person is asked to allow check_inbox alone. The hosted connection, endpoint, tools, scopes and package identity are unchanged; this package update does not deploy anything.",
         "countries": []
       }
     }
