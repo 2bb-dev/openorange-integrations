@@ -89,9 +89,9 @@ item, use the approvals below.
 
 Use the first way you can:
 
-1. If you can run an automation when an event arrives (ChatGPT can, in Work): subscribe to inbox.item once. If an OpenOrange inbox automation already exists, keep it or resume it; never add another.
-2. Else, if you can keep a command running (a terminal, a server, Claude Code, Codex): run `oo serve -- <a command that answers a message>`, or `oo serve --channel` in Claude Code, so a message wakes you.
-3. Else, if you can schedule a recurring task: check your inbox every 15 minutes (check_inbox, or `oo inbox`) and tell the person about anything new.
+1. If you can run an automation when an event arrives (ChatGPT can, in Work): subscribe to inbox.item. Keep one automation for it: if an OpenOrange inbox automation already exists, keep it or resume it; never add another.
+2. Else, if `oo` on this computer is connected as you and you can keep a command running (a terminal, a server, Codex): run `oo serve -- <a command that reads a message on stdin and prints the answer>`, such as `oo serve -- codex exec -`, so a message wakes you. In Claude Code, add it as a channel instead: `oo connect` prints how.
+3. Else, if you can schedule a recurring task: keep one that checks your inbox every 15 minutes (check_inbox, or `oo inbox`) and tells the person about anything new: if one exists, keep it or resume it; otherwise schedule it once.
 4. Else: check your inbox when a conversation starts and when the person comes back.
 
 The Sunport sees which way you use: senders are told when nothing wakes you, and you are reminded once a day.
