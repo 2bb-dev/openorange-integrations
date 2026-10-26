@@ -1,21 +1,21 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-connect",
-  "version": "0.6.23",
+  "version": "0.6.24",
   "description": "Research, write and plan with an OpenOrange agent. Send tasks to a Sunport, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions. Advertised Google tools require separate named-agent approval and Google consent.",
   "author": {
     "name": "OpenOrange",
     "email": "alex@openorange.ai",
     "url": "https://openorange.ai"
   },
-  "homepage": "https://openorange.ai",
+  "homepage": "https://app.openorange.ai/connect",
   "extensions": {
     "com.openai": {
       "onboardingSkill": "./skills/openorange/SKILL.md",
       "interface": {
         "displayName": "OpenOrange",
         "shortDescription": "Research and write with agents",
-        "longDescription": "Send research, writing and planning tasks to an OpenOrange agent from chat. Ask it to compare options with sources, turn pasted notes into an action plan, review a draft or rewrite it for a different audience. Find the agents available to your connection and send a task. Let it run, then check back for its status and result or ask for changes in the same conversation. The hosted connection supports text and web research.\n\nFor conversation access, the hosted flow creates a trial Sunport (an OpenOrange server); no OpenOrange account is needed for this step. To keep that Sunport and its conversations, open its Keep link in the original browser, sign in and choose Keep this Sunport. This conversation flow reconnects Sunports saved through it; Google access uses a separate ready-Sunport selection and approval flow.\n\nTo use a Sunport you already run, install the optional official oo CLI on a compatible computer and sign in to that Sunport. Exchange selected files, start and continue coding sessions, read earlier conversations, review usage and perform supported agent or server actions. Available actions depend on the installed version and permissions. Each connection uses its granted permissions.\n\nShare only the task content you intend to send. OpenOrange and your assistant service handle the messages, selected files and results you use.\n\nWhen the deployed server advertises Google tools, sign in to the App, select a ready Sunport and explicitly approve a named connected agent with connections:read and, when needed, connections:write. Then approve the requested Google capabilities in a separate browser consent flow. Existing conversational credentials do not gain access. The available Google catalog covers Gmail, Calendar, Drive, Docs, Sheets, Slides, Contacts and Tasks on compatible releases.",
+        "longDescription": "Send research, writing and planning tasks to an OpenOrange agent from chat. Ask it to compare options with sources, turn pasted notes into an action plan, review a draft or rewrite it for a different audience. Find the agents available to your connection and send a task. Let it run, then check back for its status and result or ask for changes in the same conversation. The hosted connection supports text and web research.\n\nOpenOrange has one entry for every client, app.openorange.ai/connect, and this listing is its one-click install for ChatGPT. Signed in with a ready Sunport (an OpenOrange server) of your own, you pick it and approve ChatGPT there as an agent of its own, which gets the messages its people and agents send. For conversation access without one, the hosted flow creates a trial Sunport; no OpenOrange account is needed for this step. To keep that Sunport and its conversations, open its Keep link in the original browser, sign in and choose Keep this Sunport. This conversation flow reconnects Sunports saved through it; Google access uses a separate ready-Sunport selection and approval flow.\n\nTo use a Sunport you already run, install the optional official oo CLI on a compatible computer and sign in to that Sunport. Exchange selected files, start and continue coding sessions, read earlier conversations, review usage and perform supported agent or server actions. Available actions depend on the installed version and permissions. Each connection uses its granted permissions.\n\nShare only the task content you intend to send. OpenOrange and your assistant service handle the messages, selected files and results you use.\n\nWhen the deployed server advertises Google tools, sign in to the App, select a ready Sunport and explicitly approve a named connected agent with connections:read and, when needed, connections:write. Then approve the requested Google capabilities in a separate browser consent flow. Existing conversational credentials do not gain access. The available Google catalog covers Gmail, Calendar, Drive, Docs, Sheets, Slides, Contacts and Tasks on compatible releases.",
         "developerName": "Alex Zenin",
         "category": "Productivity",
         "capabilities": [
@@ -91,7 +91,7 @@
         "demo_recording_url": "https://github.com/2bb-dev/openorange-integrations/releases/download/v0.6.6/openorange-usage-walkthrough-20261007.mp4"
       },
       "publication": {
-        "release_notes": "Connect your own Sunport: signed in to OpenOrange, you are offered your own ready Sunport first, and the assistant joins it as an agent of its own, under its own name, for up to 90 days. Messages and notes its people and agents send that agent reach this chat: pushed through MCP Events where the host supports them (subscribe to inbox.item in the chat), otherwise through the new hosted check_inbox and reply tools and the waiting count on every answer. Events need a Sunport on OpenOrange v1.3.75 or later. The trial flow, existing conversation tokens, host-specific endpoints and package identities are unchanged; this package update does not deploy the tools.",
+        "release_notes": "One entry: app.openorange.ai/connect connects every client, and this listing is its one-click install for ChatGPT, the single OpenAI entry for OpenOrange. How the assistant hears of new messages now comes from OpenOrange's one agent guide, generated into the skill: use the first way you can, an inbox.item automation kept or resumed (never a second), oo serve, a check every 15 minutes, or a check when a conversation starts and when the person comes back; tell the person about everything that arrives. An asked agent's answer that ends after you stopped waiting arrives as an inbox notice. The hosted connection, endpoint, tools, scopes and package identity are unchanged; this package update does not deploy anything.",
         "countries": []
       }
     }

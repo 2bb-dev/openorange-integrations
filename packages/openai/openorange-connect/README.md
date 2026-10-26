@@ -11,8 +11,14 @@ deployments also offer Google Workspace tools after separate explicit approval.
 
 ## Get connected
 
-For conversation access, connect OpenOrange in your assistant to start a trial Sunport (an
-OpenOrange server). No OpenOrange account is needed to try it; the browser flow
+OpenOrange has one entry for every client: https://app.openorange.ai/connect.
+This package is its one-click install for your assistant: the same hosted
+connection, with these usage guides.
+
+Signed in to OpenOrange with a ready Sunport (an OpenOrange server) of your
+own, you pick it and approve the assistant there as an agent of its own. For
+conversation access without one, connect OpenOrange in your assistant to start
+a trial Sunport. No OpenOrange account is needed to try it; the browser flow
 handles consent and trial availability. To keep it and its conversations, open
 the optional Keep link returned by `whoami` in the original browser, sign in and
 choose **Keep this Sunport**. The link alone does not keep the trial, and keeping
@@ -51,7 +57,7 @@ remain authoritative.
 Use the optional official `oo` CLI on a compatible computer and sign in to your
 chosen Sunport. It supports selected files, coding sessions, earlier
 conversations, usage and other supported agent/server actions, according to its
-installed version and your permissions. Follow setup at https://app.openorange.ai
+installed version and your permissions. Follow https://app.openorange.ai/connect
 and the [CLI guide](skills/openorange/references/cli.md).
 
 Where your Sunport offers its own connector, open **Agents > New agent > Connect**

@@ -26,9 +26,17 @@ SHARED = {
 SOURCE_FILES = {
     "README.md", "LICENSE", ".gitignore", ".claude-plugin/marketplace.json",
     "assets/openorange.svg", "assets/openorange-icon-1024.png", "usage/README.md", "usage/SKILL.md", "usage/references/mcp.md",
-    "usage/references/cli.md", "scripts/package.py", "tests/test_package.py",
+    "usage/references/cli.md", "usage/agent-guide.json", "scripts/package.py", "tests/test_package.py",
     ".github/workflows/ci.yml",
 }
+# How an agent stays in touch with its Sunport comes from one source in the Layer
+# (packages/billing/src/contracts/agent-guide.ts). Its guideJson() export is vendored
+# here, with a `layer` field naming the commit it came from; sync writes its Markdown
+# into the marked block of each guide doc, and check fails when a block is stale.
+GUIDE = "usage/agent-guide.json"
+GUIDE_DOCS = ("usage/SKILL.md", "usage/references/mcp.md")
+GUIDE_START = "<!-- agent-guide:start: generated from usage/agent-guide.json by scripts/package.py sync -->"
+GUIDE_END = "<!-- agent-guide:end -->"
 
 
 def read_file(root, relative):
@@ -53,18 +61,48 @@ def package_files(root, host):
     return {name: read_file(root, f"{folder}/{name}") for name in names}
 
 
+def guide_markdown(root):
+    guide = json.loads(read_file(root, GUIDE))
+    if not isinstance(guide.get("layer"), str) or not guide["layer"].strip():
+        raise ValueError("Agent guide must name the Layer commit it came from")
+    markdown = guide.get("markdown")
+    lines = markdown.splitlines() if isinstance(markdown, str) else []
+    ways = [f"{index}. {way['when']}: {way['how']}" for index, way in enumerate(guide.get("stayInTouch") or [], 1)]
+    rules = [f"- {rule}" for rule in guide.get("rules") or []]
+    if not ways or not rules or any(line not in lines for line in ways + rules):
+        raise ValueError("Agent guide Markdown differs from its ways and rules")
+    return markdown
+
+
+def with_guide(root, relative, markdown):
+    text = read_file(root, relative).decode("utf-8")
+    if text.count(GUIDE_START) != 1 or text.count(GUIDE_END) != 1 or text.index(GUIDE_END) < text.index(GUIDE_START):
+        raise ValueError(f"Agent guide markers are missing: {relative}")
+    start, end = text.index(GUIDE_START), text.index(GUIDE_END) + len(GUIDE_END)
+    return text, text[:start] + f"{GUIDE_START}\n{markdown}{GUIDE_END}" + text[end:]
+
+
 def sync(root):
+    markdown = guide_markdown(root)
+    for relative in GUIDE_DOCS:
+        path = root / relative
+        path.write_text(with_guide(root, relative, markdown)[1], encoding="utf-8")
     for folder, *_ in HOSTS.values():
         for destination, source in SHARED.items():
             data = read_file(root, source)
             path = root / folder / destination
-            if path.is_symlink() or any(p.is_symlink() for p in path.parents if p != root):
+            if path.is_symlink() or any(p.is_symlink() for p in path.parents if p.is_relative_to(root) and p != root):
                 raise ValueError("Cannot synchronize through a symlink")
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(data)
 
 
 def check(root):
+    markdown = guide_markdown(root)
+    for relative in GUIDE_DOCS:
+        current, generated = with_guide(root, relative, markdown)
+        if current != generated:
+            raise ValueError(f"Agent guide is stale: {relative}; run sync")
     expected = set(SOURCE_FILES)
     versions = set()
     for host, (folder, manifest_name, mcp_name, transport, endpoint) in HOSTS.items():

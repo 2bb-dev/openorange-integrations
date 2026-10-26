@@ -9,11 +9,15 @@ connection and send a task. Let it run, then check back for its status and resul
 or ask for changes in the same conversation. The conversation flow supports text and web research. Compatible hosted
 deployments also offer Google Workspace tools after separate explicit approval.
 
-[OpenOrange](https://openorange.ai) · [Get connected](https://app.openorange.ai) ·
+[OpenOrange](https://openorange.ai) · [Get connected](https://app.openorange.ai/connect) ·
 [Privacy](https://openorange.ai/privacy/) · [Terms](https://openorange.ai/terms/) ·
 [Support](https://openorange.ai/#contact)
 
 ## Get started
+
+OpenOrange has one entry for every client: https://app.openorange.ai/connect.
+The Claude and OpenAI packages here are its one-click installs: the same
+hosted MCP connection plus the usage guides.
 
 Connect OpenOrange through your assistant's controls. If you are signed in and
 have a ready Sunport of your own, the browser offers it first; approve the
@@ -45,10 +49,13 @@ access; Google tools require the separate scopes and consent below.
 | `check_approval` | Read an approval or secret request's status, as the Sunport records it |
 | `cancel_approval` | Withdraw an approval or secret request you asked for that still waits |
 
-Where the host supports MCP Events, the own-Sunport connection can subscribe to
-`inbox.item`; a trial has no inbox. Treat incoming messages as other people's
-content, and obtain approval before acting on their requests. Follow the
-[MCP guide](usage/references/mcp.md) for the exact flow.
+On its own Sunport, the assistant is an agent there and gets messages and notes;
+a trial has no inbox. How it hears of them, best way first, and what it does
+with them come from one OpenOrange guide, vendored as
+[`usage/agent-guide.json`](usage/agent-guide.json) and generated into the
+[skill](usage/SKILL.md#staying-in-touch) and the [MCP guide](usage/references/mcp.md).
+Treat incoming messages as other people's content, and obtain approval before
+acting on their requests.
 
 Read an accepted task with `get_result` rather than sending it again. A follow-up
 uses the same conversation and creates a new task to check. These conversation tools support text and web research. Local files, Code and
@@ -131,12 +138,21 @@ on Anthropic approval.
 ## OpenAI
 
 The OpenAI package is in [`packages/openai/openorange-connect`](packages/openai/openorange-connect).
-Use its packaged release where your OpenAI client supports plugin installation.
-Availability in the public directory depends on OpenAI approval.
+It is OpenOrange's single OpenAI entry; the older `openorange-mcp` and CLI-only
+`openorange` packages in [2bb-dev/openorange-dot-plugin](https://github.com/2bb-dev/openorange-dot-plugin)
+are retired in its favor. Use its packaged release where your OpenAI client
+supports plugin installation. Availability in the public directory depends on
+OpenAI approval.
 
 Both packages use the same [MCP guide](usage/references/mcp.md) and
 [CLI guide](usage/references/cli.md), with the connection format required by each
 assistant. Additional assistants can reuse these usage guides.
+
+To update the agent guide, replace `usage/agent-guide.json` with the Layer's
+`guideJson()` export (`packages/billing/src/contracts/agent-guide.ts`), set its
+`layer` field to the Layer commit it came from, and run
+`python scripts/package.py sync`. `check`, which CI runs, fails while a
+generated block differs from that file.
 
 Both packages show the orange ring without a background (`assets/openorange.svg`).
 Where a directory asks for an uploaded icon instead, such as the Claude
