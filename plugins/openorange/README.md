@@ -60,10 +60,9 @@ conversations, usage and other supported agent/server actions, according to its
 installed version and your permissions. Follow https://app.openorange.ai/connect
 and the [CLI guide](skills/openorange/references/cli.md).
 
-Where your Sunport offers its own connector, open **Agents > New agent > Connect**
-and use its **Connector key** in your assistant's connector settings. Credentials
-belong in those settings, never in chat. That separately configured connector
-has its own advertised tools and identity, distinct from this hosted connection.
+To connect another assistant or a terminal agent, open
+https://app.openorange.ai/connect. It sets itself up for each client: hosted
+sign-in for ChatGPT and Claude, an invite code for terminal agents.
 
 Each connection uses its granted permissions. Installing the plugin does not
 install the CLI or automatically start or keep a Sunport. Confirm the connected

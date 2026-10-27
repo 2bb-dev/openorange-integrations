@@ -87,11 +87,9 @@ sessions, read earlier conversations, review usage and perform supported agent
 and server actions. Availability depends on its installed version and your
 permissions. Follow the [CLI guide](usage/references/cli.md).
 
-Where your Sunport offers its own connector, open **Agents > New agent > Connect**
-and use its **Connector key** in your assistant's connector settings. Keep that
-credential in the connector settings, never in chat. This separately configured
-connector has its own advertised toolset; it is distinct from this package's
-hosted connection and its separately approved Google tools.
+To connect another assistant or a terminal agent, open
+https://app.openorange.ai/connect. It sets itself up for each client: hosted
+sign-in for ChatGPT and Claude, an invite code for terminal agents.
 
 ## Connection choices
 
@@ -99,7 +97,6 @@ hosted connection and its separately approved Google tools.
 | --- | --- | --- |
 | Hosted MCP | Conversations, own-agent inbox/events and feedback where advertised; Google tools require separate grants | Own-Sunport or trial browser flow; Google adds named-agent approval and service consent |
 | Optional `oo` CLI | Selected files, coding, earlier conversations, usage and supported actions | Separate CLI installation and sign-in to your chosen Sunport |
-| Your Sunport's own connector | The tools that connector advertises | Separate connector setup and its credential, where supported |
 
 Each connection uses its granted permissions. Installing the plugin does not
 install the CLI or automatically start or keep a Sunport. Confirm the connected

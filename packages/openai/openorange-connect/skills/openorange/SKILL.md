@@ -24,9 +24,9 @@ agent and connection, and share only the task content they authorize.
   that Sunport: earlier conversations, cancellation, selected local files,
   coding, schedules and Google actions supported by that version. Follow
   [the CLI guide](references/cli.md).
-- A Sunport's separately configured own connector has its own advertised tools.
-  Where supported, the user sets it up through **Agents > New agent > Connect >
-  Connector key**. Keep that credential in connector settings, never chat.
+- To connect another assistant or a terminal agent, send the user to
+  https://app.openorange.ai/connect. It sets itself up for each client: hosted
+  sign-in for ChatGPT and Claude, an invite code for terminal agents.
 
 Honor an explicit connection choice and authorization already provided. Keep an
 existing conversation on its original connection and preserve its identifiers.
