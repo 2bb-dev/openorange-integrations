@@ -19,9 +19,9 @@ or a saved trial instead** keeps the trial flow, which can also resume an
 available saved Sunport retained through it. The Google flow below uses the
 same named-agent approval. If the user asks to
 work with an existing Sunport outside these flows, do not start a trial instead:
-use the separately installed and signed-in CLI, or that Sunport's separately
-configured own connector where supported. Its toolset is distinct; follow its
-actual tool descriptions. Selected files and other Sunport actions use the CLI.
+use the separately installed and signed-in CLI, or send them to
+https://app.openorange.ai/connect. Selected files and other Sunport actions use
+the CLI.
 
 | Tool | Purpose |
 | --- | --- |
