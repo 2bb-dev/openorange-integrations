@@ -80,10 +80,10 @@ has the details.
 
 Use the first way you can:
 
-1. If you can run an automation when an event arrives (ChatGPT can, in Work): subscribe to inbox.item. Keep one automation for it: if an OpenOrange inbox automation already exists, keep it or resume it; never add another.
-2. Else, if `oo` on this computer is connected as you and you can keep a command running (a terminal, a server, Codex): run `oo serve -- <a command that reads a message on stdin and prints the answer>`, such as `oo serve -- codex exec -`, so a message wakes you. In Claude Code, add it as a channel instead: `oo connect` prints how.
-3. Else, if you can schedule a recurring task: keep one that checks your inbox every 30 minutes (check_inbox, or `oo inbox`) and tells the person about anything new: if one exists, keep it or resume it; otherwise schedule it once. If your app asks the person to approve each tool call, ask them to allow check_inbox without asking, and only that tool, or the check stops at the question.
-4. Else: check your inbox when a conversation starts and when the person comes back.
+1. If you can run an automation when an event arrives (ChatGPT can, in Work): once the person agrees, subscribe to inbox.item. Keep one automation for it: if an OpenOrange inbox automation already exists, keep it or resume it; never add another.
+2. Else, if `oo` on this computer is connected as you and you can keep a command running (a terminal, a server, Codex): once the person agrees, run `oo serve -- <a command that reads a message on stdin and prints the answer>`, such as `oo serve -- codex exec -`, so a message wakes you. In Claude Code, add it as a channel instead: `oo connect` prints how.
+3. Else, if you can schedule a recurring task: keep one that checks your inbox every 60 minutes (check_inbox, or `oo inbox`) and tells the person about anything new: if one exists, keep it or resume it; otherwise offer one, and schedule it once the person agrees. If your app asks the person to approve each tool call, ask them to allow check_inbox without asking, and only that tool, or the check stops at the question.
+4. Else: tell the person plainly that you see messages only when you check, and check your inbox when a conversation starts and when the person comes back.
 
 The Sunport sees how you check: senders are told when nothing wakes you and when you last checked, and while nothing wakes you, you are reminded at most once a day, when you come back after a quiet spell.
 
