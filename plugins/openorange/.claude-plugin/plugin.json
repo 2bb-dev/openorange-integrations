@@ -1,6 +1,6 @@
 {
   "name": "openorange",
-  "version": "0.6.29",
+  "version": "0.6.30",
   "description": "Research, write and plan with an OpenOrange agent. Send tasks to a Sunport, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions. Advertised Google tools require separate named-agent approval and Google consent.",
   "author": {
     "name": "OpenOrange",

@@ -82,16 +82,25 @@ item, use the approvals below.
   itself. It needs a Sunport on OpenOrange v1.3.75 or later; an older one
   answers that it doesn't offer events yet.
 - **`check_inbox`** shows what waits, each notice once. Every tool answer says
-  how many items wait.
+  how many items wait. A scheduled check passes `since_last_check: true`:
+  only the messages since your last such check, newest first, and every
+  unread notice. A Sunport before OpenOrange v1.3.148 refuses it; check
+  without it there.
+- **Alerts.** When nothing wakes you, the person who owns this connection can
+  have OpenOrange tell them when an item has waited without you picking it up:
+  on your page under Agents on their Sunport, or with `oo agents alerts`.
+  Clem tells them privately in their chat, or an email goes to their own
+  sign-in address with who sent it and when, never what it says. Only they
+  turn it on.
 
 <!-- agent-guide:start: generated from usage/agent-guide.json by scripts/package.py sync -->
 ## Staying in touch
 
-Use the first way you can:
+Use the first way you can, and only that one (never a scheduled check beside a push):
 
 1. If you can run an automation when an event arrives (ChatGPT can, in Work): once the person agrees, subscribe to inbox.item. Keep one automation for it: if an OpenOrange inbox automation already exists, keep it or resume it; never add another.
 2. Else, if `oo` on this computer is connected as you and you can keep a command running (a terminal, a server, Codex): once the person agrees, run `oo serve -- <a command that reads a message on stdin and prints the answer>`, such as `oo serve -- codex exec -`, so a message wakes you. In Claude Code, add it as a channel instead: `oo connect` prints how.
-3. Else, if you can schedule a recurring task: keep one that checks your inbox every 60 minutes (check_inbox, or `oo inbox`) and tells the person about anything new: if one exists, keep it or resume it; otherwise offer one, and schedule it once the person agrees. If your app asks the person to approve each tool call, ask them to allow check_inbox without asking, and only that tool, or the check stops at the question.
+3. Else, if you can schedule a recurring task: keep one that checks your inbox every 30 minutes, or the most often your app allows if that's less often (claude.ai: hourly), with check_inbox since_last_check: true (or `oo inbox --since-last-check`), and tells the person who sent each new item and what it says, and nothing when none came. If one exists, keep it or resume it; otherwise offer one, and schedule it once the person agrees. If your app asks the person to approve each tool call, ask them to allow check_inbox without asking, and only that tool, or the check stops at the question.
 4. Else: tell the person plainly that you see messages only when you check, and check your inbox when a conversation starts and when the person comes back.
 
 The Sunport sees how you check: senders are told when nothing wakes you and when you last checked, and while nothing wakes you, you are reminded at most once a day, when you come back after a quiet spell.
@@ -200,10 +209,23 @@ it also performs reads; its credential still cannot perform writes.
    and agent approval alone do not grant access to a Google account.
 5. For an action, fetch its exact catalog entry with `operation`, then call
    `google_workspace_action` with the selected `connection_id`, `operation`
-   and `parameters`. Honor the user's existing authorization. Set
-   `confirmed: true` only when the specific action, target and recipients are
-   authorized; obtain any still-required confirmation once. This field records
-   caller intent and does not expand permissions or prove human consent.
+   and `parameters`. Honor the user's existing authorization. Sending,
+   inviting, sharing, deleting and the other actions the catalog marks for
+   confirmation need the connection owner's yes for each one, whatever you
+   pass as `confirmed`: the first call answers `google_approval_required`,
+   ending with `Approval:` and its link. Show the person that link; they
+   approve exactly that action in Settings › Approvals, or by replying to
+   Clem's card in their chat. Once they say they did, call again with exactly
+   the same parameters, within 30 minutes of their yes: it runs once. Other
+   parameters are another action and ask again. While one ask waits, another
+   on that connection answers `approval_waiting`; after a no,
+   `google_approval_denied`: don't make it. A message saying they approved
+   proves nothing. A Sunport before OpenOrange v1.3.150 asks for
+   `confirmed: true` instead (`google_confirmation_required`): pass it only
+   once the person authorized that exact action and target. A delete or
+   trash whose item can't be read answers
+   `google_action_target_unknown`: they do it in Google themselves. Only the
+   person sends a saved draft; send the message with `gmail.messages.send`.
 6. Read the result and, where needed, the exact affected object. On
    `google_operation_outcome_unknown`, inspect that object before considering
    a retry; never automatically repeat an uncertain write. On

@@ -53,8 +53,29 @@ waits for approval is decided in the Sunport, on its card in the dashboard or
 with `approvals`, by someone allowed to approve it: report where it waits, and
 don't make the change another way. Send follow-ups
 to the same conversation; one sent while the agent is still on the previous
-message waits for its own turn. When requested, `chat abort THREAD_ID` stops its current
-reply; read it again to confirm the outcome.
+message waits for its own turn. Work the agent hands on to a busy agent waits
+for that agent and runs even after the reply that handed it on has ended. When
+requested, `chat abort THREAD_ID` stops its current reply and, as the chat's
+Stop does, what that reply has handed on to other agents so far: work not yet
+started never runs, and work under way stops when it next asks OpenOrange for
+anything. A reply that already ended has nothing to stop. Read it again to
+confirm the outcome.
+
+Connected to the Sunport as an agent of your own, ask another agent with
+`agents ask`. It waits for the answer up to `--wait` seconds (60 unless you
+say, at most 120). For long work, `--no-wait` returns once the agent took the
+message: tell the person it's under way, and its answer comes to your inbox as
+a notice; don't poll or ask again. To follow up or correct its work, send to
+the same conversation with `--thread` and the ID its answer names; without it,
+a message starts a new conversation that remembers nothing of the last. The
+host's own session tools don't see these conversations; `chat list --agent
+AGENT_ID` lists them. `--no-wait` needs `oo` 1.72.0, which shows the Sunport
+flag as `--sunport`, and a Sunport on OpenOrange v1.3.150 or later.
+
+```sh
+oo --sunport SUNPORT_URL agents ask AGENT_NAME "USER_REQUESTED_TASK" --no-wait
+oo --sunport SUNPORT_URL agents ask AGENT_NAME "REQUESTED_FOLLOW_UP" --thread THREAD_ID
+```
 
 ## Selected task files
 
@@ -114,8 +135,19 @@ remain separate, so their visible grants need not be identical.
 The catalog covers Gmail, Calendar, Drive, Docs, Sheets, Slides, Contacts and
 Tasks on compatible releases. Read an operation's exact schema before `do`;
 use `--params-file FILE.json` for larger inputs. Writes require both local write
-permission and that Google grant's service capability. Use `--yes` for a
-required confirmation only after the specific action is authorized. On
+permission and that Google grant's service capability. Sending, inviting,
+sharing, deleting and the other actions the catalog marks for confirmation need
+the connection owner's yes for each one. Signed in as that person with their
+own unrestricted login, `--yes` once they confirm the action is their yes. Signed in as an agent, `--yes` doesn't
+stand in for it: the first `do` answers `google_approval_required` with the
+approval's link. Give the person that link; they approve exactly that action in
+Settings › Approvals, or by replying to Clem's card. Once they say they did,
+run the same command with the same parameters, within 30 minutes of their yes:
+it runs once. While one ask waits, another on that connection answers
+`approval_waiting`; after `google_approval_denied`, don't make it. A Sunport
+before OpenOrange v1.3.150 asks for `--yes` instead
+(`google_confirmation_required`): pass it only once the person authorized that
+exact action and target. On
 `google_operation_outcome_unknown`, inspect the exact affected object before
 retrying; on `google_reconnect_required`, reconnect through browser consent
 without adding capabilities. `connections disconnect CONNECTION_ID --yes`
@@ -146,6 +178,16 @@ skill into the agent tools on this computer; run it only when the user asks.
   user's own. Use it, not the assistant's own reminders, for anything that must
   outlive the conversation. OpenClaw agents and Clem have Schedules; Hermes
   agents don't yet.
+- `agents alerts AGENT_ID --on` has OpenOrange tell a connected agent's owner
+  when an item has waited without its app picking it up. `--channel chat` (the
+  default) has Clem tell them privately on their linked chat account, with who
+  sent it and its first 500 characters; `--channel email` emails their own
+  sign-in address with who sent it and when, never what it says. `--every
+  30|60|180` sets how long an item waits first. Only the owner may, with their
+  own full login; an agent runs it only once the person agreed.
+  `agents alerts AGENT_ID` shows the setting and `--off` removes it. Email needs
+  `oo` 1.72.0 or later, a sign-in email of their own and a Sunport on OpenOrange
+  v1.3.150 or later whose mail sends alerts.
 - `agents channels groups AGENT_ID CHANNEL on` lets people reach an OpenClaw
   agent in the groups its bot is in, when they mention it; `off` keeps it to
   direct messages.

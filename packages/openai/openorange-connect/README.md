@@ -47,7 +47,8 @@ The eight tools list grants, request and follow consent, discover the operation
 catalog, perform an authorized action, disconnect a grant, search Gmail and
 read a message. They cover Gmail, Calendar, Drive, Docs, Sheets, Slides,
 Contacts and Tasks on compatible releases. Follow [the MCP guide](skills/openorange/references/mcp.md)
-for the exact tool names, identity checks, confirmation, expiry and revocation.
+for the exact tool names, identity checks, the owner's approval of each send,
+share or delete, expiry and revocation.
 An older server may advertise only four conversation tools; updating this
 package does not deploy or enable the service. Discovery and granted scopes
 remain authoritative.

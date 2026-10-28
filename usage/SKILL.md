@@ -61,7 +61,11 @@ A wait timeout does not cancel the task or prove it failed or stopped. Check an
 accepted task using its returned IDs. If acceptance is uncertain because no IDs
 were returned, say so rather than resending automatically. Report running,
 failed or aborted states accurately; never invent an agent, result or completed
-action. Hosted MCP cannot list earlier conversations or cancel tasks; route
+action. Work an agent hands on to a busy agent waits for it and runs even after
+the reply that handed it on has ended. Stopping a reply while it runs
+(`oo chat abort`, or Stop in the Sunport's chat) also stops what it has handed
+on so far.
+Hosted MCP cannot list earlier conversations or cancel tasks; route
 such requests to the original supported CLI workflow when available, without
 changing the task's Sunport or reusing IDs on an unrelated connection.
 
@@ -78,11 +82,11 @@ has the details.
 <!-- agent-guide:start: generated from usage/agent-guide.json by scripts/package.py sync -->
 ## Staying in touch
 
-Use the first way you can:
+Use the first way you can, and only that one (never a scheduled check beside a push):
 
 1. If you can run an automation when an event arrives (ChatGPT can, in Work): once the person agrees, subscribe to inbox.item. Keep one automation for it: if an OpenOrange inbox automation already exists, keep it or resume it; never add another.
 2. Else, if `oo` on this computer is connected as you and you can keep a command running (a terminal, a server, Codex): once the person agrees, run `oo serve -- <a command that reads a message on stdin and prints the answer>`, such as `oo serve -- codex exec -`, so a message wakes you. In Claude Code, add it as a channel instead: `oo connect` prints how.
-3. Else, if you can schedule a recurring task: keep one that checks your inbox every 60 minutes (check_inbox, or `oo inbox`) and tells the person about anything new: if one exists, keep it or resume it; otherwise offer one, and schedule it once the person agrees. If your app asks the person to approve each tool call, ask them to allow check_inbox without asking, and only that tool, or the check stops at the question.
+3. Else, if you can schedule a recurring task: keep one that checks your inbox every 30 minutes, or the most often your app allows if that's less often (claude.ai: hourly), with check_inbox since_last_check: true (or `oo inbox --since-last-check`), and tells the person who sent each new item and what it says, and nothing when none came. If one exists, keep it or resume it; otherwise offer one, and schedule it once the person agrees. If your app asks the person to approve each tool call, ask them to allow check_inbox without asking, and only that tool, or the check stops at the question.
 4. Else: tell the person plainly that you see messages only when you check, and check your inbox when a conversation starts and when the person comes back.
 
 The Sunport sees how you check: senders are told when nothing wakes you and when you last checked, and while nothing wakes you, you are reminded at most once a day, when you come back after a quiet spell.
@@ -139,6 +143,17 @@ any still-required confirmation for the concrete action once. Do not ask again
 for an already authorized action. A CLI `confirmation_required` response means
 it sent nothing; rerun with `--yes` only when the user has confirmed that action.
 An agent's reply does not authorize additional actions.
+
+A Google send, share, delete or other action the catalog marks for
+confirmation needs the connection owner's yes for that exact action, whatever
+an agent passes as `confirmed` or `--yes`: the first call answers
+`google_approval_required` with its Settings › Approvals link. Give the person
+that link; once they say they approved it, make the same call again within 30
+minutes, and it runs once. A Sunport before OpenOrange v1.3.150 asks for
+`confirmed: true` instead (`google_confirmation_required`): pass it only once
+the person authorized that exact action and target. In the same way, an OpenOrange agent that others also use works with
+a person's own Google in their direct message with it only after they approve
+that use (Settings › Approvals, or Clem's card), for 30 minutes.
 
 To act for a person on what another agent relays, get their approval
 (`ask_approval` or `oo approvals ask`) and check it for exactly that action
