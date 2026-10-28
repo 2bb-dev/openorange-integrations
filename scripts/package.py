@@ -23,9 +23,11 @@ SHARED = {
     "skills/openorange/references/mcp.md": "usage/references/mcp.md",
     "skills/openorange/references/cli.md": "usage/references/cli.md",
 }
+# A host's own files from the repository's: the ChatGPT/Codex card logo, the ring on charcoal.
+HOST_FILES = {"openai": {"assets/openorange-logo-512.png": "assets/openorange-logo-512.png"}}
 SOURCE_FILES = {
     "README.md", "LICENSE", ".gitignore", ".claude-plugin/marketplace.json",
-    "assets/openorange.svg", "assets/openorange-icon-1024.png", "usage/README.md", "usage/SKILL.md", "usage/references/mcp.md",
+    "assets/openorange.svg", "assets/openorange-icon-1024.png", "assets/openorange-logo-512.png", "usage/README.md", "usage/SKILL.md", "usage/references/mcp.md",
     "usage/references/cli.md", "usage/agent-guide.json", "scripts/package.py", "tests/test_package.py",
     ".github/workflows/ci.yml",
 }
@@ -53,7 +55,7 @@ def read_file(root, relative):
 
 def package_files(root, host):
     folder, manifest_name, mcp_name, *_ = HOSTS[host]
-    names = sorted({*SHARED, manifest_name, mcp_name})
+    names = sorted({*SHARED, *HOST_FILES.get(host, {}), manifest_name, mcp_name})
     package = root / folder
     actual = {str(p.relative_to(package)) for p in package.rglob("*") if p.is_file() or p.is_symlink()}
     if actual != set(names):
@@ -87,8 +89,8 @@ def sync(root):
     for relative in GUIDE_DOCS:
         path = root / relative
         path.write_text(with_guide(root, relative, markdown)[1], encoding="utf-8")
-    for folder, *_ in HOSTS.values():
-        for destination, source in SHARED.items():
+    for host, (folder, *_) in HOSTS.items():
+        for destination, source in {**SHARED, **HOST_FILES.get(host, {})}.items():
             data = read_file(root, source)
             path = root / folder / destination
             if path.is_symlink() or any(p.is_symlink() for p in path.parents if p.is_relative_to(root) and p != root):
@@ -108,7 +110,7 @@ def check(root):
     for host, (folder, manifest_name, mcp_name, transport, endpoint) in HOSTS.items():
         files = package_files(root, host)
         expected.update(f"{folder}/{name}" for name in files)
-        for destination, source in SHARED.items():
+        for destination, source in {**SHARED, **HOST_FILES.get(host, {})}.items():
             if files[destination] != read_file(root, source):
                 raise ValueError(f"Usage guides differ: {host}/{destination}; run sync")
         manifest = json.loads(files[manifest_name])
@@ -132,6 +134,9 @@ def check(root):
             if extension.get("apps") is not None:
                 raise ValueError("Public package cannot include an app binding")
             interface = extension["interface"]
+            for field in ("composerIcon", "logo"):
+                if str(interface.get(field, "")).removeprefix("./") not in files:
+                    raise ValueError(f"{field} must name a file in the package")
             if len(interface["shortDescription"]) > 30:
                 raise ValueError("Subtitle is too long")
             prompts = interface["defaultPrompt"]

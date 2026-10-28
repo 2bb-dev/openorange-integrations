@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-connect",
-  "version": "0.6.27",
+  "version": "0.6.28",
   "description": "Research, write and plan with an OpenOrange agent. Send tasks to a Sunport, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions. Advertised Google tools require separate named-agent approval and Google consent.",
   "author": {
     "name": "OpenOrange",
@@ -37,7 +37,7 @@
         ],
         "brandColor": "#D6561A",
         "composerIcon": "./assets/openorange.svg",
-        "logo": "./assets/openorange.svg"
+        "logo": "./assets/openorange-logo-512.png"
       },
       "review": {
         "test_cases": {

@@ -151,10 +151,14 @@ To update the agent guide, replace `usage/agent-guide.json` with the Layer's
 `python scripts/package.py sync`. `check`, which CI runs, fails while a
 generated block differs from that file.
 
-Both packages show the orange ring without a background (`assets/openorange.svg`).
-Where a directory asks for an uploaded icon instead, such as the Claude
-directory's listing, use [`assets/openorange-icon-1024.png`](assets/openorange-icon-1024.png),
-the same transparent ring.
+The icons:
+- the Claude Code plugin's icon and the ChatGPT composer icon: the orange ring
+  without a background (`assets/openorange.svg`);
+- the ChatGPT/Codex card logo: the ring on charcoal `#191817`
+  ([`assets/openorange-logo-512.png`](assets/openorange-logo-512.png));
+- where a directory asks for an uploaded icon, such as the Claude directory's
+  listing: the transparent ring at 1024 in the favicon framing
+  ([`assets/openorange-icon-1024.png`](assets/openorange-icon-1024.png)).
 
 Share only the messages and files needed for your task. OpenOrange and your
 assistant service handle the content you send and the results you retrieve.
