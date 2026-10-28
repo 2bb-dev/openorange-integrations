@@ -43,11 +43,15 @@ class PackageTests(unittest.TestCase):
 
     def test_card_icons_must_be_files_of_the_package(self):
         manifest = self.root / "packages/openai/openorange-connect/plugin.json"
-        data = json.loads(manifest.read_text())
-        data["extensions"]["com.openai"]["interface"]["logo"] = "./assets/missing.png"
-        manifest.write_text(json.dumps(data, indent=2) + "\n")
-        with self.assertRaisesRegex(ValueError, "logo must name a file in the package"):
-            package.check(self.root)
+        original = manifest.read_text()
+        for field in ("logo", "composerIcon"):
+            with self.subTest(field=field):
+                data = json.loads(original)
+                data["extensions"]["com.openai"]["interface"][field] = "./assets/missing.png"
+                manifest.write_text(json.dumps(data, indent=2) + "\n")
+                with self.assertRaisesRegex(ValueError, f"{field} must name a file in the package"):
+                    package.check(self.root)
+        manifest.write_text(original)
 
     def test_extra_repository_file_blocks_build(self):
         (self.root / "unrelated.md").write_text("Unapproved content")
