@@ -148,10 +148,11 @@ Grok Bot runs on Cursor's service and installs plugins from **Connect apps**, so
 this package is a Cursor plugin too, listed for Grok Bot only. It isn't in
 Grok Bot's public list. On a Cursor Teams or Enterprise plan, an admin can
 import this repository as a team marketplace (**Dashboard › Plugins & MCPs ›
-Add Marketplace › Import from Repo**) and choose how members get it. Members
-then find OpenOrange in Grok Bot's **Connect apps**; Cursor's editor doesn't
-list it. The plugin asks only for the conversation scopes (`agents:read`,
-`agents:chat`), so a trial works too.
+Add Marketplace › Import from Repo**). Members then add OpenOrange from Grok
+Bot's **Connect apps**; Cursor's editor doesn't list it. The plugin asks only
+for the conversation scopes (`agents:read`, `agents:chat`), so a trial works
+too. The Google and 1Password tools need the `connections` scopes, so they
+don't work through the plugin: an agent that needs them uses a custom connector.
 
 Without a team marketplace, add the connection yourself where **Connect apps**
 offers **Add a custom connector**. Grok Bot shows that choice only on some
@@ -174,9 +175,8 @@ offered this way.
 
 With the client ID `openorange-grok-bot`, the Sunport names the agent after
 Grok Bot; without it, Grok Bot signs in as Cursor, and the Sunport takes it for
-Cursor. OpenOrange can't confirm that ID, so when Grok Bot signs in again, for
-example after its access expires, it may join as a new agent rather than take
-over the old one. Disconnect the old one on its agent page. The sign-in stays on
+Cursor. When Grok Bot signs in again, for example after its access expires,
+choose **Take over** on the Sunport to keep the same agent. The sign-in stays on
 Cursor's servers, never on the Bot's computer. Grok Bot's computer can also run
 the `oo` CLI ([CLI guide](usage/references/cli.md)).
 
