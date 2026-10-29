@@ -18,13 +18,14 @@ HOSTS = {
                  "https://app.openorange.ai/mcp"),
 }
 # Grok Bot offers sign-in only for plugin servers placed on Cursor's service, and signs in as this public
-# client ID, so it joins a Sunport as "Grok Bot" rather than "Cursor". It asks for the conversation scopes only:
-# without them Cursor asks for every scope the server lists, and the connections ones need an account, so no trial.
+# client ID, which the app names "Grok Bot or Cursor", as Cursor's editor signs in with it too. It asks for the
+# conversation scopes only: without them Cursor asks for every scope the server lists, and the connections ones
+# need an account, so no trial.
 CONNECTION = {"grok-bot": {"placement": "server",
                            "auth": {"CLIENT_ID": "openorange-grok-bot", "scopes": ["agents:read", "agents:chat"]}}}
-# Grok Bot reads Cursor's plugin format, and Cursor's editor would sign in with Grok Bot's client ID and join as
-# "Grok Bot", so the Cursor marketplace lists this plugin for Grok Bot only.
-CLIENTS = {"grok-bot": {"cursor": "never", "grokbot": "0.49.0", "sand": "0.49.0"}}
+# Grok Bot reads Cursor's plugin format, and the Cursor marketplace lists this plugin for both: Cursor's editor from
+# 3.13.0, the version Cursor's own server-placed plugins ask for.
+CLIENTS = {"grok-bot": {"cursor": "3.13.0", "grokbot": "0.49.0", "sand": "0.49.0"}}
 # Cursor's format also loads rules, skills and variables named in a manifest, so the package declares these fields only.
 CURSOR_MANIFEST = {"name", "displayName", "version", "minClientVersions", "description", "author", "homepage", "repository",
                    "license", "keywords", "category", "logo", "mcpServers"}
@@ -139,7 +140,7 @@ def check(root):
         if components != ({"mcpServers": f"./{mcp_name}"} if host in CLIENTS else {}):
             raise ValueError("Unexpected executable component or app binding")
         if host in CLIENTS and manifest.get("minClientVersions") != CLIENTS[host]:
-            raise ValueError(f"{host} package must be listed only in its own app")
+            raise ValueError(f"{host} package must be listed only in its apps, from their minimum versions")
         if host in CLIENTS and (set(manifest) != CURSOR_MANIFEST or manifest["logo"] != "assets/openorange.svg"):
             raise ValueError(f"Unexpected {host} manifest field or logo")
         config = json.loads(files[mcp_name])
