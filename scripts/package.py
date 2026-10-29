@@ -14,7 +14,19 @@ HOSTS = {
                "https://app.openorange.ai/mcp"),
     "openai": ("packages/openai/openorange-connect", "plugin.json", "mcp.json", "streamable-http",
                "https://app.openorange.ai/mcp/openorange-usage"),
+    "grok-bot": ("packages/grok-bot/openorange-grok-bot", ".cursor-plugin/plugin.json", "mcp.json", "http",
+                 "https://app.openorange.ai/mcp"),
 }
+# Grok Bot offers sign-in only for plugin servers placed on Cursor's service, and signs in as this public
+# client ID, so it joins a Sunport as "Grok Bot" rather than "Cursor".
+CONNECTION = {"grok-bot": {"placement": "server", "auth": {"CLIENT_ID": "openorange-grok-bot"}}}
+# Grok Bot reads Cursor's plugin format, and Cursor's editor would sign in with Grok Bot's client ID and join as
+# "Grok Bot", so the Cursor marketplace lists this plugin for Grok Bot only.
+CLIENTS = {"grok-bot": {"cursor": "never", "grokbot": "0.49.0", "sand": "0.49.0"}}
+# Cursor's format also loads rules, skills and variables named in a manifest, so the package declares these fields only.
+CURSOR_MANIFEST = {"name", "displayName", "version", "minClientVersions", "description", "author", "homepage", "repository",
+                   "license", "keywords", "category", "logo", "mcpServers"}
+CURSOR_OWNER = {"name": "OpenOrange", "email": "alex@openorange.ai"}
 SHARED = {
     "README.md": "usage/README.md",
     "LICENSE": "LICENSE",
@@ -26,7 +38,7 @@ SHARED = {
 # A host's own files from the repository's: the ChatGPT/Codex card logo, the ring on charcoal.
 HOST_FILES = {"openai": {"assets/openorange-logo-512.png": "assets/openorange-logo-512.png"}}
 SOURCE_FILES = {
-    "README.md", "LICENSE", ".gitignore", ".claude-plugin/marketplace.json",
+    "README.md", "LICENSE", ".gitignore", ".claude-plugin/marketplace.json", ".cursor-plugin/marketplace.json",
     "assets/openorange.svg", "assets/openorange-icon-1024.png", "assets/openorange-logo-512.png", "usage/README.md", "usage/SKILL.md", "usage/references/mcp.md",
     "usage/references/cli.md", "usage/agent-guide.json", "scripts/package.py", "scripts/live_tools.py", "tests/test_package.py",
     ".github/workflows/ci.yml",
@@ -121,13 +133,18 @@ def check(root):
         versions.add(manifest["version"])
         if manifest["author"]["name"] != "OpenOrange" or manifest["author"]["email"] != "alex@openorange.ai":
             raise ValueError("Unexpected publisher")
-        if any(key in manifest for key in ("hooks", "commands", "agents", "apps", "mcpServers")):
+        components = {key: manifest[key] for key in ("hooks", "commands", "agents", "apps", "mcpServers") if key in manifest}
+        if components != ({"mcpServers": f"./{mcp_name}"} if host in CLIENTS else {}):
             raise ValueError("Unexpected executable component or app binding")
+        if host in CLIENTS and manifest.get("minClientVersions") != CLIENTS[host]:
+            raise ValueError(f"{host} package must be listed only in its own app")
+        if host in CLIENTS and (set(manifest) != CURSOR_MANIFEST or manifest["logo"] != "assets/openorange.svg"):
+            raise ValueError(f"Unexpected {host} manifest field or logo")
         config = json.loads(files[mcp_name])
         server = config.get("mcpServers", {}).get("openorange")
-        if set(config.get("mcpServers", {})) != {"openorange"} or server != {
-            "type": transport, "url": endpoint
-        }:
+        expected_server = {"type": transport, "url": endpoint, **CONNECTION.get(host, {})}
+        if (set(config.get("mcpServers", {})) != {"openorange"} or server != expected_server
+                or (host in CLIENTS and set(config) != {"mcpServers"})):
             raise ValueError("Only the public OpenOrange MCP connection is permitted")
         if host == "openai":
             extension = manifest["extensions"]["com.openai"]
@@ -150,6 +167,16 @@ def check(root):
         raise ValueError("Marketplace must use the contained OpenOrange package")
     if entries[0]["version"] not in versions or marketplace["metadata"]["version"] not in versions:
         raise ValueError("Marketplace version differs")
+    cursor = json.loads(read_file(root, ".cursor-plugin/marketplace.json"))
+    # Entry fields merge into the plugin, so an entry may add nothing beyond its description.
+    entries = [{key: value for key, value in entry.items() if key != "description"} for entry in cursor["plugins"]]
+    listed = [{"name": Path(HOSTS[host][0]).name, "source": HOSTS[host][0], "minClientVersions": clients}
+              for host, clients in CLIENTS.items()]
+    if (set(cursor) != {"name", "owner", "metadata", "plugins"} or cursor["name"] != "openorange" or cursor["owner"] != CURSOR_OWNER
+            or set(cursor["metadata"]) != {"description", "version"} or entries != listed):
+        raise ValueError("Cursor marketplace must use the contained Grok Bot package")
+    if cursor["metadata"]["version"] not in versions:
+        raise ValueError("Cursor marketplace version differs")
     actual = set()
     for path in root.rglob("*"):
         relative = path.relative_to(root)

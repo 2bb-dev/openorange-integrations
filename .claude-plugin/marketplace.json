@@ -7,14 +7,14 @@
   },
   "metadata": {
     "description": "Research, write and plan with an OpenOrange agent in a Sunport. Use the optional oo CLI with your chosen Sunport for files, coding and permitted actions. Advertised Google tools require separate approval.",
-    "version": "0.6.31"
+    "version": "0.6.32"
   },
   "plugins": [
     {
       "name": "openorange",
       "source": "./plugins/openorange",
       "description": "Research, write and plan with an OpenOrange agent. Send tasks to a Sunport, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions. Advertised Google tools require separate named-agent approval and Google consent.",
-      "version": "0.6.31",
+      "version": "0.6.32",
       "author": {
         "name": "OpenOrange",
         "email": "alex@openorange.ai",

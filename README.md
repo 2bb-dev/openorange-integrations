@@ -16,8 +16,8 @@ deployments also offer Google Workspace tools after separate explicit approval.
 ## Get started
 
 OpenOrange has one entry for every client: https://app.openorange.ai/connect.
-The Claude and OpenAI packages here are its one-click installs: the same
-hosted MCP connection plus the usage guides.
+The Claude, OpenAI and Grok Bot packages here are its one-click installs: the
+same hosted MCP connection plus the usage guides.
 
 Connect OpenOrange through your assistant's controls. If you are signed in and
 have a ready Sunport of your own, the browser offers it first; approve the
@@ -141,7 +141,39 @@ are retired in its favor. Use its packaged release where your OpenAI client
 supports plugin installation. Availability in the public directory depends on
 OpenAI approval.
 
-Both packages use the same [MCP guide](usage/references/mcp.md) and
+## Grok Bot
+
+The Grok Bot package is in [`packages/grok-bot/openorange-grok-bot`](packages/grok-bot/openorange-grok-bot).
+Grok Bot runs on Cursor's service and installs plugins from **Connect apps**, so
+this package is a Cursor plugin too, listed for Grok Bot only. It isn't in
+Grok Bot's public list, so add it yourself where **Connect apps** offers **Add a
+custom connector**. Grok Bot shows that choice only on some accounts so far.
+
+1. In Grok Bot, open **Connect apps** and choose **Add a custom connector**.
+2. Name it `OpenOrange`, keep **Remote HTTPS**, and enter the server URL
+   `https://app.openorange.ai/mcp` and the client ID `openorange-grok-bot`.
+   Leave the HTTP headers empty and choose **Add plugin**.
+3. In the list that opens, choose **Authenticate** next to OpenOrange (some
+   accounts show **Connect**). In the browser, choose your Sunport and approve
+   it there.
+4. In a chat, type `@`, choose OpenOrange and ask, for example:
+
+   > Ask an OpenOrange agent to compare three tools for customer feedback, with sources.
+
+With that client ID, your Sunport knows the agent comes from Grok Bot and names
+it after Grok Bot. Without it, Grok Bot signs in as Cursor, and the Sunport
+takes it for Cursor. Its sign-in stays on Cursor's servers, never on the Bot's
+computer. Grok Bot's computer can also run the `oo` CLI
+([CLI guide](usage/references/cli.md)).
+
+On a Cursor Teams or Enterprise plan, an admin can import this repository as a
+team marketplace instead, with or without that choice (**Dashboard › Plugins &
+MCPs › Add Marketplace › Import from Repo**). Members then find OpenOrange in
+Grok Bot's **Connect apps**; Cursor's editor doesn't list it.
+
+## The packages
+
+All three packages use the same [MCP guide](usage/references/mcp.md) and
 [CLI guide](usage/references/cli.md), with the connection format required by each
 assistant. Additional assistants can reuse these usage guides.
 
@@ -152,8 +184,8 @@ To update the agent guide, replace `usage/agent-guide.json` with the Layer's
 generated block differs from that file.
 
 The icons:
-- the Claude Code plugin's icon and the ChatGPT composer icon: the orange ring
-  without a background (`assets/openorange.svg`);
+- the Claude Code and Grok Bot plugins' icon and the ChatGPT composer icon: the
+  orange ring without a background (`assets/openorange.svg`);
 - the ChatGPT/Codex card logo: the ring on charcoal `#191817`
   ([`assets/openorange-logo-512.png`](assets/openorange-logo-512.png));
 - where a directory asks for an uploaded icon, such as the Claude directory's

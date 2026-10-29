@@ -19,12 +19,14 @@ class PackageTests(unittest.TestCase):
         self.root = Path(self.temp.name) / "source"
         shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns(".git", "dist", "__pycache__"))
 
-    def test_both_archives_contain_only_the_approved_inventory(self):
+    def test_every_archive_contains_only_the_approved_inventory(self):
         output = Path(self.temp.name) / "output"
         package.build(self.root, output)
         connections = {
             "claude": {"type": "http", "url": "https://app.openorange.ai/mcp"},
             "openai": {"type": "streamable-http", "url": "https://app.openorange.ai/mcp/openorange-usage"},
+            "grok-bot": {"type": "http", "url": "https://app.openorange.ai/mcp", "placement": "server",
+                         "auth": {"CLIENT_ID": "openorange-grok-bot"}},
         }
         for host, (_, manifest_name, mcp_name, *_) in package.HOSTS.items():
             files = package.package_files(self.root, host)
@@ -122,7 +124,7 @@ class PackageTests(unittest.TestCase):
             package.sync(self.root)
 
     def test_plugin_identity_cannot_change_or_reuse_previous_name(self):
-        wrong_names = {"claude": "openorange-connect", "openai": "openorange-usage"}
+        wrong_names = {"claude": "openorange-connect", "openai": "openorange-usage", "grok-bot": "openorange"}
         for host, (folder, manifest_name, *_) in package.HOSTS.items():
             with self.subTest(host=host):
                 path = self.root / folder / manifest_name
@@ -138,7 +140,8 @@ class PackageTests(unittest.TestCase):
         for host, (folder, _, mcp_name, *_) in package.HOSTS.items():
             path = self.root / folder / mcp_name
             original = path.read_bytes()
-            for extra in ({"headers": {"Authorization": "synthetic"}}, {"url": "https://example.com/mcp"}):
+            for extra in ({"headers": {"Authorization": "synthetic"}}, {"url": "https://example.com/mcp"},
+                          {"auth": {"CLIENT_ID": "openorange-grok-bot", "CLIENT_SECRET": "synthetic"}}):
                 with self.subTest(host=host, extra=extra):
                     changed = json.loads(original)
                     changed["mcpServers"]["openorange"].update(extra)
@@ -151,6 +154,7 @@ class PackageTests(unittest.TestCase):
         wrong_connections = {
             "claude": "https://app.openorange.ai/mcp/openorange-usage",
             "openai": "https://app.openorange.ai/mcp",
+            "grok-bot": "https://app.openorange.ai/mcp/openorange-usage",
         }
         for host, (folder, _, mcp_name, _, endpoint) in package.HOSTS.items():
             path = self.root / folder / mcp_name
@@ -164,13 +168,93 @@ class PackageTests(unittest.TestCase):
                         package.check(self.root)
                     path.write_bytes(original)
 
+    def test_connection_cannot_add_a_second_server(self):
+        for host, (folder, _, mcp_name, *_) in package.HOSTS.items():
+            with self.subTest(host=host):
+                path = self.root / folder / mcp_name
+                original = path.read_bytes()
+                changed = json.loads(original)
+                changed["mcpServers"]["other"] = {"type": "http", "url": "https://example.com/mcp"}
+                path.write_text(json.dumps(changed))
+                with self.assertRaisesRegex(ValueError, "public OpenOrange MCP connection"):
+                    package.check(self.root)
+                path.write_bytes(original)
+
+    def test_grok_bot_package_signs_in_as_grok_bot(self):
+        path = self.root / "packages/grok-bot/openorange-grok-bot/mcp.json"
+        original = path.read_bytes()
+        changes = {
+            "client ID goes": lambda server: server.pop("auth"),
+            "another client ID": lambda server: server["auth"].update(CLIENT_ID="openorange-cursor"),
+            "sign-in leaves the service": lambda server: server.pop("placement"),
+        }
+        for label, change in changes.items():
+            with self.subTest(change=label):
+                changed = json.loads(original)
+                change(changed["mcpServers"]["openorange"])
+                path.write_text(json.dumps(changed))
+                with self.assertRaisesRegex(ValueError, "public OpenOrange MCP connection"):
+                    package.check(self.root)
+                path.write_bytes(original)
+
+    def test_grok_bot_plugin_stays_in_grok_bot_and_adds_nothing(self):
+        marketplace = ".cursor-plugin/marketplace.json"
+        grok_bot = f"{package.HOSTS['grok-bot'][0]}/.cursor-plugin/plugin.json"
+        server = {"other": {"type": "http", "url": "https://example.com/mcp"}}
+        changes = {
+            "entry adds a server": (marketplace, lambda config: config["plugins"][0].update(mcpServers=server)),
+            "entry adds hooks": (marketplace, lambda config: config["plugins"][0].update(hooks="./hooks.json")),
+            "marketplace adds a key": (marketplace, lambda config: config.update(hooks="./hooks.json")),
+            "plugin root moves": (marketplace, lambda config: config["metadata"].update(pluginRoot="packages")),
+            "the entry goes": (marketplace, lambda config: config["plugins"].pop()),
+            "a second entry": (marketplace, lambda config: config["plugins"].append(dict(config["plugins"][0], name="openorange"))),
+            "entry lists it in Cursor": (marketplace, lambda config: config["plugins"][0]["minClientVersions"].pop("cursor")),
+            "manifest lists it in Cursor": (grok_bot, lambda config: config["minClientVersions"].pop("cursor")),
+            "manifest adds a server": (grok_bot, lambda config: config.update(mcpServers=server)),
+            "manifest adds rules": (grok_bot, lambda config: config.update(rules="./skills/openorange/references/")),
+            "manifest adds a variable": (grok_bot, lambda config: config.update(variables={"TOKEN": {"required": True}})),
+            "logo leaves the package": (grok_bot, lambda config: config.update(logo="https://example.com/logo.svg")),
+            "owner changes": (marketplace, lambda config: config["owner"].update(email="someone@example.com")),
+            "connection adds a key": (f"{package.HOSTS['grok-bot'][0]}/mcp.json", lambda config: config.update(inputs=[{"id": "token"}])),
+        }
+        for label, (name, change) in changes.items():
+            with self.subTest(change=label):
+                path = self.root / name
+                original = path.read_bytes()
+                config = json.loads(original)
+                change(config)
+                path.write_text(json.dumps(config))
+                with self.assertRaises(ValueError):
+                    package.check(self.root)
+                path.write_bytes(original)
+
+    def test_marketplace_versions_follow_the_packages(self):
+        changes = {".claude-plugin/marketplace.json": (lambda config: config["metadata"].update(version="9.9.9"),
+                                                       lambda config: config["plugins"][0].update(version="9.9.9")),
+                   ".cursor-plugin/marketplace.json": (lambda config: config["metadata"].update(version="9.9.9"),)}
+        for name, edits in changes.items():
+            path = self.root / name
+            original = path.read_bytes()
+            for index, change in enumerate(edits):
+                with self.subTest(marketplace=name, change=index):
+                    config = json.loads(original)
+                    change(config)
+                    path.write_text(json.dumps(config))
+                    with self.assertRaisesRegex(ValueError, "version differs"):
+                        package.check(self.root)
+                    path.write_bytes(original)
+
     def test_marketplace_cannot_redirect_to_external_source(self):
-        path = self.root / ".claude-plugin/marketplace.json"
-        config = json.loads(path.read_text())
-        config["plugins"][0]["source"] = "../another-plugin"
-        path.write_text(json.dumps(config))
-        with self.assertRaises(ValueError):
-            package.check(self.root)
+        for name in (".claude-plugin/marketplace.json", ".cursor-plugin/marketplace.json"):
+            with self.subTest(marketplace=name):
+                path = self.root / name
+                original = path.read_bytes()
+                config = json.loads(original)
+                config["plugins"][0]["source"] = "../another-plugin"
+                path.write_text(json.dumps(config))
+                with self.assertRaises(ValueError):
+                    package.check(self.root)
+                path.write_bytes(original)
 
     def test_archives_are_reproducible(self):
         first = Path(self.temp.name) / "first"
