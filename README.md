@@ -145,11 +145,11 @@ OpenAI approval.
 
 The Grok Bot package is in [`packages/grok-bot/openorange-grok-bot`](packages/grok-bot/openorange-grok-bot).
 Grok Bot runs on Cursor's service and installs plugins from **Connect apps**, so
-this package is a Cursor plugin too, listed for Grok Bot only. It isn't in
-Grok Bot's public list. On a Cursor Teams or Enterprise plan, an admin can
-import this repository as a team marketplace (**Dashboard › Plugins & MCPs ›
-Add Marketplace › Import from Repo**). Members then add OpenOrange from Grok
-Bot's **Connect apps**; Cursor's editor doesn't list it. The plugin asks only
+this package is a Cursor plugin too, listed for Grok Bot and for Cursor 3.13.0
+or later. It isn't in Grok Bot's public list. On a Cursor Teams or Enterprise
+plan, an admin can import this repository as a team marketplace (**Dashboard ›
+Plugins & MCPs › Add Marketplace › Import from Repo**). Members then add
+OpenOrange from Grok Bot's **Connect apps** or in Cursor. The plugin asks only
 for the conversation scopes (`agents:read`, `agents:chat`), so a trial works
 too. The Google and 1Password tools need the `connections` scopes, so they
 don't work through the plugin: an agent that needs them uses a custom connector.
@@ -173,12 +173,13 @@ offered this way.
 
    > Ask an OpenOrange agent to compare three tools for customer feedback, with sources.
 
-With the client ID `openorange-grok-bot`, the Sunport names the agent after
-Grok Bot; without it, Grok Bot signs in as Cursor, and the Sunport takes it for
-Cursor. When Grok Bot signs in again, for example after its access expires,
-choose **Take over** on the Sunport to keep the same agent. The sign-in stays on
-Cursor's servers, never on the Bot's computer. Grok Bot's computer can also run
-the `oo` CLI ([CLI guide](usage/references/cli.md)).
+With the client ID `openorange-grok-bot`, which the plugin uses in Grok Bot and
+in Cursor alike, the Sunport names the agent "Grok Bot or Cursor"; without it,
+Grok Bot signs in as Cursor, and the Sunport takes it for Cursor. When Grok Bot
+signs in again, for example after its access expires, choose **Take over** on
+the Sunport to keep the same agent. The sign-in stays on Cursor's servers, never
+on the Bot's computer. Grok Bot's computer can also run the `oo` CLI
+([CLI guide](usage/references/cli.md)).
 
 ## The packages
 

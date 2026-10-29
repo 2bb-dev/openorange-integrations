@@ -199,7 +199,7 @@ class PackageTests(unittest.TestCase):
                     package.check(self.root)
                 path.write_bytes(original)
 
-    def test_grok_bot_plugin_stays_in_grok_bot_and_adds_nothing(self):
+    def test_grok_bot_plugin_stays_in_its_apps_and_adds_nothing(self):
         marketplace = ".cursor-plugin/marketplace.json"
         grok_bot = f"{package.HOSTS['grok-bot'][0]}/.cursor-plugin/plugin.json"
         server = {"other": {"type": "http", "url": "https://example.com/mcp"}}
@@ -210,8 +210,8 @@ class PackageTests(unittest.TestCase):
             "plugin root moves": (marketplace, lambda config: config["metadata"].update(pluginRoot="packages")),
             "the entry goes": (marketplace, lambda config: config["plugins"].pop()),
             "a second entry": (marketplace, lambda config: config["plugins"].append(dict(config["plugins"][0], name="openorange"))),
-            "entry lists it in Cursor": (marketplace, lambda config: config["plugins"][0]["minClientVersions"].pop("cursor")),
-            "manifest lists it in Cursor": (grok_bot, lambda config: config["minClientVersions"].pop("cursor")),
+            "entry lists it in every Cursor": (marketplace, lambda config: config["plugins"][0]["minClientVersions"].pop("cursor")),
+            "manifest lists it in every Cursor": (grok_bot, lambda config: config["minClientVersions"].pop("cursor")),
             "manifest adds a server": (grok_bot, lambda config: config.update(mcpServers=server)),
             "manifest adds rules": (grok_bot, lambda config: config.update(rules="./skills/openorange/references/")),
             "manifest adds a variable": (grok_bot, lambda config: config.update(variables={"TOKEN": {"required": True}})),
