@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "openorange": {
+      "type": "http",
+      "url": "https://app.openorange.ai/mcp",
+      "placement": "server",
+      "auth": {
+        "CLIENT_ID": "openorange-grok-bot",
+        "scopes": [
+          "agents:read",
+          "agents:chat"
+        ]
+      }
+    }
+  }
+}
