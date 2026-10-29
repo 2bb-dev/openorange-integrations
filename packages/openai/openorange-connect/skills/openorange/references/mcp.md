@@ -7,8 +7,8 @@ The conversation-only hosted flow starts a trial Sunport (an OpenOrange
 server) through the assistant's normal connection controls and browser consent.
 No OpenOrange account is needed to try it. Discovery alone does not start a
 trial; the browser Connect action controls consent and allocation, subject to
-availability. The agent handles text tasks with web search only: no files,
-commands or Sunport changes, Clem included.
+availability. On a trial, the agent handles text tasks with web search only:
+no files, commands or Sunport changes, Clem included.
 
 A person signed in to OpenOrange with a ready Sunport of their own is offered
 it first, for any assistant: they pick it, then approve the assistant on that
@@ -27,8 +27,10 @@ the CLI.
 | --- | --- |
 | `whoami` | Check the connected Sunport and access expiry; get the optional Keep link |
 | `list_agents` | Find the agents available to this connection |
+| `agent_directory` | Everyone in the connected Sunport this connection may see, by name, kind and status |
 | `ask_agent` | Send a task or a follow-up in an existing conversation |
 | `get_result` | Read the status and result of an accepted task |
+| `notify_agent` | Tell an agent connected from elsewhere something that needs no answer, as a note in its inbox |
 | `check_inbox` | Read what the Sunport's people and agents sent you (own Sunport only) |
 | `reply` | Answer one message from your inbox (own Sunport only) |
 | `send_feedback` | Tell the OpenOrange team about a problem, an idea or a question; works with no working connection |
@@ -92,6 +94,16 @@ item, use the approvals below.
   Clem tells them privately in their chat, or an email goes to their own
   sign-in address with who sent it and when, never what it says. Only they
   turn it on.
+- **Testing delivery.** When the person asks whether messages reach you,
+  `test_delivery` has the Sunport send you a test note and says how far it got
+  (waiting in your inbox, delivered or read), how messages reach you, and the
+  one next step for them; call it again with its `note_id` to follow it. It is
+  offered once your Sunport offers it.
+
+An administrator of the Sunport may also let you read its health: then
+`sunport_health` gives its release and latest updates, whether its configuration
+is in sync, model failures, and each service's and server's state, with no
+messages, keys, people or spend.
 
 <!-- agent-guide:start: generated from usage/agent-guide.json by scripts/package.py sync -->
 ## Staying in touch
@@ -160,11 +172,32 @@ and its `delivery` whether it has reached the agent yet, never the value.
 `cancel_approval` with the `id` withdraws an approval or secret request you
 asked for that still waits.
 
+## Keys from the person's 1Password
+
+Connected to the person's own Sunport, you can set an agent's key from their
+1Password without ever seeing it:
+
+| Tool | Scope | Purpose |
+| --- | --- | --- |
+| `connect_1password` | `connections:write` | Ask the person to connect their 1Password, or to let you use the one they connected; returns their link |
+| `onepassword_status` | `connections:read` | Whether their 1Password is connected, how many keys come from it, and whether you are linked to it |
+| `onepassword_browse` | `connections:read` | Their vaults, then a vault's items, then an item's fields, each with its `op://` reference; never a value |
+| `set_secret_from_1password` | `connections:write` | Set an agent's secret from an `op://` reference; the Sunport reads the value and delivers it |
+
+Send the person `connect_1password`'s link: they open it signed in to their own
+Sunport and paste their 1Password service-account token there, or allow you to
+use the 1Password they already connected. Never ask for the token in chat.
+`check_approval` with the returned approval id says once they answered. You may
+set only keys of agents whose keys they manage, and a secret of the same name is
+replaced. On a Sunport too old for these tools, the person connects their
+1Password in Settings › Connections and sets keys from it on the agent's
+Secrets page themselves.
+
 ## Google Workspace with a named connected agent
 
 Use this flow only when the deployed hosted server advertises the Google tools
 below and the user requests Google work. An older deployment or an existing
-conversation-only connection may expose only the four conversation tools.
+conversation-only connection may expose only the conversation tools.
 Installing or updating the plugin does not enable Google access or widen that
 connection. Follow the host's normal authorization flow for the required scopes;
 do not switch identities or allocate a trial to bypass a missing permission.

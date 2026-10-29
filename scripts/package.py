@@ -28,7 +28,7 @@ HOST_FILES = {"openai": {"assets/openorange-logo-512.png": "assets/openorange-lo
 SOURCE_FILES = {
     "README.md", "LICENSE", ".gitignore", ".claude-plugin/marketplace.json",
     "assets/openorange.svg", "assets/openorange-icon-1024.png", "assets/openorange-logo-512.png", "usage/README.md", "usage/SKILL.md", "usage/references/mcp.md",
-    "usage/references/cli.md", "usage/agent-guide.json", "scripts/package.py", "tests/test_package.py",
+    "usage/references/cli.md", "usage/agent-guide.json", "scripts/package.py", "scripts/live_tools.py", "tests/test_package.py",
     ".github/workflows/ci.yml",
 }
 # How an agent stays in touch with its Sunport comes from one source in the Layer

@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-connect",
-  "version": "0.6.30",
+  "version": "0.6.31",
   "description": "Research, write and plan with an OpenOrange agent. Send tasks to a Sunport, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions. Advertised Google tools require separate named-agent approval and Google consent.",
   "author": {
     "name": "OpenOrange",
@@ -91,7 +91,7 @@
         "demo_recording_url": "https://github.com/2bb-dev/openorange-integrations/releases/download/v0.6.6/openorange-usage-walkthrough-20261007.mp4"
       },
       "publication": {
-        "release_notes": "The skill follows OpenOrange v1.3.151. A Google send, share or delete waits for the connection owner's yes for that exact action: the first call answers google_approval_required with its Settings › Approvals link, and the same call runs once they approve; confirmed no longer stands in for them. The agent guide is version 4: a scheduled check every 30 minutes, or the most often the app allows (claude.ai: hourly), with check_inbox since_last_check, and one way only. Inbox alerts can go by email, a stopped reply stops what it handed on, and the CLI guide covers oo agents ask --no-wait and --thread. The connection, endpoint, scopes, package identity and logos are unchanged.",
+        "release_notes": "The MCP guide names every tool the hosted connection's public listing shows, adding agent_directory, notify_agent and the four 1Password tools, which set an agent's key from the person's own 1Password without anyone seeing it, and describes test_delivery and sunport_health, offered once the connected Sunport offers them. It no longer says an older server has only four conversation tools, and its web-search-only line is about a trial. The connection, endpoint, tools, scopes, package identity and logos are unchanged.",
         "countries": []
       }
     }
