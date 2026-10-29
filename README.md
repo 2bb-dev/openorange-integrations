@@ -146,30 +146,39 @@ OpenAI approval.
 The Grok Bot package is in [`packages/grok-bot/openorange-grok-bot`](packages/grok-bot/openorange-grok-bot).
 Grok Bot runs on Cursor's service and installs plugins from **Connect apps**, so
 this package is a Cursor plugin too, listed for Grok Bot only. It isn't in
-Grok Bot's public list, so add it yourself where **Connect apps** offers **Add a
-custom connector**. Grok Bot shows that choice only on some accounts so far.
+Grok Bot's public list. On a Cursor Teams or Enterprise plan, an admin can
+import this repository as a team marketplace (**Dashboard › Plugins & MCPs ›
+Add Marketplace › Import from Repo**) and choose how members get it. Members
+then find OpenOrange in Grok Bot's **Connect apps**; Cursor's editor doesn't
+list it. The plugin asks only for the conversation scopes (`agents:read`,
+`agents:chat`), so a trial works too.
+
+Without a team marketplace, add the connection yourself where **Connect apps**
+offers **Add a custom connector**. Grok Bot shows that choice only on some
+accounts so far. A custom connector adds the connection without this package's
+skill and guides, and its form can't limit the scopes, so Grok Bot asks for
+every scope, `connections:read` and `connections:write` included. Those need an
+OpenOrange account: sign in and choose your own Sunport, as the trial isn't
+offered this way.
 
 1. In Grok Bot, open **Connect apps** and choose **Add a custom connector**.
 2. Name it `OpenOrange`, keep **Remote HTTPS**, and enter the server URL
    `https://app.openorange.ai/mcp` and the client ID `openorange-grok-bot`.
    Leave the HTTP headers empty and choose **Add plugin**.
 3. In the list that opens, choose **Authenticate** next to OpenOrange (some
-   accounts show **Connect**). In the browser, choose your Sunport and approve
-   it there.
+   accounts show **Connect**). In the browser, sign in, choose your Sunport and
+   approve it there.
 4. In a chat, type `@`, choose OpenOrange and ask, for example:
 
    > Ask an OpenOrange agent to compare three tools for customer feedback, with sources.
 
-With that client ID, your Sunport knows the agent comes from Grok Bot and names
-it after Grok Bot. Without it, Grok Bot signs in as Cursor, and the Sunport
-takes it for Cursor. Its sign-in stays on Cursor's servers, never on the Bot's
-computer. Grok Bot's computer can also run the `oo` CLI
-([CLI guide](usage/references/cli.md)).
-
-On a Cursor Teams or Enterprise plan, an admin can import this repository as a
-team marketplace instead, with or without that choice (**Dashboard › Plugins &
-MCPs › Add Marketplace › Import from Repo**). Members then find OpenOrange in
-Grok Bot's **Connect apps**; Cursor's editor doesn't list it.
+With the client ID `openorange-grok-bot`, the Sunport names the agent after
+Grok Bot; without it, Grok Bot signs in as Cursor, and the Sunport takes it for
+Cursor. OpenOrange can't confirm that ID, so when Grok Bot signs in again, for
+example after its access expires, it may join as a new agent rather than take
+over the old one. Disconnect the old one on its agent page. The sign-in stays on
+Cursor's servers, never on the Bot's computer. Grok Bot's computer can also run
+the `oo` CLI ([CLI guide](usage/references/cli.md)).
 
 ## The packages
 

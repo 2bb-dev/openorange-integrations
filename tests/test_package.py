@@ -26,7 +26,7 @@ class PackageTests(unittest.TestCase):
             "claude": {"type": "http", "url": "https://app.openorange.ai/mcp"},
             "openai": {"type": "streamable-http", "url": "https://app.openorange.ai/mcp/openorange-usage"},
             "grok-bot": {"type": "http", "url": "https://app.openorange.ai/mcp", "placement": "server",
-                         "auth": {"CLIENT_ID": "openorange-grok-bot"}},
+                         "auth": {"CLIENT_ID": "openorange-grok-bot", "scopes": ["agents:read", "agents:chat"]}},
         }
         for host, (_, manifest_name, mcp_name, *_) in package.HOSTS.items():
             files = package.package_files(self.root, host)
@@ -187,6 +187,8 @@ class PackageTests(unittest.TestCase):
             "client ID goes": lambda server: server.pop("auth"),
             "another client ID": lambda server: server["auth"].update(CLIENT_ID="openorange-cursor"),
             "sign-in leaves the service": lambda server: server.pop("placement"),
+            "every scope the server lists": lambda server: server["auth"].pop("scopes"),
+            "a connections scope": lambda server: server["auth"]["scopes"].append("connections:read"),
         }
         for label, change in changes.items():
             with self.subTest(change=label):

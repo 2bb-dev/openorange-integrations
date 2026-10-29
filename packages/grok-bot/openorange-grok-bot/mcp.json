@@ -5,7 +5,11 @@
       "url": "https://app.openorange.ai/mcp",
       "placement": "server",
       "auth": {
-        "CLIENT_ID": "openorange-grok-bot"
+        "CLIENT_ID": "openorange-grok-bot",
+        "scopes": [
+          "agents:read",
+          "agents:chat"
+        ]
       }
     }
   }

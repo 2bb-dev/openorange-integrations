@@ -18,8 +18,10 @@ HOSTS = {
                  "https://app.openorange.ai/mcp"),
 }
 # Grok Bot offers sign-in only for plugin servers placed on Cursor's service, and signs in as this public
-# client ID, so it joins a Sunport as "Grok Bot" rather than "Cursor".
-CONNECTION = {"grok-bot": {"placement": "server", "auth": {"CLIENT_ID": "openorange-grok-bot"}}}
+# client ID, so it joins a Sunport as "Grok Bot" rather than "Cursor". It asks for the conversation scopes only:
+# without them Cursor asks for every scope the server lists, and the connections ones need an account, so no trial.
+CONNECTION = {"grok-bot": {"placement": "server",
+                           "auth": {"CLIENT_ID": "openorange-grok-bot", "scopes": ["agents:read", "agents:chat"]}}}
 # Grok Bot reads Cursor's plugin format, and Cursor's editor would sign in with Grok Bot's client ID and join as
 # "Grok Bot", so the Cursor marketplace lists this plugin for Grok Bot only.
 CLIENTS = {"grok-bot": {"cursor": "never", "grokbot": "0.49.0", "sand": "0.49.0"}}
