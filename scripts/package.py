@@ -140,7 +140,7 @@ def check(root):
         if components != ({"mcpServers": f"./{mcp_name}"} if host in CLIENTS else {}):
             raise ValueError("Unexpected executable component or app binding")
         if host in CLIENTS and manifest.get("minClientVersions") != CLIENTS[host]:
-            raise ValueError(f"{host} package must be listed only in its own app")
+            raise ValueError(f"{host} package must be listed only in its apps, from their minimum versions")
         if host in CLIENTS and (set(manifest) != CURSOR_MANIFEST or manifest["logo"] != "assets/openorange.svg"):
             raise ValueError(f"Unexpected {host} manifest field or logo")
         config = json.loads(files[mcp_name])
