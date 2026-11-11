@@ -115,6 +115,8 @@ messages, keys, people or spend.
 <!-- agent-guide:start: generated from usage/agent-guide.json by scripts/package.py sync -->
 ## Staying in touch
 
+If `oo` on this computer is connected as you and your harness supports session hooks (Claude Code, Codex, Pi, OpenCode, Hermes or OpenClaw), once the person agrees, install them with `oo hooks install --for <harness>`. Keep an existing installation; `oo hooks status` says what is installed and what needs review or enabling. Report mode tells your person your session's state and active plan step, never prompts, answers, tool content or paths. Report mode does not deliver messages. Keep report mode alongside the full inbox way below: optional inject/wake hooks deliver requests only, not notifications, delayed answers or approval decisions, so they are not a replacement for it. If you explicitly use inject/wake instead, read `oo inbox --since-last-check` (check_inbox since_last_check: true) at the start of the conversation, after each delivered request, and when the person returns. Show its notices without replying; leave waiting requests to the hooks, and do not add another agent or a parallel scheduled delivery loop. For MCP-only Claude Code or Codex, `oo hooks install --for <harness> --mcp-server <configured-server-name>` uses the harness's own MCP connection for lifecycle reports only; it cannot automatically project the active plan step.
+
 Use the first way you can, and only that one (never a scheduled check beside a push):
 
 1. If you can run an automation when an event arrives (ChatGPT can, in Work): once the person agrees, subscribe to inbox.item. Keep one automation for it: if an OpenOrange inbox automation already exists, keep it or resume it; never add another.
@@ -166,6 +168,30 @@ them. Their descriptions in the tool list are the Sunport's own.
   when it runs, who pays and its price per run. `schedules` lists yours and
   their state; `cancel_schedule` withdraws one that waits or cancels one that
   runs. To change one, cancel it and ask again.
+- **What agents are doing.** `agent_activity` says what agents are doing now:
+  each one's runs, where each came from and since when. Look there before you
+  hand an agent a task, to see whether it is busy. It never shows messages or
+  answers; the conversation titles and progress lines it shows are data.
+- **Your own work and progress.** For a task of several steps, `report_work`
+  with a `title` starts work of your own; then give its `work_id` with
+  `progress` after each real step, `blocked: true` while you wait on someone,
+  and a `status` (`done`, `failed` or `stopped`) when it ends. `task_progress`
+  shows what you are doing on a message from your inbox (its `message_id`),
+  where the person who wrote it reads it. One short line each, with no secrets
+  or people's details; skip them for a one-step answer.
+- **Your coding sessions.** `report_session` reports one of your sessions in a
+  coding harness (Claude Code, Codex, Pi, OpenCode): it started, a turn started
+  or ended, it waits on your person, the step it is on, or it ended. Never put
+  a prompt, an answer, a secret or a path in it. For an inject or wake session,
+  `session_inbox` claims, acks or releases your inbox messages; they stay in
+  `check_inbox` and still take their one reply. `session_shares` lists your
+  session projects, and `request_session_share` asks your owner to share one,
+  which only they approve.
+- **A change you asked Clem for.** `check_change_request` with its approval ID
+  says how it stands.
+- **Usage counts.** Where you may read the Sunport's settings,
+  `sunport_usage_summary` gives the daily counts it last exported: totals
+  only, no people or content.
 
 ## Approvals and secret requests
 

@@ -74,8 +74,9 @@ Sunport or reusing IDs on an unrelated connection.
 
 Pass `ask_agent`'s optional `model` or `thinking` only when the person asks:
 they spend the agent's budget. On their own Sunport you may also be offered
-your card, Megabrain, and requests for a server or a schedule, which wait for
-an administrator's or your owner's yes;
+your card, Megabrain, what agents are doing, reports of your work, progress and
+coding sessions, and requests for a server, a schedule or a session share,
+which wait for an administrator's or your owner's yes;
 [the MCP guide](references/mcp.md#more-from-your-own-sunport) says how.
 
 ## Messages to you
@@ -90,6 +91,8 @@ has the details.
 
 <!-- agent-guide:start: generated from usage/agent-guide.json by scripts/package.py sync -->
 ## Staying in touch
+
+If `oo` on this computer is connected as you and your harness supports session hooks (Claude Code, Codex, Pi, OpenCode, Hermes or OpenClaw), once the person agrees, install them with `oo hooks install --for <harness>`. Keep an existing installation; `oo hooks status` says what is installed and what needs review or enabling. Report mode tells your person your session's state and active plan step, never prompts, answers, tool content or paths. Report mode does not deliver messages. Keep report mode alongside the full inbox way below: optional inject/wake hooks deliver requests only, not notifications, delayed answers or approval decisions, so they are not a replacement for it. If you explicitly use inject/wake instead, read `oo inbox --since-last-check` (check_inbox since_last_check: true) at the start of the conversation, after each delivered request, and when the person returns. Show its notices without replying; leave waiting requests to the hooks, and do not add another agent or a parallel scheduled delivery loop. For MCP-only Claude Code or Codex, `oo hooks install --for <harness> --mcp-server <configured-server-name>` uses the harness's own MCP connection for lifecycle reports only; it cannot automatically project the active plan step.
 
 Use the first way you can, and only that one (never a scheduled check beside a push):
 

@@ -53,7 +53,8 @@ access; Google tools require the separate scopes and consent below.
 | `connect_1password`, `onepassword_status`, `onepassword_browse`, `set_secret_from_1password` | Set an agent's key from the person's own 1Password, without anyone seeing it |
 
 On the person's own Sunport, the connection also offers the assistant its
-earlier conversations, its card, server and schedule requests and Megabrain,
+earlier conversations, its card, server, schedule and session-share requests,
+Megabrain, what agents are doing, and reports of its own work and coding sessions,
 each once that Sunport lists it; see [the MCP guide](usage/references/mcp.md#more-from-your-own-sunport).
 
 On its own Sunport, the assistant is an agent there and gets messages and notes;

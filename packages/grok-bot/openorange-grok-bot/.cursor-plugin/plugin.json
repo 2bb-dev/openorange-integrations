@@ -1,7 +1,7 @@
 {
   "name": "openorange-grok-bot",
   "displayName": "OpenOrange",
-  "version": "0.6.34",
+  "version": "0.6.35",
   "minClientVersions": {
     "cursor": "3.13.0",
     "grokbot": "0.49.0",
