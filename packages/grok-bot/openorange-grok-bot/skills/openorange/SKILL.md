@@ -22,7 +22,8 @@ agent and connection, and share only the task content they authorize.
   the MCP guide instead of starting a trial or assuming a grant exists.
 - For other existing-Sunport actions, use the installed `oo` CLI signed in to
   that Sunport: earlier conversations, cancellation, selected local files,
-  coding, schedules and Google actions supported by that version. Follow
+  coding and its session reports, schedules, chat apps such as iMessage, and
+  Google actions supported by that version. Follow
   [the CLI guide](references/cli.md).
 - To connect another assistant or a terminal agent, send the user to
   https://app.openorange.ai/connect. It sets itself up for each client: hosted
@@ -65,9 +66,17 @@ action. Work an agent hands on to a busy agent waits for it and runs even after
 the reply that handed it on has ended. Stopping a reply while it runs
 (`oo chat abort`, or Stop in the Sunport's chat) also stops what it has handed
 on so far.
-Hosted MCP cannot list earlier conversations or cancel tasks; route
-such requests to the original supported CLI workflow when available, without
-changing the task's Sunport or reusing IDs on an unrelated connection.
+Hosted MCP cannot cancel tasks. Connected to the person's own Sunport, it
+can list and reread your earlier conversations (`list_threads`, `get_thread`)
+once that Sunport offers them; a trial can't. Route other such requests to the
+original supported CLI workflow when available, without changing the task's
+Sunport or reusing IDs on an unrelated connection.
+
+Pass `ask_agent`'s optional `model` or `thinking` only when the person asks:
+they spend the agent's budget. On their own Sunport you may also be offered
+your card, Megabrain, and requests for a server or a schedule, which wait for
+an administrator's or your owner's yes;
+[the MCP guide](references/mcp.md#more-from-your-own-sunport) says how.
 
 ## Messages to you
 
