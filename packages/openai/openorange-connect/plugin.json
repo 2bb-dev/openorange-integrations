@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-connect",
-  "version": "0.6.34",
+  "version": "0.6.35",
   "description": "Research, write and plan with an OpenOrange agent. Send tasks to a Sunport, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions. Advertised Google tools require separate named-agent approval and Google consent.",
   "author": {
     "name": "OpenOrange",
@@ -91,7 +91,7 @@
         "demo_recording_url": "https://github.com/2bb-dev/openorange-integrations/releases/download/v0.6.6/openorange-usage-walkthrough-20261007.mp4"
       },
       "publication": {
-        "release_notes": "The skill and guides follow OpenOrange v1.3.224 and oo 1.95.1. On the person's own Sunport, the MCP guide describes the tools that Sunport offers a connected agent: list_threads and get_thread for its earlier conversations, introduce and update_card, request_server and server_requests, megabrain_search and megabrain_read, and request_schedule, schedules and cancel_schedule, which run only after the owner's yes. ask_agent's optional model and thinking are passed only when the person asks. connect_google names each capability, none by default, and a capability that is temporarily unavailable answers what to do instead. The CLI guide uses --sunport and adds Code machines and folders, session reports through oo hooks, task progress, iMessage, group chats and the owner holding the Sunport's keys. The connection, endpoint, tools, scopes, package identity, listing text and logos are unchanged.",
+        "release_notes": "The agent guide is version 6, as the hosted connection now serves it: with the person's agreement, a coding harness reports its sessions through oo hooks. On the person's own Sunport, the MCP guide adds the tools that Sunport now offers a connected agent: agent_activity, report_work and task_progress for what agents are doing and its own progress; report_session, session_inbox, session_shares and request_session_share for its coding sessions, a share needing the owner's yes; check_change_request; and sunport_usage_summary. The connection, endpoint, scopes, package identity, listing text and logos are unchanged.",
         "countries": []
       }
     }
