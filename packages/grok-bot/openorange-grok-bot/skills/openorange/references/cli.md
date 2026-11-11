@@ -12,14 +12,15 @@ Sunport as an agent of its own. The plugin does not install the CLI.
 user has already chosen a Sunport, use:
 
 ```sh
-oo --instance SUNPORT_URL auth login --name work
-oo --instance SUNPORT_URL auth status
-oo --instance SUNPORT_URL agents list
+oo --sunport SUNPORT_URL auth login --name work
+oo --sunport SUNPORT_URL auth status
+oo --sunport SUNPORT_URL agents list
 ```
 
-`--instance` takes the Sunport's address: replace `SUNPORT_URL` with the
-selected Sunport's actual HTTPS address. Newer `oo` releases show this flag as
-`--sunport` in their help; `--instance` works in every release.
+`--sunport` takes the Sunport's address or a saved profile name: replace
+`SUNPORT_URL` with the selected Sunport's actual HTTPS address. An `oo` before
+1.72.0 names this flag `--instance`, which every release still takes; `oo`
+updates itself from its Sunport, and `oo update` does it now.
 Confirm the identity reported by `auth status`, then use that same explicit
 Sunport for subsequent commands. For a connection-only request, finish after
 listing agents. The user completes sign-in and access approval in the browser.
@@ -35,15 +36,16 @@ Choose an accessible agent from `agents list`. For an existing conversation,
 use `chat list --agent AGENT_ID` and read the selected conversation first.
 It lists the 25 latest active, or up to 100 with `--limit`; `--order created`
 goes through older ones in pages, giving each answer's `next_cursor` to
-`--cursor`, and `--unfinished` marks those with a run that hasn't ended.
+`--cursor`, `--unfinished` marks those with a run that hasn't ended, and
+`--latest-run` adds each one's newest task with its status.
 For a new task (`chat create --cwd DIR` starts an OpenClaw agent's
 conversation in a folder, an absolute path in its workspace or a registered
 project):
 
 ```sh
-oo --instance SUNPORT_URL chat create --agent AGENT_ID --title "Requested task"
-oo --instance SUNPORT_URL chat send THREAD_ID --message "USER_REQUESTED_TASK"
-oo --instance SUNPORT_URL chat get THREAD_ID
+oo --sunport SUNPORT_URL chat create --agent AGENT_ID --title "Requested task"
+oo --sunport SUNPORT_URL chat send THREAD_ID --message "USER_REQUESTED_TASK"
+oo --sunport SUNPORT_URL chat get THREAD_ID
 ```
 
 Use actual returned IDs. Sending acknowledges acceptance; read the conversation
@@ -82,10 +84,10 @@ oo --sunport SUNPORT_URL agents ask AGENT_NAME "REQUESTED_FOLLOW_UP" --thread TH
 Upload only a file chosen for the task, using the same login as the conversation:
 
 ```sh
-oo --instance SUNPORT_URL files upload ./selected-report.pdf --for chat
-oo --instance SUNPORT_URL chat send THREAD_ID --message "Summarize this report" --attachment ATTACHMENT_ID
-oo --instance SUNPORT_URL chat get THREAD_ID
-oo --instance SUNPORT_URL chat download THREAD_ID FILE_ID --output ./result.txt
+oo --sunport SUNPORT_URL files upload ./selected-report.pdf --for chat
+oo --sunport SUNPORT_URL chat send THREAD_ID --message "Summarize this report" --attachment ATTACHMENT_ID
+oo --sunport SUNPORT_URL chat get THREAD_ID
+oo --sunport SUNPORT_URL chat download THREAD_ID FILE_ID --output ./result.txt
 ```
 
 Use returned attachment and file IDs. Check the command help and upload response
@@ -97,13 +99,17 @@ not establish that a downloadable file exists.
 
 When the user requests coding work, inspect available sessions and choose the
 intended one. Starting or sending work may execute code and consume usage.
+A session runs on a machine the Sunport's people share: `code machines` lists
+the ones you work on and `code folders MACHINE` the folders there; it works in
+the chosen folder itself, so others on that machine see its changes at once.
 
 ```sh
-oo --instance SUNPORT_URL code environments
-oo --instance SUNPORT_URL code list
-oo --instance SUNPORT_URL code start --message "USER_REQUESTED_TASK" --wait
-oo --instance SUNPORT_URL code send SESSION_ID --message "REQUESTED_FOLLOW_UP" --wait
-oo --instance SUNPORT_URL code get SESSION_ID
+oo --sunport SUNPORT_URL code machines
+oo --sunport SUNPORT_URL code folders MACHINE
+oo --sunport SUNPORT_URL code list
+oo --sunport SUNPORT_URL code start --machine MACHINE --folder FOLDER --message "USER_REQUESTED_TASK" --wait
+oo --sunport SUNPORT_URL code send SESSION_ID --message "REQUESTED_FOLLOW_UP" --wait
+oo --sunport SUNPORT_URL code get SESSION_ID
 ```
 
 Use `code wait SESSION_ID` to follow accepted work, or `code cancel SESSION_ID`
@@ -111,19 +117,42 @@ when cancellation is requested. Check the result of the current task; a timeout
 does not cancel it. For a selected Code input file, use `files upload PATH --for code`
 and the returned attachment according to command help.
 
+## Your sessions and progress
+
+When `oo` on this computer is connected as you and you run in a coding harness
+such as Claude Code, Codex, Pi or OpenCode, your sessions can report
+themselves to the person you work for: whether each works, waits for them or is
+idle, and the step it is on, never prompts, answers, tool content or paths.
+Install the hooks only once the person agrees, then restart the harness:
+
+```sh
+oo hooks install --for claude-code
+oo hooks status
+```
+
+`oo hooks uninstall --for claude-code` removes them. These reports deliver no
+messages: keep the way you stay in touch from the skill.
+
+Lead a task of several steps where people see it. When it starts, run
+`oo agents work start "TITLE" --progress "FIRST STEP"` and keep its `id`; after
+each real step, `oo agents work set WORK_ID --progress "STEP"`, adding
+`--blocked` while you wait on someone; end it with `--status done` (or `failed`,
+`stopped`). One short line each, with no secrets or people's details; skip it
+for a one-step answer. `oo agents activity` says what agents are doing now.
+
 ## Google Workspace
 
 On a compatible installed release, use `oo connections --help` and the catalog
 before requesting Google access or choosing an action:
 
 ```sh
-oo --instance SUNPORT_URL connections catalog
-oo --instance SUNPORT_URL connections catalog --service docs
-oo --instance SUNPORT_URL connections catalog --operation docs.documents.get
-oo --instance SUNPORT_URL connections list
-oo --instance SUNPORT_URL connections google --capability docs.read
-oo --instance SUNPORT_URL connections status REQUEST_ID
-oo --instance SUNPORT_URL connections do CONNECTION_ID docs.documents.get --param documentId=DOCUMENT_ID
+oo --sunport SUNPORT_URL connections catalog
+oo --sunport SUNPORT_URL connections catalog --service docs
+oo --sunport SUNPORT_URL connections catalog --operation docs.documents.get
+oo --sunport SUNPORT_URL connections list
+oo --sunport SUNPORT_URL connections google --capability docs.read
+oo --sunport SUNPORT_URL connections status REQUEST_ID
+oo --sunport SUNPORT_URL connections do CONNECTION_ID docs.documents.get --param documentId=DOCUMENT_ID
 ```
 
 Use returned IDs and only the requested capabilities. `connections google`
@@ -133,7 +162,15 @@ select an allowed agent with `--agent AGENT_ID`. CLI and hosted MCP credentials
 remain separate, so their visible grants need not be identical.
 
 The catalog covers Gmail, Calendar, Drive, Docs, Sheets, Slides, Contacts and
-Tasks on compatible releases. Read an operation's exact schema before `do`;
+Tasks on compatible releases. Name each capability you need: none is requested
+by default. Each says whether this Sunport may request it (`available`); one it
+doesn't offer, such as reading Gmail or the whole Drive while those are
+temporarily unavailable, answers `google_capability_unavailable`, and its
+`instead` says what to do, such as asking the person to paste the email or
+using Drive files they choose (`drive.file`). These are limits: never work
+around them. Where a Sunport administrator set their organization's own Google
+app, the catalog has `own_client`, and `--client own` connects through it.
+Read an operation's exact schema before `do`;
 use `--params-file FILE.json` for larger inputs. Writes require both local write
 permission and that Google grant's service capability. Sending, inviting,
 sharing, deleting and the other actions the catalog marks for confirmation need
@@ -166,7 +203,8 @@ skill into the agent tools on this computer; run it only when the user asks.
 - The dashboard's Models page shows the models the Sunport serves; `models list`
   is an administrator's list of the models added there.
 - `requests list`, `models usage`, `billing balance` and `billing charges` show
-  accessible request activity, usage and charges.
+  accessible request activity, usage and charges; `requests failed` shows
+  model calls that failed.
 - `export charges --output ./charges.csv` exports accessible charge records.
 - `agents config get AGENT_ID` lists an agent's own configuration changes;
   `set`, `unset` and `reset` change them. A key OpenOrange manages is refused,
@@ -176,8 +214,9 @@ skill into the agent tools on this computer; run it only when the user asks.
   --tz ZONE`, schedules a reminder or task: at the time, the agent posts the
   message where it was asked. `agents schedules list` and `cancel` manage the
   user's own. Use it, not the assistant's own reminders, for anything that must
-  outlive the conversation. OpenClaw agents and Clem have Schedules; Hermes
-  agents don't yet.
+  outlive the conversation. A recurring web lookup, such as weekly news, adds
+  `--tools web` where the Sunport allows it. OpenClaw agents and Clem have
+  Schedules; Hermes agents don't yet.
 - `agents alerts AGENT_ID --on` has OpenOrange tell a connected agent's owner
   when an item has waited without its app picking it up. `--channel chat` (the
   default) has Clem tell them privately on their linked chat account, with who
@@ -191,6 +230,17 @@ skill into the agent tools on this computer; run it only when the user asks.
 - `agents channels groups AGENT_ID CHANNEL on` lets people reach an OpenClaw
   agent in the groups its bot is in, when they mention it; `off` keeps it to
   direct messages.
+- Where the Sunport offers iMessage, `agents channels add AGENT_ID imessage`
+  turns it on for an agent, with no token, as OpenOrange holds the number. A
+  person links their own number with `profile link-code imessage --agent
+  AGENT_ID`, which gives a code and the number to text it to; from then on,
+  texting that number reaches that agent. Clem takes iMessage too, once an
+  administrator connects it (`clem bots connect imessage`). iMessage is direct
+  messages only.
+- `chat group create --title TITLE` starts a conversation of several people
+  and one agent. Its owner adds people and the agent (`chat group add`) and
+  chooses whether the agent answers every message or only when mentioned
+  (`chat group answers`). An agent connected from elsewhere can't join one.
 - `secrets set NAME --agent AGENT_ID` gives an agent an API key or credential
   file. The user enters the value in their own terminal or the dashboard, never
   in chat.
@@ -205,6 +255,12 @@ skill into the agent tools on this computer; run it only when the user asks.
 - `sunport updates`, `sunport data-sharing` and `sunport desired-state` show
   when updates install, what the Sunport shares with OpenOrange, and whether
   it matches what OpenOrange expects.
+- `sunport keys` says whether OpenOrange still keeps a copy of the Sunport's
+  keys. Its owner can hold them alone, in Settings › Privacy › Keys or with
+  `sunport keys --export FILE` (the recovery file) and then `--hold FILE`:
+  OpenOrange deletes its copy for good, and a restore onto a new server may
+  then need that file. Only the owner does it, signed in as themselves, never
+  with an API key: don't offer to do it for them.
 - `sunport sign-in` shows whether members may sign in with their OpenOrange
   account, off unless an administrator turns it on, and the logins linked to
   one. A login is linked by its invitation, its own password or an
@@ -286,5 +342,5 @@ To keep a CLI trial, the user runs `claim --email person@example.com` and
 enter the emailed verification code privately. Afterwards, check `claim` and
 confirm `claimed: true`. Keep the same Sunport and conversation IDs.
 
-When asked to disconnect, use `oo --instance SUNPORT_URL auth logout`.
+When asked to disconnect, use `oo --sunport SUNPORT_URL auth logout`.
 Removing the plugin does not revoke the CLI login or delete Sunport data.

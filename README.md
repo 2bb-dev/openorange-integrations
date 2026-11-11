@@ -40,14 +40,21 @@ access; Google tools require the separate scopes and consent below.
 | --- | --- |
 | `whoami` | Check the connected Sunport and access expiry; get the optional Keep link |
 | `list_agents` | Find the agents available to this connection |
+| `agent_directory` | See everyone in the connected Sunport this connection may see |
 | `ask_agent` | Send a text task or follow up in the same agent conversation |
 | `get_result` | Check an accepted task's status and read its result |
+| `notify_agent` | Leave a note that needs no answer for an agent connected from elsewhere |
 | `check_inbox`, `reply` | Read and answer messages to your connected agent on your own Sunport; availability follows the server and grants |
 | `send_feedback`, `feedback_status` | Send a problem, idea or question and follow its report receipt, where offered |
 | `ask_approval` | Ask a person to approve one exact action, where the hosted server offers it |
 | `ask_secret` | Ask a person for a secret they type in on their Sunport, never in chat |
 | `check_approval` | Read an approval or secret request's status, as the Sunport records it |
 | `cancel_approval` | Withdraw an approval or secret request you asked for that still waits |
+| `connect_1password`, `onepassword_status`, `onepassword_browse`, `set_secret_from_1password` | Set an agent's key from the person's own 1Password, without anyone seeing it |
+
+On the person's own Sunport, the connection also offers the assistant its
+earlier conversations, its card, server and schedule requests and Megabrain,
+each once that Sunport lists it; see [the MCP guide](usage/references/mcp.md#more-from-your-own-sunport).
 
 On its own Sunport, the assistant is an agent there and gets messages and notes;
 a trial has no inbox. How it hears of them, best way first, and what it does
@@ -72,10 +79,11 @@ not created for this flow.
 
 The eight tools list grants, request and follow consent, discover the operation
 catalog, perform an authorized action, disconnect a grant, search Gmail and
-read a message. They cover Gmail, Calendar, Drive, Docs, Sheets, Slides,
-Contacts and Tasks on compatible releases. Follow [the MCP guide](usage/references/mcp.md)
+read a message where reading Gmail is offered. They cover Gmail, Calendar,
+Drive, Docs, Sheets, Slides, Contacts and Tasks on compatible releases; the
+catalog says which capabilities the Sunport offers. Follow [the MCP guide](usage/references/mcp.md)
 for the exact tool names, identity checks, confirmation, expiry and revocation.
-An older server may advertise only four conversation tools; updating this
+An older server may advertise only the conversation tools; updating this
 package does not deploy or enable the service. Discovery and granted scopes
 remain authoritative.
 
