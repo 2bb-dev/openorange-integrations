@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "OpenOrange for Grok Bot and Cursor: research, write and plan with an OpenOrange agent in a Sunport. Advertised Google tools require separate approval.",
-    "version": "0.6.35"
+    "version": "0.6.36"
   },
   "plugins": [
     {

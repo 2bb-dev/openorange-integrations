@@ -1,13 +1,11 @@
 # OpenOrange
 
-Research and write with agents.
+Hand off tasks to AI agents.
 
-Send research, writing and planning tasks to an OpenOrange agent from chat.
-Compare options with sources, turn pasted notes into an action plan, review a
-draft or rewrite it for a different audience. Find the agents available to your
-connection and send a task. Let it run, then check back for its status and result
-or ask for changes in the same conversation. The conversation flow supports text and web research. Compatible hosted
-deployments also offer Google Workspace tools after separate explicit approval.
+Hand off a task from your assistant and let an OpenOrange agent work on it on an OpenOrange server (a
+Sunport). Compare options with sources, turn notes into an action plan, or rewrite a draft for a
+different audience; check back for the status and result, or ask for changes in the same conversation.
+The hosted connection supports text and web research; Google Workspace tools need separate approval.
 
 [OpenOrange](https://openorange.ai) · [Get connected](https://app.openorange.ai/connect) ·
 [Privacy](https://openorange.ai/privacy/) · [Terms](https://openorange.ai/terms/) ·
