@@ -16,7 +16,7 @@
         "displayName": "OpenOrange",
         "shortDescription": "Hand off tasks to AI agents",
         "longDescription": "Hand off a task in ChatGPT and let an OpenOrange agent work on it on an OpenOrange server (a Sunport).\n\nTry:\n• \"Compare these 3 vendors, with sources\"\n• \"Turn these notes into an action plan\"\n• \"Rewrite this draft for investors\"\n\nCheck back for the status and result, or ask for changes in the same chat.\n\nNo OpenOrange account is needed to try it: while trials are available, a guest Sunport is set up for the conversation.\n\nAlready use OpenOrange? Connect your own Sunport, and ChatGPT joins it as an agent of its own, alongside your team's agents, and gets the messages they send it.\n\nGood to know\n• Hosted connection: text and web research.\n• Optional, on your own Sunport: Google Workspace (Gmail, Calendar, Drive, Docs, Sheets and more), each permission approved separately. What is offered depends on your Sunport's Google setup.\n• Files, coding sessions and server actions: install the optional oo CLI and sign in to your Sunport.\n• Share only what you mean to send.\n\nOpenOrange and ChatGPT process the messages, files and results you share.",
-        "developerName": "Alex Zenin",
+        "developerName": "OpenOrange",
         "category": "Productivity",
         "capabilities": [
           "Compare options and research with sources",
