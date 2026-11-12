@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "openorange-connect",
-  "version": "0.6.35",
-  "description": "Research, write and plan with an OpenOrange agent. Send tasks to a Sunport, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions. Advertised Google tools require separate named-agent approval and Google consent.",
+  "version": "0.6.36",
+  "description": "Hand off a task in ChatGPT and let an OpenOrange agent work on it on an OpenOrange server (a Sunport). Check back for the status and result, or ask for changes in the same chat. Optional: connect your own Sunport, approve Google access separately, or use the oo CLI for files and coding.",
   "author": {
     "name": "OpenOrange",
     "email": "alex@openorange.ai",
@@ -14,9 +14,9 @@
       "onboardingSkill": "./skills/openorange/SKILL.md",
       "interface": {
         "displayName": "OpenOrange",
-        "shortDescription": "Research and write with agents",
-        "longDescription": "Send research, writing and planning tasks to an OpenOrange agent from chat. Ask it to compare options with sources, turn pasted notes into an action plan, review a draft or rewrite it for a different audience. Find the agents available to your connection and send a task. Let it run, then check back for its status and result or ask for changes in the same conversation. The hosted connection supports text and web research.\n\nOpenOrange has one entry for every client, app.openorange.ai/connect, and this listing is its one-click install for ChatGPT. Signed in with a ready Sunport (an OpenOrange server) of your own, you pick it and approve ChatGPT there as an agent of its own, which gets the messages its people and agents send. Without one, the hosted flow sets up a guest Sunport for the conversation; no OpenOrange account is needed for this step. This conversation flow reconnects Sunports saved through it; Google access uses a separate ready-Sunport selection and approval flow.\n\nTo use a Sunport you already run, install the optional official oo CLI on a compatible computer and sign in to that Sunport. Exchange selected files, start and continue coding sessions, read earlier conversations, review usage and perform supported agent or server actions. Available actions depend on the installed version and permissions. Each connection uses its granted permissions.\n\nShare only the task content you intend to send. OpenOrange and your assistant service handle the messages, selected files and results you use.\n\nWhen the deployed server advertises Google tools, sign in to the App, select a ready Sunport and explicitly approve a named connected agent with connections:read and, when needed, connections:write. Then approve the requested Google capabilities in a separate browser consent flow. Existing conversational credentials do not gain access. The available Google catalog covers Gmail, Calendar, Drive, Docs, Sheets, Slides, Contacts and Tasks on compatible releases.",
-        "developerName": "Alex Zenin",
+        "shortDescription": "Hand off tasks to AI agents",
+        "longDescription": "Hand off a task in ChatGPT and let an OpenOrange agent work on it on an OpenOrange server (a Sunport).\n\nTry:\n• \"Compare these 3 vendors, with sources\"\n• \"Turn these notes into an action plan\"\n• \"Rewrite this draft for investors\"\n\nCheck back for the status and result, or ask for changes in the same chat.\n\nNo OpenOrange account is needed to try it: while trials are available, a guest Sunport is set up for the conversation.\n\nAlready use OpenOrange? Connect your own Sunport, and ChatGPT joins it as an agent of its own, alongside your team's agents, and gets the messages they send it.\n\nGood to know\n• Hosted connection: text and web research.\n• Optional, on your own Sunport: Google Workspace (Gmail, Calendar, Drive, Docs, Sheets and more), each permission approved separately. What is offered depends on your Sunport's Google setup.\n• Files, coding sessions and server actions: install the optional oo CLI and sign in to your Sunport.\n• Share only what you mean to send.\n\nOpenOrange and ChatGPT process the messages, files and results you share.",
+        "developerName": "OpenOrange",
         "category": "Productivity",
         "capabilities": [
           "Compare options and research with sources",
@@ -91,7 +91,7 @@
         "demo_recording_url": "https://github.com/2bb-dev/openorange-integrations/releases/download/v0.6.6/openorange-usage-walkthrough-20261007.mp4"
       },
       "publication": {
-        "release_notes": "The agent guide is version 6, as the hosted connection now serves it: with the person's agreement, a coding harness reports its sessions through oo hooks. On the person's own Sunport, the MCP guide adds the tools that Sunport now offers a connected agent: agent_activity, report_work and task_progress for what agents are doing and its own progress; report_session, session_inbox, session_shares and request_session_share for its coding sessions, a share needing the owner's yes; check_change_request; and sunport_usage_summary. The connection, endpoint, scopes, package identity, listing text and logos are unchanged.",
+        "release_notes": "The listing says what OpenOrange is for in fewer words: the subtitle is \"Hand off tasks to AI agents\", and the description leads with handing off a task, three example requests, the guest Sunport, connecting one's own Sunport, and what to know about Google, the oo CLI and sharing. The connection, endpoint, tools, scopes, package identity, guides and logos are unchanged.",
         "countries": []
       }
     }

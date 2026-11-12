@@ -1,7 +1,7 @@
 {
   "name": "openorange",
-  "version": "0.6.35",
-  "description": "Research, write and plan with an OpenOrange agent. Send tasks to a Sunport, check results and follow up in the same conversation. Use the optional oo CLI with your chosen Sunport for selected files, coding and permitted actions. Advertised Google tools require separate named-agent approval and Google consent.",
+  "version": "0.6.36",
+  "description": "Hand off a task in Claude and let an OpenOrange agent work on it on an OpenOrange server (a Sunport). Check back for the status and result, or ask for changes in the same conversation. Optional: connect your own Sunport, approve Google access separately, or use the oo CLI for files and coding.",
   "author": {
     "name": "OpenOrange",
     "email": "alex@openorange.ai",
