@@ -1,0 +1,17 @@
+{
+  "id": "openorange.agents",
+  "name": "OpenOrange",
+  "apiVersion": 1,
+  "description": "Talk to your OpenOrange agents, such as Clem, in Buzz. They keep running on your Sunport; this computer only passes messages.",
+  "host": {
+    "processes": [
+      {
+        "id": "oo",
+        "program": "oo",
+        "args": [
+          "acp"
+        ]
+      }
+    ]
+  }
+}
