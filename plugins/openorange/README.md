@@ -57,7 +57,7 @@ remain authoritative.
 ## Already have a Sunport?
 
 Use the optional official `oo` CLI on a compatible computer and sign in to your
-chosen Sunport. It supports selected files, coding sessions, earlier
+chosen Sunport. It supports selected files, coding agents, earlier
 conversations, usage and other supported agent/server actions, according to its
 installed version and your permissions. Follow https://app.openorange.ai/connect
 and the [CLI guide](skills/openorange/references/cli.md).

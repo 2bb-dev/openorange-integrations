@@ -95,27 +95,19 @@ for size limits and attachment expiry. Save to the requested location and avoid
 overwriting an existing file without approval. A path mentioned in a reply does
 not establish that a downloadable file exists.
 
-## Coding sessions
+## Coding work
 
-When the user requests coding work, inspect available sessions and choose the
-intended one. Starting or sending work may execute code and consume usage.
-A session runs on a machine the Sunport's people share: `code machines` lists
-the ones you work on and `code folders MACHINE` the folders there; it works in
-the chosen folder itself, so others on that machine see its changes at once.
+OpenOrange Code is retired, and current `oo` has no `code` commands. When the
+user requests coding work, ask an agent that runs a coding runtime, with
+`agents ask` as above, and follow up in the same conversation with `--thread`.
+Its work may execute code and consume usage.
 
 ```sh
-oo --sunport SUNPORT_URL code machines
-oo --sunport SUNPORT_URL code folders MACHINE
-oo --sunport SUNPORT_URL code list
-oo --sunport SUNPORT_URL code start --machine MACHINE --folder FOLDER --message "USER_REQUESTED_TASK" --wait
-oo --sunport SUNPORT_URL code send SESSION_ID --message "REQUESTED_FOLLOW_UP" --wait
-oo --sunport SUNPORT_URL code get SESSION_ID
+oo --sunport SUNPORT_URL agents directory
+oo --sunport SUNPORT_URL agents ask CODING_AGENT "USER_REQUESTED_TASK" --no-wait
 ```
 
-Use `code wait SESSION_ID` to follow accepted work, or `code cancel SESSION_ID`
-when cancellation is requested. Check the result of the current task; a timeout
-does not cancel it. For a selected Code input file, use `files upload PATH --for code`
-and the returned attachment according to command help.
+A task file goes with `files upload PATH --for chat`, as above.
 
 ## Your sessions and progress
 
