@@ -230,6 +230,25 @@ class PackageTests(unittest.TestCase):
                     package.check(self.root)
                 path.write_bytes(original)
 
+    def test_buzz_plugin_keeps_its_id_and_asks_only_to_start_oo_acp(self):
+        path = self.root / package.BUZZ / "manifest.json"
+        original = path.read_bytes()
+        changes = {
+            "a key Buzz refuses": lambda manifest: manifest.update(version="0.6.36"),
+            "another id": lambda manifest: manifest.update(id="openorange.buzz"),
+            "a command": lambda manifest: manifest["host"].update(commands=[{"id": "status", "program": "git", "args": ["status"]}]),
+            "a network origin": lambda manifest: manifest["host"].update(networkOrigins=["https://example.com"]),
+            "another program": lambda manifest: manifest["host"]["processes"][0].update(program="sh"),
+        }
+        for label, change in changes.items():
+            with self.subTest(change=label):
+                manifest = json.loads(original)
+                change(manifest)
+                path.write_text(json.dumps(manifest))
+                with self.assertRaisesRegex(ValueError, "Buzz plugin"):
+                    package.check(self.root)
+                path.write_bytes(original)
+
     def test_marketplace_versions_follow_the_packages(self):
         changes = {".claude-plugin/marketplace.json": (lambda config: config["metadata"].update(version="9.9.9"),
                                                        lambda config: config["plugins"][0].update(version="9.9.9")),

@@ -25,6 +25,19 @@ jobs:
         run: |
           npm exec --yes --package=@anthropic-ai/claude-code@2.1.291 -- claude plugin validate ./plugins/openorange --strict
           npm exec --yes --package=@anthropic-ai/claude-code@2.1.291 -- claude plugin validate . --strict
+  # The Buzz Desktop plugin against a stub ACP agent in place of `oo acp`: no Sunport, no network.
+  buzz-plugin:
+    name: Buzz plugin
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24.22.1'
+      - run: node --test --test-timeout=30000 tests/test_buzz_plugin.mjs
   # The guide names exactly the tools the hosted MCP lists publicly today, read with no credentials. A job of its own:
   # the hosted MCP changes on its own deploys, and its being down says nothing about the package.
   live-tools:

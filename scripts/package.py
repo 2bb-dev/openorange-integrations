@@ -40,11 +40,18 @@ SHARED = {
 }
 # A host's own files from the repository's: the ChatGPT/Codex card logo, the ring on charcoal.
 HOST_FILES = {"openai": {"assets/openorange-logo-512.png": "assets/openorange-logo-512.png"}}
+# Buzz Desktop installs this folder from the repository as it is, so nothing here generates or builds it: its manifest,
+# one self-contained plugin.js and a README. Buzz refuses a manifest with any other key, updates an installed plugin by
+# its id, and shows the person the computer access it asks for at install: starting `oo acp`, nothing else.
+BUZZ = "packages/buzz/openorange-buzz"
+BUZZ_FILES = ("manifest.json", "plugin.js", "README.md")
+BUZZ_MANIFEST = {"id", "name", "apiVersion", "description", "discovery", "host"}
+BUZZ_HOST = {"processes": [{"id": "oo", "program": "oo", "args": ["acp"]}]}
 SOURCE_FILES = {
     "README.md", "LICENSE", ".gitignore", ".claude-plugin/marketplace.json", ".cursor-plugin/marketplace.json",
     "assets/openorange.svg", "assets/openorange-icon-1024.png", "assets/openorange-logo-512.png", "usage/README.md", "usage/SKILL.md", "usage/references/mcp.md",
     "usage/references/cli.md", "usage/agent-guide.json", "scripts/package.py", "scripts/live_tools.py", "tests/test_package.py",
-    ".github/workflows/ci.yml",
+    "tests/test_buzz_plugin.mjs", "tests/acp_stub.mjs", ".github/workflows/ci.yml",
 }
 # How an agent stays in touch with its Sunport comes from one source in the Layer
 # (packages/billing/src/contracts/agent-guide.ts). Its guideJson() export is vendored
@@ -180,6 +187,11 @@ def check(root):
         raise ValueError("Cursor marketplace must use the contained Grok Bot package")
     if cursor["metadata"]["version"] not in versions:
         raise ValueError("Cursor marketplace version differs")
+    buzz = json.loads(read_file(root, f"{BUZZ}/manifest.json"))
+    if (not set(buzz) <= BUZZ_MANIFEST or buzz.get("id") != "openorange.agents" or buzz.get("apiVersion") != 1
+            or buzz.get("host") != BUZZ_HOST):
+        raise ValueError("Buzz plugin must keep its id, the manifest keys Buzz accepts and only oo acp")
+    expected.update(f"{BUZZ}/{name}" for name in BUZZ_FILES)
     actual = set()
     for path in root.rglob("*"):
         relative = path.relative_to(root)
