@@ -191,9 +191,35 @@ the Sunport to keep the same agent. The sign-in stays on Cursor's servers, never
 on the Bot's computer. Grok Bot's computer can also run the `oo` CLI
 ([CLI guide](usage/references/cli.md)).
 
+## Buzz Desktop
+
+The Buzz plugin is in [`packages/buzz/openorange-buzz`](packages/buzz/openorange-buzz).
+It makes OpenOrange an agent type in Buzz Desktop: mention your agent in a
+thread and it answers there from your Sunport, each thread one continuing
+conversation. Buzz passes the messages to `oo` on your computer, which reaches
+your Sunport as you.
+
+You need Buzz Desktop and, on the same computer, the `oo` CLI with `oo login`
+done ([CLI guide](usage/references/cli.md)).
+
+1. Open this link on that computer, for example from your browser's address bar:
+
+   ```text
+   buzz://plugin-install?repository=https%3A%2F%2Fgithub.com%2F2bb-dev%2Fopenorange-integrations.git&path=packages%2Fbuzz%2Fopenorange-buzz
+   ```
+
+   Or, in Buzz, open **Settings › Plugins › Manage plugins**, choose **Add**, and
+   enter the repository `2bb-dev/openorange-integrations` and the folder
+   `packages/buzz/openorange-buzz`. Buzz shows the access the plugin asks for,
+   starting `oo acp`; choose **Install plugin**.
+2. Open **Agents › New agent › Custom › Harness › OpenOrange**. The agent is
+   Clem on your Sunport.
+3. Mention the agent in a thread. It answers only your own mentions, while Buzz
+   Desktop is open.
+
 ## The packages
 
-All three packages use the same [MCP guide](usage/references/mcp.md) and
+The Claude, OpenAI and Grok Bot packages use the same [MCP guide](usage/references/mcp.md) and
 [CLI guide](usage/references/cli.md), with the connection format required by each
 assistant. Additional assistants can reuse these usage guides.
 
