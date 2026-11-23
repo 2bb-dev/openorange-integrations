@@ -1,11 +1,17 @@
-// OpenOrange in Buzz: an agent type whose agents are the owner's agents on their Sunport, Clem unless the agent's
-// config names another. Buzz keeps the agent's identity and posts its replies. Each thread the agent is mentioned in is
-// one continuing conversation with the Sunport's agent, reached through `oo acp` (the Agent Client Protocol on stdin
-// and stdout), which signs in as the person who ran `oo login`. Nothing of the agent runs on this computer, and no key
-// of Buzz's ever reaches `oo`.
+// OpenOrange in Buzz: two agent types whose agents are the owner's agents on their Sunport.
+//
+// "OpenOrange" (`agent`): Clem unless the agent's config names another. Buzz keeps the agent's identity and posts its
+// replies. Each thread the agent is mentioned in is one continuing conversation with the Sunport's agent, reached
+// through `oo acp` (the Agent Client Protocol on stdin and stdout), which signs in as the person who ran `oo login`.
+// Nothing of the agent runs on this computer, and no key of Buzz's ever reaches `oo`.
+//
+// "OpenOrange (always on)" (`hosted`): an agent Buzz calls hosted. The owner's Sunport makes and keeps its key, hears
+// the owner's mentions and posts the replies itself, so it answers while this computer is off. This computer only
+// makes, sets up, renames and removes it, each step one `oo buzz hosted <step>`.
 export const inject = ["agents", "host"];
 
 const TYPE_ID = "agent";
+const HOSTED_TYPE_ID = "hosted";
 /** The Sunport agent a Buzz agent is, when its config names none. */
 const DEFAULT_AGENT = "clem";
 const SAVED = "openorange.agents.sessions.v1";
@@ -39,6 +45,7 @@ export function apply(ctx) {
       return next;
     },
   });
+  agents.register(hostedType(host));
 }
 
 /** The Sunport agent a Buzz agent's config names: an id or alias `oo acp --agent` takes. */
@@ -316,4 +323,83 @@ function createSaved(storage) {
       }
     },
   };
+}
+
+/** The always-on type: Clem on the owner's Sunport, which keeps the agent's key and answers in Buzz itself. Buzz runs
+ * these steps one at a time for an agent and asks a failed one again, so the Sunport makes each safe to repeat. None
+ * has a deadline: activate waits while the owner signs in to Buzz in their browser. */
+function hostedType(host) {
+  return {
+    id: HOSTED_TYPE_ID,
+    title: "OpenOrange (always on)",
+    description:
+      "Clem on your OpenOrange Sunport, which runs it, so it answers your mentions even while this computer is off. oo on this computer sets it up with one sign-in to Buzz.",
+    defaults: () => ({ config: {} }),
+    remote: {
+      async provision({ name, picture, community, signal }) {
+        const { pubkey } = await hosted(host, "provision", { community, name, ...(picture && { picture }) }, signal);
+        // The picture it was made with, which Buzz keeps for a retried creation.
+        return { pubkey, ...(picture && { picture }) };
+      },
+      async activate({ pubkey, community, name, auth, signal }) {
+        await hosted(host, "activate", { pubkey, community, name, auth }, signal);
+      },
+      async profile({ pubkey, community, name, picture, signal }) {
+        await hosted(host, "profile", { pubkey, community, name, ...(picture && { picture }) }, signal);
+      },
+      async remove({ pubkey, community, signal }) {
+        await hosted(host, "remove", { pubkey, community }, signal);
+      },
+      async interrupt({ pubkey, community, channelId, threadRootId, signal }) {
+        const { stopped } = await hosted(host, "interrupt", { pubkey, community, channel: channelId, root: threadRootId }, signal);
+        return stopped === true;
+      },
+    },
+  };
+}
+
+/** One `oo buzz hosted <step>`: the step's input as a JSON object on its stdin, its answer one on its stdout, and on
+ * failure the reason as its last line on stderr. Ended when Buzz stops waiting for it. */
+async function hosted(host, step, input, signal) {
+  // Buzz no longer waits: start nothing, so activate opens no browser.
+  signal.throwIfAborted();
+  let answer = "";
+  let errors = "";
+  let oo;
+  try {
+    oo = await host.spawn("oo-buzz", {
+      args: [step],
+      onStdout: (data) => void (answer += data),
+      onStderr: (data) => void (errors = (errors + data).slice(-1200)),
+    });
+  } catch (error) {
+    if (/os error 2|no such file|not found/i.test(String(error?.message ?? error)))
+      throw new Error(
+        "The oo command was not found on this computer. Install it from your Sunport (Connect, then Command line), run `oo login`, and try again.",
+      );
+    throw error;
+  }
+  // An oo that ended before reading its input is answered by its exit; one still running would wait for it forever.
+  oo.end(JSON.stringify(input)).catch(() => oo.kill());
+  const code = await new Promise((resolve, reject) => {
+    const stop = () => {
+      void oo.kill();
+      reject(signal.reason);
+    };
+    if (signal.aborted) return stop();
+    signal.addEventListener("abort", stop, { once: true });
+    oo.exited.then((exit) => {
+      signal.removeEventListener("abort", stop);
+      resolve(exit);
+    }, reject);
+  });
+  if (code !== 0) throw new Error(errors.trim().split("\n").pop().trim() || "oo stopped without saying why.");
+  let result;
+  try {
+    result = JSON.parse(answer);
+  } catch {
+    // Read as not an answer, below.
+  }
+  if (!result || typeof result !== "object") throw new Error("oo's answer could not be read. Update oo with `oo update`, then try again.");
+  return result;
 }

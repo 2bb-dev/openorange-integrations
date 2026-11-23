@@ -25,7 +25,7 @@ jobs:
         run: |
           npm exec --yes --package=@anthropic-ai/claude-code@2.1.291 -- claude plugin validate ./plugins/openorange --strict
           npm exec --yes --package=@anthropic-ai/claude-code@2.1.291 -- claude plugin validate . --strict
-  # The Buzz Desktop plugin against a stub ACP agent in place of `oo acp`: no Sunport, no network.
+  # The Buzz Desktop plugin against stubs in place of `oo acp` and `oo buzz hosted`: no Sunport, no network.
   buzz-plugin:
     name: Buzz plugin
     runs-on: ubuntu-24.04
