@@ -253,11 +253,17 @@ function createBridge(spawn, target) {
         for (const waiting of pending.values()) waiting.reject(ended);
         pending.clear();
       });
-    await request("initialize", {
-      protocolVersion: 1,
-      clientCapabilities: {},
-      clientInfo: { name: "buzz", title: "Buzz", version: "1" },
-    });
+    try {
+      await request("initialize", {
+        protocolVersion: 1,
+        clientCapabilities: {},
+        clientInfo: { name: "buzz", title: "Buzz", version: "1" },
+      });
+    } catch (error) {
+      // An oo that can't start is of no use, and the next mention starts another: end this one.
+      void process.kill().catch(() => undefined);
+      throw error;
+    }
     return self;
   }
 
