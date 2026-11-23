@@ -11,6 +11,14 @@
         "args": [
           "acp"
         ]
+      },
+      {
+        "id": "oo-buzz",
+        "program": "oo",
+        "args": [
+          "buzz",
+          "hosted"
+        ]
       }
     ]
   }

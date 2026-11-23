@@ -230,15 +230,20 @@ class PackageTests(unittest.TestCase):
                     package.check(self.root)
                 path.write_bytes(original)
 
-    def test_buzz_plugin_keeps_its_id_and_asks_only_to_start_oo_acp(self):
+    def test_buzz_plugin_keeps_its_id_and_asks_only_to_start_oo_acp_and_oo_buzz_hosted(self):
         path = self.root / package.BUZZ / "manifest.json"
         original = path.read_bytes()
+        self.assertEqual([process["args"] for process in json.loads(original)["host"]["processes"]], [["acp"], ["buzz", "hosted"]])
         changes = {
             "a key Buzz refuses": lambda manifest: manifest.update(version="0.6.36"),
             "another id": lambda manifest: manifest.update(id="openorange.buzz"),
             "a command": lambda manifest: manifest["host"].update(commands=[{"id": "status", "program": "git", "args": ["status"]}]),
             "a network origin": lambda manifest: manifest["host"].update(networkOrigins=["https://example.com"]),
             "another program": lambda manifest: manifest["host"]["processes"][0].update(program="sh"),
+            "another program for the hosted steps": lambda manifest: manifest["host"]["processes"][1].update(program="sh"),
+            "all of oo buzz": lambda manifest: manifest["host"]["processes"][1].update(args=["buzz"]),
+            "a third process": lambda manifest: manifest["host"]["processes"].append({"id": "shell", "program": "oo", "args": ["shell"]}),
+            "no hosted process": lambda manifest: manifest["host"]["processes"].pop(),
         }
         for label, change in changes.items():
             with self.subTest(change=label):

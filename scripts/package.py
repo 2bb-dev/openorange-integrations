@@ -42,11 +42,13 @@ SHARED = {
 HOST_FILES = {"openai": {"assets/openorange-logo-512.png": "assets/openorange-logo-512.png"}}
 # Buzz Desktop installs this folder from the repository as it is, so nothing here generates or builds it: its manifest,
 # one self-contained plugin.js and a README. Buzz refuses a manifest with any other key, updates an installed plugin by
-# its id, and shows the person the computer access it asks for at install: starting `oo acp`, nothing else.
+# its id, and shows the person the computer access it asks for at install: starting `oo acp` (an agent answering while
+# Buzz Desktop is open) and `oo buzz hosted` (setting up an always-on one), nothing else.
 BUZZ = "packages/buzz/openorange-buzz"
 BUZZ_FILES = ("manifest.json", "plugin.js", "README.md")
 BUZZ_MANIFEST = {"id", "name", "apiVersion", "description", "discovery", "host"}
-BUZZ_HOST = {"processes": [{"id": "oo", "program": "oo", "args": ["acp"]}]}
+BUZZ_HOST = {"processes": [{"id": "oo", "program": "oo", "args": ["acp"]},
+                           {"id": "oo-buzz", "program": "oo", "args": ["buzz", "hosted"]}]}
 SOURCE_FILES = {
     "README.md", "LICENSE", ".gitignore", ".claude-plugin/marketplace.json", ".cursor-plugin/marketplace.json",
     "assets/openorange.svg", "assets/openorange-icon-1024.png", "assets/openorange-logo-512.png", "usage/README.md", "usage/SKILL.md", "usage/references/mcp.md",
@@ -190,7 +192,7 @@ def check(root):
     buzz = json.loads(read_file(root, f"{BUZZ}/manifest.json"))
     if (not set(buzz) <= BUZZ_MANIFEST or buzz.get("id") != "openorange.agents" or buzz.get("apiVersion") != 1
             or buzz.get("host") != BUZZ_HOST):
-        raise ValueError("Buzz plugin must keep its id, the manifest keys Buzz accepts and only oo acp")
+        raise ValueError("Buzz plugin must keep its id, the manifest keys Buzz accepts and only oo acp and oo buzz hosted")
     expected.update(f"{BUZZ}/{name}" for name in BUZZ_FILES)
     actual = set()
     for path in root.rglob("*"):
