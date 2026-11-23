@@ -122,6 +122,8 @@ function run(program, env) {
     type,
     replies,
     restored: () => restored,
+    /** How many of the processes the plugin started are still running. */
+    running: () => children.filter(({ child }) => child.exitCode === null && child.signalCode === null).length,
     /** The plugin turned off: its cleanup runs, then Buzz ends the processes it started. */
     stop: () =>
       (stopped ??= (async () => {
@@ -280,4 +282,13 @@ test("when oo is not signed in, the owner is told to run `oo login`", async (t) 
       notifyOwner: true,
     },
   ]);
+});
+
+test("an oo that fails as it starts is ended, so later mentions leave none running", async (t) => {
+  const refused = { method: "initialize", message: "Not signed in to a Sunport (401)" };
+  const buzz = computer(t, { env: { ACP_STUB_REFUSE: JSON.stringify(refused) } }).start();
+  await assert.rejects(buzz.type.run(mention("@Clem hello", "root-1").delivery));
+  await assert.rejects(buzz.type.run(mention("@Clem again", "root-1").delivery));
+  for (let waited = 0; buzz.running() && waited < 50; waited++) await new Promise((resolve) => setTimeout(resolve, 100));
+  assert.equal(buzz.running(), 0);
 });
