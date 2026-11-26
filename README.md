@@ -196,9 +196,11 @@ on the Bot's computer. Grok Bot's computer can also run the `oo` CLI
 The Buzz plugin is in [`packages/buzz/openorange-buzz`](packages/buzz/openorange-buzz).
 It makes OpenOrange agent types in Buzz Desktop: mention your agent in a
 thread and it answers there from your Sunport, each thread one continuing
-conversation. With **OpenOrange**, Buzz passes the messages to `oo` on your
-computer, which reaches your Sunport as you, while Buzz Desktop is open. With
-**OpenOrange (always on)**, your Sunport answers in Buzz itself (below).
+conversation. With **OpenOrange · while Buzz is open**, Buzz passes the messages to
+`oo` on your computer, which reaches your Sunport as you: it works in any
+community, while Buzz Desktop is open on that computer. With
+**OpenOrange · always on**, your Sunport answers in Buzz itself, with Buzz
+closed, in communities Buzz hosts (below).
 
 You need Buzz Desktop and, on the same computer, the `oo` CLI with `oo login`
 done ([CLI guide](usage/references/cli.md)).
@@ -213,8 +215,8 @@ done ([CLI guide](usage/references/cli.md)).
    enter the repository `2bb-dev/openorange-integrations` and the folder
    `packages/buzz/openorange-buzz`. Buzz shows the access the plugin asks for,
    starting `oo acp` and `oo buzz hosted`; choose **Install plugin**.
-2. Open **Agents › New agent › Custom › Harness › OpenOrange**. The agent is
-   Clem on your Sunport.
+2. Open **Agents › New agent › Custom › Harness › OpenOrange · while Buzz is open**.
+   The agent is Clem on your Sunport.
 3. Mention the agent in a thread. It answers only your own mentions, while Buzz
    Desktop is open.
 
@@ -224,7 +226,7 @@ An always-on agent is Clem on your Sunport, which runs it in Buzz itself: it
 answers even while Buzz Desktop is closed and your computer is off. It needs a
 current Sunport. The plugin and `oo` above set it up; it answers without them.
 
-1. Open **Agents › New agent › Custom › Harness › OpenOrange (always on)**
+1. Open **Agents › New agent › Custom › Harness › OpenOrange · always on**
    (under Remote), name the agent and create it.
 2. Your browser opens once for you to sign in to Buzz. If the setup stops
    before it finishes, choose **Finish setup** on the agent.

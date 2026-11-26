@@ -1,11 +1,11 @@
 // OpenOrange in Buzz: two agent types whose agents are the owner's agents on their Sunport.
 //
-// "OpenOrange" (`agent`): Clem unless the agent's config names another. Buzz keeps the agent's identity and posts its
+// "OpenOrange · while Buzz is open" (`agent`): Clem unless the agent's config names another. Buzz keeps the agent's identity and posts its
 // replies. Each thread the agent is mentioned in is one continuing conversation with the Sunport's agent, reached
 // through `oo acp` (the Agent Client Protocol on stdin and stdout), which signs in as the person who ran `oo login`.
 // Nothing of the agent runs on this computer, and no key of Buzz's ever reaches `oo`.
 //
-// "OpenOrange (always on)" (`hosted`): an agent Buzz calls hosted. The owner's Sunport makes and keeps its key, hears
+// "OpenOrange · always on" (`hosted`): an agent Buzz calls hosted. The owner's Sunport makes and keeps its key, hears
 // the owner's mentions and posts the replies itself, so it answers while this computer is off. This computer only
 // makes, sets up, renames and removes it, each step one `oo buzz hosted <step>`.
 export const inject = ["agents", "host"];
@@ -29,9 +29,9 @@ export function apply(ctx) {
 
   agents.register({
     id: TYPE_ID,
-    title: "OpenOrange",
+    title: "OpenOrange · while Buzz is open",
     description:
-      "An agent of your OpenOrange Sunport, Clem by default, reached with oo on this computer. Each thread it is mentioned in is one continuing conversation.",
+      "An agent of your OpenOrange Sunport, Clem by default, in any community. It answers while Buzz Desktop is open on this computer, through oo here. Each thread it is mentioned in is one continuing conversation.",
     defaults: () => ({ config: { agent: DEFAULT_AGENT } }),
     summary: (agent) => `${sunportAgent(agent.config)} on your Sunport`,
     timeoutMs: 30 * 60_000,
@@ -331,9 +331,9 @@ function createSaved(storage) {
 function hostedType(host) {
   return {
     id: HOSTED_TYPE_ID,
-    title: "OpenOrange (always on)",
+    title: "OpenOrange · always on",
     description:
-      "Clem on your OpenOrange Sunport, which runs it, so it answers your mentions even while this computer is off. oo on this computer sets it up with one sign-in to Buzz.",
+      "Clem on your OpenOrange Sunport, which runs it: it answers your mentions with Buzz closed and this computer off. For communities Buzz hosts. oo on this computer sets it up with one sign-in to Buzz.",
     defaults: () => ({ config: {} }),
     remote: {
       async provision({ name, picture, community, signal }) {

@@ -169,7 +169,7 @@ const prompts = (stub) => stub.received.filter((message) => message.method === "
 test("registers OpenOrange as an agent type, Clem by default", (t) => {
   const { type } = computer(t).start();
   assert.equal(type.id, "agent");
-  assert.equal(type.title, "OpenOrange");
+  assert.equal(type.title, "OpenOrange · while Buzz is open");
   assert.deepEqual(type.defaults(), { config: { agent: "clem" } });
   assert.equal(type.summary({ config: {} }), "clem on your Sunport");
 });
@@ -320,8 +320,8 @@ test("registers the always-on type beside the local one: hosted, with its five s
   assert.deepEqual(
     types.map((registered) => [registered.id, registered.title]),
     [
-      ["agent", "OpenOrange"],
-      ["hosted", "OpenOrange (always on)"],
+      ["agent", "OpenOrange · while Buzz is open"],
+      ["hosted", "OpenOrange · always on"],
     ],
   );
   // What Buzz requires of a hosted type.
