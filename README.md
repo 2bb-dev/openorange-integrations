@@ -231,7 +231,8 @@ current Sunport. The plugin and `oo` above set it up; it answers without them.
 2. Your browser opens once for you to sign in to Buzz. If the setup stops
    before it finishes, choose **Finish setup** on the agent.
 3. Add the agent to a channel in Buzz and mention it there. It answers only
-   your own mentions.
+   your own mentions; anyone else who mentions it gets one short note that it
+   answers only its owner.
 
 Buzz asks for a new sign-in from time to time. Until you give it one, the agent
 doesn't answer: run `oo buzz renew` in a terminal, which opens your browser to
